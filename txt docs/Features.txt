@@ -1,0 +1,118 @@
+star up check it later
+
+Text:="|<>*149$211.Dz0Q0wDzs7z0S0w03VzzU0s00T0DzwzzVzwDzkC0S7zw7zsD0w01kzzk0Q00Dk7zyTzkzzbzw70D3zw7zy7UQ00sTzk0C007s3zyDzkTzrUC3U7Vs03UD3kS00Q0Q007007w03U7U0C0zU7Vk3kw03k7VsS00C0C003U03z01k3k070Tk3ks1sS01s1kwS00707001k01nU0s1s03UDs1sQ0wD00w0sSD003U3U00s00tk0Q0w01k7w00C0S7U0S00DD001k1k00Q00ww0C0S00s3y0070D3k0D007j000s0s00C00QS070D00Q1z003zzVzw7U03r000Q0Q00700C703U7zkC0zU01zzkzy3k01zk00C0C003U073U1k3zs70xk00zzsTz1s00zs00707001k07Vs0s1zw3zys00Q0wD00w00Ty003U3U00s03UQ0Q0w01zyQ00C0S7U0S00DbU01k1k00Q01kC0C0S00wyC0A70D3k0D0C7Vk00s0s00C01zzU70D00Q770D3U7Vs07U73kw00Q0Q00700zzk3U7U0C3nU7Vk3kw03k3VsD00C0C003U0Tzs1k3k071tk3ks1sS01s3kw3U0707001k0C0Q0s1s03USw3kQ0wD00Q1sS1s03U3U00s0D0D0Q0w01kDDzsC0S7zwDzsD0S01k1k00Tzb03UC0Tzks3rzs70D3zy3zw7U700s0s00DznU1k70DzsQ1szs3U71zy0zs3U3k0Q0Q007zvk0s3U7zwC0S"
+
+if (ok:=FindText(X, Y, 328, 617, 553, 653, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+
+
+
+
+connection error retry
+
+Text:="|<>*127$59.01zzU7z00y00Ts03y00Q00TU03w00M00z003s00EzVw7y7kzkVzVsTwDVzV3z3kzsT3z27y7Vzky7y4DwD3zVwDw8TsS7z3sTsEzkwDy7kzkVz3sTwDVzV3w7kzsT3w200DVzky00A00z3zVw00s07y7z3s03kwDwDy7ky7VwDsTwDVwD3sTkzsT3wC7sTVzky7sQDkz3zVwDsMTkz3y3sTkkzVy00DkzkVz1y00TVzV3z3y01z3z1"
+
+if (ok:=FindText(X, Y, 724, 201, 812, 244, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+5s delay needeed
+
+Click, 693, 500 Left, 1
+
+
+swqith to profile tab before checking user id
+
+================================
+
+club ms claim later
+
+
+Text:="|<>*148$74.w00S0zzXzsTyD00DkDzszy7zvk03w3zyDzVzyw00z01k3U0Q3z00Cs0Q0s070Tk07C070C01k7w01nU1k3U0Q1z00Qs0Q0s070Tk0D7070C01k7w03Vk1k3zkQ3z00sQ0Q0zw7zvk0C7U70C01zww070s1k3U0TyD01zy0Q0s073Xk0TzU70C01kww0Dzw1k3U0Q7D03U70Q0s071vk0s1k70C01kCzzC0S1k3zsQ3zzr03UQ0zy70S"
+
+if (ok:=FindText(X, Y, 452, 578, 544, 615, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+
+==================================
+
+tier unlocked
+
+
+Text:="|<>*110$82.1w0Q007k1kDk3szy3s00zU7Uz0TrzwDU07y0S3y1zzzky00Ts1sDs7zsDXs01zU7UzUzz0yDU07z0S3y3zw3sy00yw1sDwDzkDXs03nk7Uxlvz00DU0DD0S3r7jw00y00wy1sDSQzk03s07ls7Uxtnz00DU0S7US3njDw00y01sS1sDDszk03s07Vw7UwzXz0QDU0zzkS3lyDw3sy03zz1sD7szkDXs0Dzw7UwT3z0yDU0zzsS3ksDy7sy07k7VsD00zzz3zyS0S7Uw03rzwDzts1wS3k0DDzUzzbU7lsD00y"
+
+if (ok:=FindText(X, Y, 562, 536, 705, 597, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+Click, 1108, 153 Left, 1
+
+===============================
+
+demoted 
+
+
+Text:="|<>*154$35.DzUS0wzzUw3lzz1sD7UD3kQD0S7VsS0wD7Uw1sSS1s3kww3k7Vvk7UD3z0D0S7z0S0wDz0w1sTC1s3kyS3k7VsS7UD3kQD0S7UwS0wD0wT7kS0szzUw1szy1s1w"
+
+if (ok:=FindText(X, Y, 609, 520, 659, 554, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+
+Click, 667, 532 Left, 1
+
+================================
+
+rewards next
+
+
+Text:="|<>*151$68.w0w7zsw0wzzz0D1zy7UDDzzs3kTzVs7Xzzy0w700D1s1sDkD1k01kw0S3y3kQ00SD07UzUw7003bU1sDwD1k00xs0S3r3kQ007w07Uxsw7zk1y01sDCD1zw0DU0S3nnkTz07s07UwQw7001z01sD7j1k00zk0S3kzkQ00DS07Uw7w7007XU1sD1z1k01sw0S3kDkQ00w707Uw3w700D1s1sD0T1zw7UC0S3k7kTzVs3k7Uw0w7zsw0Q1s6061zwC030A2"
+
+if (ok:=FindText(X, Y, 1106, 635, 1187, 666, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+=============================
+
+get key / BP
+
+
+Text:="|<>*150$45.007zzzzs00zzzzz0070zzzs00k1zzz00607zzs3wk0Tzz7z601zzzzUk0007y060000vU0k0007Q060000vU0k0007A060000tk0k0007C0607s0tk0k1zU76060Ty0ss0k3zk77060zy0ss0k7zs77060zz0sM0k3zk73U60Ty0sQ0k1zU73U607s0sA0k00071k60000sC0k00071k60000s60k00070s60000s70k00070s7zzU0s30zzy070Q7zzs0s3UzzzU70Q7zzy0s3Uzzzzz0A7zzzzs1k000000C0000001zz000007zk00000z0000006000004"
+
+if (ok:=FindText(X, Y, 913, 602, 975, 660, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+====================
+
+login check it later 
+
+
+Text:="|<>*155$74.k00y0zz7zkTwC00DUTztzyDznU03s7zyTzXzys01z03k700w7i00Rk0w1k0D0zU07Q0D0Q03kDs03r03k700w3y00ss0w1k0D0zU0CC0D0Q03kDs03XU3k7zkw3i01sw0w1zwDzvU0Q70D0Tz3zws071k3k700zyC03kQ0w1k0D7XU0zzUD0Q03kss0Dzs3k700wDC03UC0w1k0D1nU1s3kD0Q03kSzyQ0Q3k7zkw3jzb070w1zyD0zztk1kD0TzVk7U"
+
+if (ok:=FindText(X, Y, 654, 568, 752, 621, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+=============================
+
+application interuppted/ no opponent / no connection to the game server 
+
+
+
+Text:="|<>*159$33.zzzzzzTzzzrlzzzwQ7zzz1UTzzkC1zzw3s7zz0zUTzkDy1zw3zs7z0zzUTkDzy1w3zzs70zzzU0Dzzy03zzzs0zzzzUDzzzw1zzzz07zzzk0Tzzw21zzz0s7zzkDUTzw3y1zz0zs7zkDzUTw3zy1z0zzs7kDzzUQ3zzy1UzzzsCDzzzXzzzzyzzzzzzU"
+
+if (ok:=FindText(X, Y, 1066, 234, 1108, 279, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+

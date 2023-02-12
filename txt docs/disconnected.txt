@@ -1,0 +1,66 @@
+still disconnected 
+Text:="|<>*117$71.7z7zUzkzwQ00DwDz0zVzks00TsTw1zXzVk00zkzs3z3z3VzlzVzl7y7wD3zXz3zW7yDsS7z7y7y4DwDkwDyDwDwQTsTXsTwTsTssTky7kzszkzVkzlwDVzk01z3lzXsT00U03yDXz3ly01007wT3y7Xw02DwDky7yC7sTwTsTVyDwQDkzszkz00DsMzVzlzVw00Tklz3zXz3s00zl3y7z7y7lzlzWDwDyDwDXzVz0TsTwTsS7z3z0zk00zkwDz7y1zU01zVszy7w7z00E"
+
+if (ok:=FindText(X, Y, 331, 103, 410, 128, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+
+==========
+
+
+connecting to the server 
+
+
+Text:="|<>*73$51.U0zzzzzzs00Dzzzzz000zzzzzs003zzzzz000DzzzzsDy1zzzzz1zsDzzzzsDz1zzzzz1zw7zzzzsDzUzzzzz1zw7zzzzsDzUzzzzz1zw7zzzzsDzUzzzzz1zsDzzzzsDz1zzzzz1zUDzzzzs003zzzzz000Tzzzzs00Dzzzzz003zzzzzsDkTzzzzz1y1zzzzzsDsDzzzzz1z0zzzzzsDw7z3wDk1zUTkT1w0Dy3y3sDU1zkDkT1w0Dz1y3sDU1zs7kT1w0DzUy3sDU1zw7kT1w4"
+
+if (ok:=FindText(X, Y, 744, 619, 809, 663, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+====================
+connecting to the server mp
+
+
+Text:="|<>*71$43.zzzzzzzs0Dzzzzs00zzzzw00Dzzzy007zzzz3z3zzzzVzkzzzzkzsTzzzsTwDzzzwDy7zzzy7z3zzzz3zVzzzzVzUzzzzkTUzzzzs00Tzzzw00Tzzzy00zzzzz1sTzzzzVw7zzzzkz3zzzzsTUzzzzwDsTVsS67w7kwD33z3sS7VVzUwD3kkzsS7VsQTwD3kwDzzzzzzy"
+
+if (ok:=FindText(X, Y, 578, 624, 628, 658, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+=====================
+
+seasonal events red 
+
+CoordMode, Pixel, Screen
+PixelSearch, FoundX, FoundY, 240, 603, 270, 625, 0xFF0049, 0, Fast RGB
+If (ErrorLevel = 0)
+{
+}
+
+
+=======================
+
+sync  
+
+
+Text:="|<>*127$33.zzzzzwwz7k7bXsw0QwD73XbVssyAw777lbUsszwwX77zbaMszwwl761bb8ssAww77lbbUsyAwy77lbbkswQwz7U3bbsy0zzzzzzU"
+
+if (ok:=FindText(X, Y, 1221, 604, 1261, 631, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
+
+===============================
+
+coming back from race complete screen stck on asphalt 9 lescreen (add in rewards check)
+
+Text:="|<>*53$36.zzzzzzy00001w00001k00001k00001U7zzzzUDzzzzUDzzzzUDzzzzU7zwvzk0000Dk00007s00003w00003zzzzk3zzzzw1zzzzw1zzzzw1zzzzs3U00003U00007U0000DU0001zzzzzzzU"
+
+if (ok:=FindText(X, Y, 745, 429, 795, 468, 0, 0, Text))
+{
+ ; FindText().Click(X, Y, "L")
+}
