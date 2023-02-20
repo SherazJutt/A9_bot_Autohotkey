@@ -11,6 +11,19 @@ SetKeyDelay 0
 SetMouseDelay -1
 SetBatchLines -1
 
+; run as admin if not running as admin
+CommandLine := DllCall("GetCommandLine", "Str")
+If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
+    Try {
+        If (A_IsCompiled) {
+            Run *RunAs "%A_ScriptFullPath%" /restart
+        } Else {
+            Run *RunAs "%A_AhkPath%" /restart "%A_ScriptFullPath%"
+        }
+    }
+    ExitApp
+}
+
 ; system sound
 SoundSet,+1,,Mute
 
@@ -48,8 +61,9 @@ date_check:
         ToolTip, ExpirationDate : 24 February 2023 , 640, 0,
     }
 
-    ; READING INI FILE TO CONFIGURE BOT
+    ; configs from ini file
 
+    ; READING INI FILE TO CONFIGURE BOT
     myinipath=%A_ScriptDir%\options.ini
 
     if !FileExist(myinipath){
