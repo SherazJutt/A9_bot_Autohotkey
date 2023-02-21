@@ -24,9 +24,6 @@ If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
     ExitApp
 }
 
-; system sound
-SoundSet,+1,,Mute
-
 date_check:
 
     WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
@@ -61,8 +58,6 @@ date_check:
         ToolTip, ExpirationDate : 24 February 2023 , 640, 0,
     }
 
-    ; configs from ini file
-
     ; READING INI FILE TO CONFIGURE BOT
     myinipath=%A_ScriptDir%\options.ini
 
@@ -70,18 +65,19 @@ date_check:
         IniWrite, "1", %myinipath%, Main,Hunt
         IniWrite, "1", %myinipath%, Main,MP1_Ads
         IniWrite, "1", %myinipath%, Main,LowGarage
-        Goto, script_start
+        IniWrite, "1", %myinipath%, Main,Mute_System
+        ; Goto, script_start
     }
-
-    myinipath=%A_ScriptDir%\options.ini
 
     IniRead, inihunt, %myinipath%, Main, Hunt
     IniRead, iniads, %myinipath%, Main, MP1_Ads
     IniRead, iniLowGarage, %myinipath%, Main, LowGarage
+    IniRead, iniMute_System, %myinipath%, Main, Mute_System
 
     Hunt = 0
     MPads = 0
     LowGarage = 0
+    Mute_System = 0
 
     If (inihunt == 1){
         Hunt = Checked
@@ -92,21 +88,30 @@ date_check:
     If (iniLowGarage == 1){
         LowGarage = Checked
     }
+    If (iniMute_System == 1){
+        Mute_System = checked
+    }
+main_gui:
 
-    Gui Add, Button, gscript_start x7 y7 w100 h45 , Play
-    Gui Add, Button, gexitscript x115 y7 w100 h45, Exit
-    Gui Add, CheckBox, gplayhunt %Hunt% x7 y60 w75 h25 , Play Hunt
-    Gui Add, CheckBox, gPlayMPAds %MPads% x7 y85s w80 h25 , Play MP Ads
-    Gui Add, CheckBox, gLowGarageMode %LowGarage% x7 y110 w110 h25, Low Garage Mode
-
-    Gui Show, w225 h185, Window
+    Gui -MinimizeBox -MaximizeBox -DPIScale ;-Caption
+    ; play 
+    Gui Add, Button, gscript_start x3 y3 w130 h60 , Play
+    ; exit
+    Gui Add, Button, gexitscript x134 y3 w70 h60, Exit
+    ; play hunt
+    Gui Add, CheckBox, gplayhunt %Hunt% x7 y70 w80 h25 , Play Hunt
+    Gui Add, Button, gdefine_cars x90 y70 w75 h25 , Hunt Cars
+    Gui Add, CheckBox, gPlayMPAds %MPads% x7 y100 w100 h25 , Play MP Ads
+    Gui Add, CheckBox, gLowGarageMode %LowGarage% x7 y130 w130 h25, Low Garage Mode
+    Gui Add, CheckBox, gmute_volume %Mute_System% x7 y160 w150 h25, Mute System Volume
+    ; Gui Add, Text, x0 y160 w220 h2 +0x10
+    Gui Show, w210 h200, Asphat 9 Autobot
+    WinSet, Style, -0x80000, Asphat 9 Autobot
 Return
 
-BtnPlay:
-    MsgBox, %Hunt%
-Return
 ; exit button action
 exitscript:
+    SoundSet,0,,Mute
 ExitApp
 Return
 
@@ -140,14 +145,77 @@ LowGarageMode:
     }
 Return
 
-GuiEscape:
-GuiClose:
-ExitApp
+mute_volume:
+    if(Mute_System == 0){
+        Mute_System = Checked
+        IniWrite, 1, %myinipath%, Main, Mute_System
+    }Else{
+        Mute_System = 0
+        IniWrite, 0, %myinipath%, Main, Mute_System
+    }
+    If (Mute_System == "Checked"){
+        SoundSet,+1,,Mute
+    }
+Return
+
+define_cars:
+    ; MsgBox, %inihunt% 
+    Gui, Destroy
+    Gui -MinimizeBox -MaximizeBox ;-DPIScale ;-Caption
+    ; car1
+    Gui, Add, Text, w30 h25 y7, Car 1:
+    Gui, Add, Edit, vcar_1 w25 h20 x40 y3
+    ; car2
+    Gui, Add, Text, w30 h25 x70 y7, Car 2:
+    Gui, Add, Edit, vcar_2 w25 h20 x100 y3
+    ; car3
+    Gui, Add, Text, w30 h25 x10 y33 , Car 3:
+    Gui, Add, Edit, vcar_3 w25 h20 x40 y30
+    ; car4
+    Gui, Add, Text, w30 h25 x70 y33 , Car 4:
+    Gui, Add, Edit, vcar_4 w25 h20 x100 y30
+    ; car5
+    Gui, Add, Text, w30 h25 x10 y63 , Car 5:
+    Gui, Add, Edit, vcar_5 w25 h20 x40 y60
+
+    Gui, Add, Button, gsave_cars Default w55 h20 x70 y61, Save
+
+    Gui Add, Text, x10 y87 w120 h50, Insert Numbers only to avoide errors
+
+    Gui, Show, w135 h120, Define Cars
+    WinSet, Style, -0x80000, Define Cars
+
+    IniRead, inicar1, %myinipath%, HUNT ,car_1
+    IniRead, inicar2, %myinipath%, HUNT ,car_2
+    IniRead, inicar3, %myinipath%, HUNT ,car_3
+    IniRead, inicar4, %myinipath%, HUNT ,car_4
+    IniRead, inicar5, %myinipath%, HUNT ,car_5
+    ; setting current ini values to inputs
+    GuiControl, , car_1, %inicar1%
+    GuiControl, , car_2, %inicar2%
+    GuiControl, , car_3, %inicar3%
+    GuiControl, , car_4, %inicar4%
+    GuiControl, , car_5, %inicar5%
+Return
+
+save_cars:
+    Gui, Submit, NoHide
+    IniWrite, %car_1%, %myinipath%, HUNT,car_1
+    IniWrite, %car_2%, %myinipath%, HUNT,car_2
+    IniWrite, %car_3%, %myinipath%, HUNT,car_3
+    IniWrite, %car_4%, %myinipath%, HUNT,car_4
+    IniWrite, %car_5%, %myinipath%, HUNT,car_5
+    Gui, Destroy
+    Goto, main_gui
 Return
 
 script_start:
 
     Gui, Destroy
+
+    If (Mute_System == checked){
+        SoundSet,+1,,Mute
+    }
 
     t1:=A_TickCount, X:=Y:=""
 
@@ -575,9 +643,9 @@ hunt_card_check_start:
 
     ; hunt card
 
-    Text:="|<>*147$51.w00zzk03z003zw007k00Dz000Q000zk0030Tk3w0z087zUTUTy11zy3w7zs8DzkTUzz11zy3w7zs0DzkTUzz01zy3w7zs0DzzzUzz01zzzw7zs0DzzzUzz01zzzw7zs0DzzzUzz01zzzw7zs0DzzzUzz01zzzw7zs0DzzzUzz01zzzw7zs0DzzzUzz01zy3w7zs0DzkTUzz01zy3w7zs0DzkTUzz11zy3w7zs8DzUTUTz10zs3w1zkA000zk001U007y000S001zs007s00TzU01zw0zzzU0zU"
+    Text:="|<>*133$73.U002000Dzk7zU0010003zs1zk000U001zs0zw000E001zw0Tzz0zzy1zzy07zzUTzz1zzy03zzkDzzUzzz11zzs7zzkTzzUUTzw3zzsDzzkMDzy1zzw7zzkQ7zz0zzy3zzsC1zzUTzz1zzw7UzzkDzzUzzw7kTzs7zzkTzy3sDzw3zzsDzz1y3zy1zzw7zzUz1zz0zzy3zzUzUzzUTzz1zzkTkTzkDzzUzzsDw7zs7zzkTzs7y3zw3zzsDzw7z1zy1zzw7zy1zUTz0zzy3zz000DzUTzz1zz0007zkDzzUzzU003zs7zzkTzk000zw3zzsDzkDzkTy1zzw7zs7zsDz0zzy3zw7zw7zUTzz1zy3zz1zkDzzUzy1zzUzs7zzkTz1zzkTw3zzsDzUzzw7z3zzy7zkzzy6"
 
-    if (ok:=FindText(X, Y, 322, 217, 387, 266, 0, 0, Text))
+    if (ok:=FindText(X, Y, 631, 217, 741, 264, 0, 0, Text))
     {
         Loop, 2{
             Send, {Enter}
@@ -784,7 +852,7 @@ random_select:
             If (currcar > 0){
                 Loop, %currcar%{
                     Send, {PgDn 1}
-                    Sleep, 100
+                    Sleep, 250
                 }
             }Else{
                 Goto, reselect_car
