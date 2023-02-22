@@ -43,7 +43,7 @@ date_check:
     CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
 
     ; Year Month Day
-    ExpirationDate := 2023 02 24
+    ExpirationDate := 2023 03 01
     PurchaseDate := 2023 01 01
 
     if (CurrentDate >= ExpirationDate or !data)
@@ -55,7 +55,7 @@ date_check:
         msgbox, Warning dont change the system date
         ExitApp
     }Else{
-        ToolTip, ExpirationDate : 24 February 2023 , 640, 0,
+        ToolTip, ExpirationDate : 01 March 2023 , 640, 0,
     }
 
     ; READING INI FILE TO CONFIGURE BOT
@@ -64,8 +64,8 @@ date_check:
     if !FileExist(myinipath){
         IniWrite, "1", %myinipath%, Main,Hunt
         IniWrite, "1", %myinipath%, Main,MP1_Ads
-        IniWrite, "1", %myinipath%, Main,LowGarage
-        IniWrite, "1", %myinipath%, Main,Mute_System
+        IniWrite, "0", %myinipath%, Main,LowGarage
+        IniWrite, "0", %myinipath%, Main,Mute_System
         ; Goto, script_start
     }
 
