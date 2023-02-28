@@ -11,6 +11,7 @@ SetKeyDelay 0
 SetMouseDelay -1
 SetBatchLines -1
 
+; Goto, skip_cars
 ; run as admin if not running as admin
 CommandLine := DllCall("GetCommandLine", "Str")
 If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
@@ -26,37 +27,52 @@ If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
 
 date_check:
 
-    WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-    WinHttp.Open("GET", "http://worldtimeapi.org/api/ip", false)
-    try
-    {
-        WinHttp.Send()
-    }
-    catch
-    {
-        MsgBox, 262144, , Could not connect to the internet`, Please connect to the internet and try again [ retry in 1 sec ] [ctrl + Q to exit], 1
-        Goto, date_check
-    }
-    data := WinHttp.ResponseText
-    Pos := InStr(data, "datetime")
-    Pos += 11
-    CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
+    ; ; Create WinHttpRequest object
+    ; WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 
-    ; Year Month Day
-    ExpirationDate := 2023 03 01
-    PurchaseDate := 2023 01 01
+    ; ; Set URL and disable asynchronous requests
+    ; WinHttp.Open("GET", "http://worldtimeapi.org/api/ip", false)
 
-    if (CurrentDate >= ExpirationDate or !data)
-    {
-        msgbox, The subscription period is over.
-        ExitApp
-    }Else if (CurrentDate <= PurchaseDate)
-    {
-        msgbox, Warning dont change the system date
-        ExitApp
-    }Else{
-        ToolTip, ExpirationDate : 01 March 2023 , 640, 0,
-    }
+    ; ; Loop until successful response is received
+    ; Loop
+    ; {
+    ;     ; Display alert message
+    ;     MsgBox, 262144, , Connecting to internet... [ctrl + Q to exit], 1
+
+    ;     ; Send request
+    ;     try
+    ;     {
+    ;         WinHttp.Send()
+    ;         break
+    ;     }
+    ;     catch
+    ;     {
+    ;         ; Wait for 1 second before retrying
+    ;         Sleep, 1000
+    ;     }
+    ; }
+
+    ; ; Response received, process data
+    ; data := WinHttp.ResponseText
+    ; Pos := InStr(data, "datetime")
+    ; Pos += 11
+    ; CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
+
+    ; ; Year Month Day
+    ; ExpirationDate := 2023 03 01
+    ; PurchaseDate := 2023 01 01
+
+    ; if (CurrentDate >= ExpirationDate or !data)
+    ; {
+    ;     msgbox, The subscription period is over.
+    ;     ExitApp
+    ; }Else if (CurrentDate <= PurchaseDate)
+    ; {
+    ;     msgbox, Warning dont change the system date
+    ;     ExitApp
+    ; }Else{
+    ;     ToolTip, ExpirationDate : 01 March 2023 , 640, 0,
+    ; }
 
     ; READING INI FILE TO CONFIGURE BOT
     myinipath=%A_ScriptDir%\options.ini
@@ -102,10 +118,12 @@ main_gui:
     Gui Add, CheckBox, gplayhunt %Hunt% x7 y70 w80 h25 , Play Hunt
     Gui Add, Button, gdefine_cars x90 y70 w75 h25 , Hunt Cars
     Gui Add, CheckBox, gPlayMPAds %MPads% x7 y100 w100 h25 , Play MP Ads
-    Gui Add, CheckBox, gLowGarageMode %LowGarage% x7 y130 w130 h25, Low Garage Mode
-    Gui Add, CheckBox, gmute_volume %Mute_System% x7 y160 w150 h25, Mute System Volume
+    Gui Add, CheckBox, gmute_volume %Mute_System% x7 y130 w150 h25, Mute System Volume
+    Gui Add, CheckBox, vLeagueDetection %LeagueDetection% x7 y160 w150 h25, League Detection
+    ; Gui Add, CheckBox, gLowGarageMode %LowGarage% x7 y190 w150 h25, Low Garage Mode
+    Gui Add, Button, gskip_cars x7 y190 w100 h25 , Skip MP Cars
     ; Gui Add, Text, x0 y160 w220 h2 +0x10
-    Gui Show, w210 h200, Asphat 9 Autobot
+    Gui Show, w210 h300, Asphat 9 Autobot
     WinSet, Style, -0x80000, Asphat 9 Autobot
 Return
 
@@ -152,9 +170,6 @@ mute_volume:
     }Else{
         Mute_System = 0
         IniWrite, 0, %myinipath%, Main, Mute_System
-    }
-    If (Mute_System == "Checked"){
-        SoundSet,+1,,Mute
     }
 Return
 
@@ -209,11 +224,62 @@ save_cars:
     Goto, main_gui
 Return
 
+skip_cars:
+    Lancer = 10
+
+    MsgBox, %Lancer%
+    Gui, Destroy
+    Gui -MinimizeBox -MaximizeBox ;-Caption ;-DPIScale
+    ;lancer
+    Gui Add, CheckBox, gLancer %Lancer% y3 w50 h25 , Lancer
+    Gui, Add, Edit, vlancer w25 h20 x75 y3
+    ; car2
+    ; Gui, Add, Text, w30 h25 x70 y7, Hellcat:
+    ; Gui, Add, Edit, vhellcat w25 h20 x100 y3
+    ; ; car3
+    ; Gui, Add, Text, w30 h25 x10 y33 , Peogeot SR1:
+    ; Gui, Add, Edit, vpeogeotSR1 w25 h20 x40 y30
+    ; ; car4
+    ; Gui, Add, Text, w30 h25 x70 y33 , Lamborghini Countach:
+    ; Gui, Add, Edit, vlamborghiniCountach w25 h20 x100 y30
+
+    ; Gui, Add, Button, gsave_cars Default w55 h20 x70 y61, Save
+
+    ; Gui Add, Text, x10 y87 w120 h50, Insert Numbers only to avoide errors
+
+    Gui, Show, w300 h350, Define Cars Skip
+    ; WinSet, Style, -0x80000, Define Cars Skip
+
+Return
+
+; cars to skip variables
+Lancer = 10
+; readming ini values
+; Lancer
+IniRead, inilancer, %myinipath%, CarsSkip, Lancer
+IniRead, inilancer_to, %myinipath%, CarsSkip, Lancer_to
+
+If (Lancer == 1){
+    Lancer = Checked
+}
+
+; cars to skip labels start
+Lancer:
+    if(Lancer == 0){
+        Mute_System = Checked
+        IniWrite, 1, %myinipath%, Main, Mute_System
+    }Else{
+        Mute_System = 0
+        IniWrite, 0, %myinipath%, Main, Mute_System
+    }
+Return
+; cars to skip labels end
+
 script_start:
 
     Gui, Destroy
 
-    If (Mute_System == checked){
+    If (Mute_System != 0){
         SoundSet,+1,,Mute
     }
 
