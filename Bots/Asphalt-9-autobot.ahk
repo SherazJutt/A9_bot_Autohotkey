@@ -225,52 +225,106 @@ save_cars:
 Return
 
 skip_cars:
-    Lancer = 10
 
-    MsgBox, %Lancer%
+    ; readming cars values form ini file
+
+    ; Lancer
+    IniRead, inilancer, %myinipath%, CarsSkip, Lancer
+    IniRead, inilancer_to, %myinipath%, CarsSkip, Lancer_to
+
+    ; cars to skip variables
+    Lancer = 0
+
+    If (inilancer == 1){
+        Lancer = Checked
+    }
+
     Gui, Destroy
     Gui -MinimizeBox -MaximizeBox ;-Caption ;-DPIScale
+
+    ; glancer is like goto label and %Lancer% is a variable to set checkbox state checked or uncheked
+    ; vlancer is a variable to select input
+
     ;lancer
     Gui Add, CheckBox, gLancer %Lancer% y3 w50 h25 , Lancer
     Gui, Add, Edit, vlancer w25 h20 x75 y3
-    ; car2
-    ; Gui, Add, Text, w30 h25 x70 y7, Hellcat:
-    ; Gui, Add, Edit, vhellcat w25 h20 x100 y3
-    ; ; car3
-    ; Gui, Add, Text, w30 h25 x10 y33 , Peogeot SR1:
-    ; Gui, Add, Edit, vpeogeotSR1 w25 h20 x40 y30
-    ; ; car4
-    ; Gui, Add, Text, w30 h25 x70 y33 , Lamborghini Countach:
-    ; Gui, Add, Edit, vlamborghiniCountach w25 h20 x100 y30
+    ;Dodge Hellcat
+    Gui Add, CheckBox, gHellcat %Hellcat% x10 y30 w50 h25 , Hellcat
+    Gui, Add, Edit, vhellcat w25 h20 x75 y30
+    ;peugeot sr1
+    Gui Add, CheckBox, gPeugeotsr1 %Peugeotsr1% x10 y30 w50 h25 , Peugeot sr1
+    Gui, Add, Edit, vpeugeotsr1 w25 h20 x75 y30
+    ;lamborghini countach 25th
+    Gui Add, CheckBox, gLamborghinicountach25th %Lamborghinicountach25th% x10 y30 w50 h25 , lamborghini countach 25th
+    Gui, Add, Edit, vlamborghinicountach25th w25 h20 x75 y30
+    ;SRT8
+    Gui Add, CheckBox, gSrt8 %Srt8% x10 y30 w50 h25 , Srt8
+    Gui, Add, Edit, vSrt8 w25 h20 x75 y30
+    ;Saleen s1
+    Gui Add, CheckBox, gSaleens1 %Saleens1% x10 y30 w50 h25 , Saleen s1
+    Gui, Add, Edit, vsaleens1 w25 h20 x75 y30
+    ;ferrari monza sp1
+    Gui Add, CheckBox, gFerrarimonzasp1 %Ferrarimonzasp1% x10 y30 w50 h25 , Ferrari monza sp1
+    Gui, Add, Edit, vferrarimonzasp1 w25 h20 x75 y30
+    ;jaguar xe sv project
+    Gui Add, CheckBox, gJaguarxesvproject %Jaguarxesvproject% x10 y30 w50 h25 , jaguar xe sv project
+    Gui, Add, Edit, vjaguarxesvproject w25 h20 x75 y30
+    ;lamborghini miura
+    Gui Add, CheckBox, gLamborghinimiura %Lamborghinimiura% x10 y30 w50 h25 , lamborghini miura
+    Gui, Add, Edit, vlamborghinimiura w25 h20 x75 y30
+    ;bugatti eb 110
+    Gui Add, CheckBox, gBugattieb110 %Bugattieb110% x10 y30 w50 h25 , bugatti eb 110
+    Gui, Add, Edit, vBugattieb110 w25 h20 x75 y30
+    ;Porsche 911 gs coupe
+    Gui Add, CheckBox, gPorsche911gscoupe %Porsche911gscoupe% x10 y30 w50 h25 , Porsche 911 gs coupe
+    Gui, Add, Edit, vporsche911gscoupe w25 h20 x75 y30
+    ;nissan r390
+    Gui Add, CheckBox, gNissanr390 %Nissanr390% x10 y30 w50 h25 , Nissan r390
+    Gui, Add, Edit, vnissanr390 w25 h20 x75 y30
+    ;Ferrari enzo
+    Gui Add, CheckBox, gFerrarienzo %Ferrarienzo% x10 y30 w50 h25 , Ferrari enzo
+    Gui, Add, Edit, vFerrarienzo w25 h20 x75 y30
+    ;lamborghini essenza
+    Gui Add, CheckBox, gLamborghiniessenza %Lamborghiniessenza% x10 y30 w50 h25 , Lamborghini essenza
+    Gui, Add, Edit, vLamborghiniessenza w25 h20 x75 y30
+    ;Porsche carrera
+    Gui Add, CheckBox, gPorschecarrera %Porschecarrera% x10 y30 w50 h25 , Porsche carrera
+    Gui, Add, Edit, vPorschecarrera w25 h20 x75 y30
+    ;vulkan
+    Gui Add, CheckBox, gVulkan %Vulkan% x10 y30 w50 h25 , Vulkan
+    Gui, Add, Edit, vVulkan w25 h20 x75 y30
+    ;senna gtr
+    Gui Add, CheckBox, gSennagtr %Sennagtr% x10 y30 w50 h25 , Senna gtr
+    Gui, Add, Edit, vSennagtr w25 h20 x75 y30
 
-    ; Gui, Add, Button, gsave_cars Default w55 h20 x70 y61, Save
-
-    ; Gui Add, Text, x10 y87 w120 h50, Insert Numbers only to avoide errors
-
+    ; showing gui
     Gui, Show, w300 h350, Define Cars Skip
     ; WinSet, Style, -0x80000, Define Cars Skip
 
+    ; readming cars_to values form ini file
+
+    ; Lancer
+    GuiControl, , lancer, %inilancer_to%
+
 Return
-
-; cars to skip variables
-Lancer = 10
-; readming ini values
-; Lancer
-IniRead, inilancer, %myinipath%, CarsSkip, Lancer
-IniRead, inilancer_to, %myinipath%, CarsSkip, Lancer_to
-
-If (Lancer == 1){
-    Lancer = Checked
-}
 
 ; cars to skip labels start
 Lancer:
     if(Lancer == 0){
-        Mute_System = Checked
-        IniWrite, 1, %myinipath%, Main, Mute_System
+        Lancer = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Lancer
     }Else{
-        Mute_System = 0
-        IniWrite, 0, %myinipath%, Main, Mute_System
+        Lancer = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Lancer
+    }
+Return
+Hellcat:
+    if(Lancer == 0){
+        Lancer = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Lancer
+    }Else{
+        Lancer = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Lancer
     }
 Return
 ; cars to skip labels end
