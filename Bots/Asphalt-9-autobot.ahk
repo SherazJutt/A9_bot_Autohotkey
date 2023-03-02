@@ -11,6 +11,7 @@ SetKeyDelay 0
 SetMouseDelay -1
 SetBatchLines -1
 
+; Goto, skip_cars
 ; run as admin if not running as admin
 CommandLine := DllCall("GetCommandLine", "Str")
 If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
@@ -26,37 +27,52 @@ If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
 
 date_check:
 
-    WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-    WinHttp.Open("GET", "http://worldtimeapi.org/api/ip", false)
-    try
-    {
-        WinHttp.Send()
-    }
-    catch
-    {
-        MsgBox, 262144, , Could not connect to the internet`, Please connect to the internet and try again [ retry in 1 sec ] [ctrl + Q to exit], 1
-        Goto, date_check
-    }
-    data := WinHttp.ResponseText
-    Pos := InStr(data, "datetime")
-    Pos += 11
-    CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
+    ; ; Create WinHttpRequest object
+    ; WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 
-    ; Year Month Day
-    ExpirationDate := 2023 03 01
-    PurchaseDate := 2023 01 01
+    ; ; Set URL and disable asynchronous requests
+    ; WinHttp.Open("GET", "http://worldtimeapi.org/api/ip", false)
 
-    if (CurrentDate >= ExpirationDate or !data)
-    {
-        msgbox, The subscription period is over.
-        ExitApp
-    }Else if (CurrentDate <= PurchaseDate)
-    {
-        msgbox, Warning dont change the system date
-        ExitApp
-    }Else{
-        ToolTip, ExpirationDate : 01 March 2023 , 640, 0,
-    }
+    ; ; Loop until successful response is received
+    ; Loop
+    ; {
+    ;     ; Display alert message
+    ;     MsgBox, 262144, , Connecting to internet... [ctrl + Q to exit], 1
+
+    ;     ; Send request
+    ;     try
+    ;     {
+    ;         WinHttp.Send()
+    ;         break
+    ;     }
+    ;     catch
+    ;     {
+    ;         ; Wait for 1 second before retrying
+    ;         Sleep, 1000
+    ;     }
+    ; }
+
+    ; ; Response received, process data
+    ; data := WinHttp.ResponseText
+    ; Pos := InStr(data, "datetime")
+    ; Pos += 11
+    ; CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
+
+    ; ; Year Month Day
+    ; ExpirationDate := 2023 03 01
+    ; PurchaseDate := 2023 01 01
+
+    ; if (CurrentDate >= ExpirationDate or !data)
+    ; {
+    ;     msgbox, The subscription period is over.
+    ;     ExitApp
+    ; }Else if (CurrentDate <= PurchaseDate)
+    ; {
+    ;     msgbox, Warning dont change the system date
+    ;     ExitApp
+    ; }Else{
+    ;     ToolTip, ExpirationDate : 01 March 2023 , 640, 0,
+    ; }
 
     ; READING INI FILE TO CONFIGURE BOT
     myinipath=%A_ScriptDir%\options.ini
@@ -102,10 +118,12 @@ main_gui:
     Gui Add, CheckBox, gplayhunt %Hunt% x7 y70 w80 h25 , Play Hunt
     Gui Add, Button, gdefine_cars x90 y70 w75 h25 , Hunt Cars
     Gui Add, CheckBox, gPlayMPAds %MPads% x7 y100 w100 h25 , Play MP Ads
-    Gui Add, CheckBox, gLowGarageMode %LowGarage% x7 y130 w130 h25, Low Garage Mode
-    Gui Add, CheckBox, gmute_volume %Mute_System% x7 y160 w150 h25, Mute System Volume
+    Gui Add, CheckBox, gmute_volume %Mute_System% x7 y130 w150 h25, Mute System Volume
+    Gui Add, CheckBox, vLeagueDetection %LeagueDetection% x7 y160 w150 h25, League Detection
+    ; Gui Add, CheckBox, gLowGarageMode %LowGarage% x7 y190 w150 h25, Low Garage Mode
+    Gui Add, Button, gskip_cars x7 y190 w100 h25 , Skip MP Cars
     ; Gui Add, Text, x0 y160 w220 h2 +0x10
-    Gui Show, w210 h200, Asphat 9 Autobot
+    Gui Show, w210 h300, Asphat 9 Autobot
     WinSet, Style, -0x80000, Asphat 9 Autobot
 Return
 
@@ -152,9 +170,6 @@ mute_volume:
     }Else{
         Mute_System = 0
         IniWrite, 0, %myinipath%, Main, Mute_System
-    }
-    If (Mute_System == "Checked"){
-        SoundSet,+1,,Mute
     }
 Return
 
@@ -209,41 +224,520 @@ save_cars:
     Goto, main_gui
 Return
 
-script_start:
+skip_cars:
+
+    ; readming cars values form ini file
+
+    ; Lancer
+    IniRead, iniLancer, %myinipath%, CarsSkip, Lancer
+    IniRead, iniLancer_to, %myinipath%, CarsSkip, Lancer_to
+    ; Hellcat
+    IniRead, iniHellcat, %myinipath%, CarsSkip, Hellcat
+    IniRead, iniHellcat_to, %myinipath%, CarsSkip, Hellcat_to
+    ; Peugeotsr1
+    IniRead, iniPeugeotsr1, %myinipath%, CarsSkip, Peugeotsr1
+    IniRead, iniPeugeotsr1_to, %myinipath%, CarsSkip, Peugeotsr1_to
+    ; Lamborghinicountach25th
+    IniRead, iniLamborghinicountach25th, %myinipath%, CarsSkip, Lamborghinicountach25th
+    IniRead, iniLamborghinicountach25th_to, %myinipath%, CarsSkip, Lamborghinicountach25th_to
+    ; Srt8
+    IniRead, iniSrt8, %myinipath%, CarsSkip, Srt8
+    IniRead, iniSrt8_to, %myinipath%, CarsSkip, Srt8_to
+    ; Saleens1
+    IniRead, iniSaleens1, %myinipath%, CarsSkip, Saleens1
+    IniRead, iniSaleens1_to, %myinipath%, CarsSkip, Saleens1_to
+    ; Ferrarimonzasp1
+    IniRead, iniFerrarimonzasp1, %myinipath%, CarsSkip, Ferrarimonzasp1
+    IniRead, iniFerrarimonzasp1_to, %myinipath%, CarsSkip, Ferrarimonzasp1_to
+    ; Jaguarxesvproject
+    IniRead, iniJaguarxesvproject, %myinipath%, CarsSkip, Jaguarxesvproject
+    IniRead, iniJaguarxesvproject_to, %myinipath%, CarsSkip, Jaguarxesvproject_to
+    ; Lamborghinimiura
+    IniRead, iniLamborghinimiura, %myinipath%, CarsSkip, Lamborghinimiura
+    IniRead, iniLamborghinimiura_to, %myinipath%, CarsSkip, Lamborghinimiura_to
+    ; Bugattieb110
+    IniRead, iniBugattieb110, %myinipath%, CarsSkip, Bugattieb110
+    IniRead, iniBugattieb110_to, %myinipath%, CarsSkip, Bugattieb110_to
+    ; Porsche911gscoupe
+    IniRead, iniPorsche911gscoupe, %myinipath%, CarsSkip, Porsche911gscoupe
+    IniRead, iniPorsche911gscoupe_to, %myinipath%, CarsSkip, Porsche911gscoupe_to
+    ; Nissanr390
+    IniRead, iniNissanr390, %myinipath%, CarsSkip, Nissanr390
+    IniRead, iniNissanr390_to, %myinipath%, CarsSkip, Nissanr390_to
+    ; Ferrarienzo
+    IniRead, iniFerrarienzo, %myinipath%, CarsSkip, Ferrarienzo
+    IniRead, iniFerrarienzo_to, %myinipath%, CarsSkip, Ferrarienzo_to
+    ; Lamborghiniessenza
+    IniRead, iniLamborghiniessenza, %myinipath%, CarsSkip, Lamborghiniessenza
+    IniRead, iniLamborghiniessenza_to, %myinipath%, CarsSkip, Lamborghiniessenza_to
+    ; Porschecarrera
+    IniRead, iniPorschecarrera, %myinipath%, CarsSkip, Porschecarrera
+    IniRead, iniPorschecarrera_to, %myinipath%, CarsSkip, Porschecarrera_to
+    ; Vulkan
+    IniRead, iniVulkan, %myinipath%, CarsSkip, Vulkan
+    IniRead, iniVulkan_to, %myinipath%, CarsSkip, Vulkan_to
+    ; Sennagtr
+    IniRead, iniSennagtr, %myinipath%, CarsSkip, Sennagtr
+    IniRead, iniSennagtr_to, %myinipath%, CarsSkip, Sennagtr_to
+    ; Zondar
+    IniRead, iniZondar, %myinipath%, CarsSkip, Zondar
+    IniRead, iniZondar_to, %myinipath%, CarsSkip, Zondar_to
+    ; Centenario
+    IniRead, iniCentenario, %myinipath%, CarsSkip, Centenario
+    IniRead, iniCentenario_to, %myinipath%, CarsSkip, Centenario_to
+    ; RaesrTacheon
+    IniRead, iniRaesrTacheon, %myinipath%, CarsSkip, RaesrTacheon
+    IniRead, iniRaesrTacheon_to, %myinipath%, CarsSkip, RaesrTacheon_to
+    ; Trion
+    IniRead, iniTrion, %myinipath%, CarsSkip, Trion
+    IniRead, iniTrion_to, %myinipath%, CarsSkip, Trion_to
+    ; Naran
+    IniRead, iniNaran, %myinipath%, CarsSkip, Naran
+    IniRead, iniNaran_to, %myinipath%, CarsSkip, Naran_to
+
+    ; cars to skip variables
+    Lancer=0
+    Hellcat=0
+    Peugeotsr1=0
+    Lamborghinicountach25th=0
+    Srt8=0
+    Saleens1=0
+    Ferrarimonzasp1=0
+    Jaguarxesvproject=0
+    Lamborghinimiura=0
+    Bugattieb110=0
+    Porsche911gscoupe=0
+    Nissanr390=0
+    Ferrarienzo=0
+    Lamborghiniessenza=0
+    Porschecarrera=0
+    Vulkan=0
+    Sennagtr=0
+    Zondar=0
+    Centenario=0
+    RaesrTacheon=0
+    Trion=0
+    Naran=0
+
+    Lancer := (iniLancer = 1) ? "Checked":Lancer
+    Hellcat := (iniHellcat = 1) ? "Checked":Hellcat
+    Peugeotsr1 := (iniPeugeotsr1 = 1) ? "Checked":Peugeotsr1
+    Lamborghinicountach25th := (iniLamborghinicountach25th = 1) ? "Checked":Lamborghinicountach25th
+    Srt8 := (iniSrt8 = 1) ? "Checked":Srt8
+    Saleens1 := (iniSaleens1 = 1) ? "Checked":Saleens1
+    Ferrarimonzasp1 := (iniFerrarimonzasp1 = 1) ? "Checked":Ferrarimonzasp1
+    Jaguarxesvproject := (iniJaguarxesvproject = 1) ? "Checked":Jaguarxesvproject
+    Lamborghinimiura := (iniLamborghinimiura = 1) ? "Checked":Lamborghinimiura
+    Bugattieb110 := (iniBugattieb110 = 1) ? "Checked":Bugattieb110
+    Porsche911gscoupe := (iniPorsche911gscoupe = 1) ? "Checked":Porsche911gscoupe
+    Nissanr390 := (iniNissanr390 = 1) ? "Checked":Nissanr390
+    Ferrarienzo := (iniFerrarienzo = 1) ? "Checked":Ferrarienzo
+    Lamborghiniessenza := (iniLamborghiniessenza = 1) ? "Checked":Lamborghiniessenza
+    Porschecarrera := (iniPorschecarrera = 1) ? "Checked":Porschecarrera
+    Vulkan := (iniVulkan = 1) ? "Checked":Vulkan
+    Sennagtr := (iniSennagtr = 1) ? "Checked":Sennagtr
+    Zondar := (iniZondar = 1) ? "Checked":Zondar
+    Centenario := (iniCentenario = 1) ? "Checked":Centenario
+    RaesrTacheon := (iniRaesrTacheon = 1) ? "Checked":RaesrTacheon
+    Trion := (iniTrion = 1) ? "Checked":Trion
+    Naran := (iniNaran = 1) ? "Checked":Naran
 
     Gui, Destroy
+    Gui -MinimizeBox -MaximizeBox ;-Caption ;-DPIScale
 
-    If (Mute_System == checked){
-        SoundSet,+1,,Mute
+    ; glancer is like goto label and %Lancer% is a variable to set checkbox state checked or uncheked
+    ; vlancer is a variable to select input
+
+    ;lancer
+    Gui Add, CheckBox, gLancer %Lancer% y0 w150 h25 , Lancer
+    Gui, Add, Edit, vlancer_to_input w25 h20 x200 y0
+    ;Dodge Hellcat
+    Gui Add, CheckBox, gHellcat %Hellcat% x10 y30 w150 h25 , Hellcat
+    Gui, Add, Edit, vhellcat_to_input w25 h20 x200 y30
+    ;peugeot sr1
+    Gui Add, CheckBox, gPeugeotsr1 %Peugeotsr1% x10 y60 w150 h25 , Peugeot sr1
+    Gui, Add, Edit, vpeugeotsr1_to_input w25 h20 x200 y60
+    ;lamborghini countach 25th
+    Gui Add, CheckBox, gLamborghinicountach25th %Lamborghinicountach25th% x10 y90 w150 h25 , lamborghini countach 25th
+    Gui, Add, Edit, vlamborghinicountach25th_to_input w25 h20 x200 y90
+    ;SRT8
+    Gui Add, CheckBox, gSrt8 %Srt8% x10 y120 w150 h25 , Srt8
+    Gui, Add, Edit, vSrt8_to_input w25 h20 x200 y120
+    ;Saleen s1
+    Gui Add, CheckBox, gSaleens1 %Saleens1% x10 y150 w150 h25 , Saleen s1
+    Gui, Add, Edit, vsaleens1_to_input w25 h20 x200 y150
+    ;ferrari monza sp1
+    Gui Add, CheckBox, gFerrarimonzasp1 %Ferrarimonzasp1% x10 y180 w150 h25 , Ferrari monza sp1
+    Gui, Add, Edit, vferrarimonzasp1_to_input w25 h20 x200 y180
+    ;jaguar xe sv project
+    Gui Add, CheckBox, gJaguarxesvproject %Jaguarxesvproject% x10 y210 w150 h25 , jaguar xe sv project
+    Gui, Add, Edit, vjaguarxesvproject_to_input w25 h20 x200 y210
+    ;lamborghini miura
+    Gui Add, CheckBox, gLamborghinimiura %Lamborghinimiura% x10 y240 w150 h25 , lamborghini miura
+    Gui, Add, Edit, vlamborghinimiura_to_input w25 h20 x200 y240
+    ;bugatti eb 110
+    Gui Add, CheckBox, gBugattieb110 %Bugattieb110% x10 y270 w150 h25 , bugatti eb 110
+    Gui, Add, Edit, vBugattieb110_to_input w25 h20 x200 y270
+    ;Porsche 911 gs coupe
+    Gui Add, CheckBox, gPorsche911gscoupe %Porsche911gscoupe% x10 y300 w150 h25 , Porsche 911 gs coupe
+    Gui, Add, Edit, vporsche911gscoupe_to_input w25 h20 x200 y300
+    ;nissan r390
+    Gui Add, CheckBox, gNissanr390 %Nissanr390% x10 y330 w150 h25 , Nissan r390
+    Gui, Add, Edit, vnissanr390_to_input w25 h20 x200 y330
+    ;Ferrari enzo
+    Gui Add, CheckBox, gFerrarienzo %Ferrarienzo% x10 y360 w150 h25 , Ferrari enzo
+    Gui, Add, Edit, vFerrarienzo_to_input w25 h20 x200 y360
+    ;lamborghini essenza
+    Gui Add, CheckBox, gLamborghiniessenza %Lamborghiniessenza% x10 y390 w150 h25 , Lamborghini essenza
+    Gui, Add, Edit, vLamborghiniessenza_to_input w25 h20 x200 y390
+    ;Porsche carrera
+    Gui Add, CheckBox, gPorschecarrera %Porschecarrera% x10 y420 w150 h25 , Porsche carrera
+    Gui, Add, Edit, vPorschecarrera_to_input w25 h20 x200 y420
+    ;vulkan
+    Gui Add, CheckBox, gVulkan %Vulkan% x10 y450 w150 h25 , Vulkan
+    Gui, Add, Edit, vVulkan_to_input w25 h20 x200 y450
+    ;senna gtr
+    Gui Add, CheckBox, gSennagtr %Sennagtr% x10 y480 w150 h25 , Senna gtr
+    Gui, Add, Edit, vSennagtr_to_input w25 h20 x200 y480
+    ;zonda r
+    Gui Add, CheckBox, gZondar %Zondar% x10 y510 w150 h25 , Zonda r
+    Gui, Add, Edit, vZondar_to_input w25 h20 x200 y510
+    ;centenario
+    Gui Add, CheckBox, gCentenario %Centenario% x10 y540 w150 h25 , Lamborgini centenario
+    Gui, Add, Edit, vCentenario_to_input w25 h20 x200 y540
+    ;Raesr Tacheon
+    Gui Add, CheckBox, gRaesrTacheon %RaesrTacheon% x10 y570 w150 h25 , Raesr Tacheon
+    Gui, Add, Edit, vRaesrTacheon_to_input w25 h20 x200 y570
+    ;trion
+    Gui Add, CheckBox, gTrion %Trion% x10 y600 w150 h25 , Trion Nemisis
+    Gui, Add, Edit, vTrion_to_input w25 h20 x200 y600
+    ;Naran
+    Gui Add, CheckBox, gNaran %Naran% x10 y630 w150 h25 , Naran HyperCoupoe
+    Gui, Add, Edit, vNaran_to_input w25 h20 x200 y630
+
+    ; SAVE CARS SKIP
+    Gui Add, Button, gsave_cars_skip x10 y660 w100 h25 , Save
+
+    ; showing gui
+    Gui, Show, w240 h690, Define Cars Skip
+    ; WinSet, Style, -0x80000, Define Cars Skip
+
+    ; MsgBox, %iniLancer_to%
+    GuiControl, , Lancer_to_input, %iniLancer_to%
+    GuiControl, , Hellcat_to_input, %iniHellcat_to%
+    GuiControl, , Peugeotsr1_to_input, %iniPeugeotsr1_to%
+    GuiControl, , Lamborghinicountach25th_to_input, %iniLamborghinicountach25th_to%
+    GuiControl, , Srt8_to_input, %iniSrt8_to%
+    GuiControl, , Saleens1_to_input, %iniSaleens1_to%
+    GuiControl, , Ferrarimonzasp1_to_input, %iniFerrarimonzasp1_to%
+    GuiControl, , Jaguarxesvproject_to_input, %iniJaguarxesvproject_to%
+    GuiControl, , Lamborghinimiura_to_input, %iniLamborghinimiura_to%
+    GuiControl, , Bugattieb110_to_input, %iniBugattieb110_to%
+    GuiControl, , Porsche911gscoupe_to_input, %iniPorsche911gscoupe_to%
+    GuiControl, , Nissanr390_to_input, %iniNissanr390_to%
+    GuiControl, , Ferrarienzo_to_input, %iniFerrarienzo_to%
+    GuiControl, , Lamborghiniessenza_to_input, %iniLamborghiniessenza_to%
+    GuiControl, , Porschecarrera_to_input, %iniPorschecarrera_to%
+    GuiControl, , Vulkan_to_input, %iniVulkan_to%
+    GuiControl, , Sennagtr_to_input, %iniSennagtr_to%
+    GuiControl, , Zondar_to_input, %iniZondar_to%
+    GuiControl, , Centenario_to_input, %iniCentenario_to%
+    GuiControl, , RaesrTacheon_to_input, %iniRaesrTacheon_to%
+    GuiControl, , Trion_to_input, %iniTrion_to%
+    GuiControl, , Naran_to_input, %iniNaran_to%
+
+Return
+
+save_cars_skip:
+    Gui, Submit, NoHide
+    IniWrite, %Lancer_to_input%, %myinipath%, CarsSkip, Lancer_to
+    IniWrite, %Hellcat_to_input%, %myinipath%, CarsSkip, Hellcat_to
+    IniWrite, %Peugeotsr1_to_input%, %myinipath%, CarsSkip, Peugeotsr1_to
+    IniWrite, %Lamborghinicountach25th_to_input%, %myinipath%, CarsSkip, Lamborghinicountach25th_to
+    IniWrite, %Srt8_to_input%, %myinipath%, CarsSkip, Srt8_to
+    IniWrite, %Saleens1_to_input%, %myinipath%, CarsSkip, Saleens1_to
+    IniWrite, %Ferrarimonzasp1_to_input%, %myinipath%, CarsSkip, Ferrarimonzasp1_to
+    IniWrite, %Jaguarxesvproject_to_input%, %myinipath%, CarsSkip, Jaguarxesvproject_to
+    IniWrite, %Lamborghinimiura_to_input%, %myinipath%, CarsSkip, Lamborghinimiura_to
+    IniWrite, %Bugattieb110_to_input%, %myinipath%, CarsSkip, Bugattieb110_to
+    IniWrite, %Porsche911gscoupe_to_input%, %myinipath%, CarsSkip, Porsche911gscoupe_to
+    IniWrite, %Nissanr390_to_input%, %myinipath%, CarsSkip, Nissanr390_to
+    IniWrite, %Ferrarienzo_to_input%, %myinipath%, CarsSkip, Ferrarienzo_to
+    IniWrite, %Lamborghiniessenza_to_input%, %myinipath%, CarsSkip, Lamborghiniessenza_to
+    IniWrite, %Porschecarrera_to_input%, %myinipath%, CarsSkip, Porschecarrera_to
+    IniWrite, %Vulkan_to_input%, %myinipath%, CarsSkip, Vulkan_to
+    IniWrite, %Sennagtr_to_input%, %myinipath%, CarsSkip, Sennagtr_to
+    IniWrite, %Zondar_to_input%, %myinipath%, CarsSkip, Zondar_to
+    IniWrite, %Centenario_to_input%, %myinipath%, CarsSkip, Centenario_to
+    IniWrite, %RaesrTacheon_to_input%, %myinipath%, CarsSkip, RaesrTacheon_to
+    IniWrite, %Trion_to_input%, %myinipath%, CarsSkip, Trion_to
+    IniWrite, %Naran_to_input%, %myinipath%, CarsSkip, Naran_to
+    ; MsgBox, %Lancer_to_input%
+
+    Gui, Destroy
+    Goto, main_gui
+Return
+
+; cars to skip labels start
+Lancer:
+    if(Lancer == 0){
+        Lancer = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Lancer
+    }Else{
+        Lancer = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Lancer
     }
+Return
+; Hellcat
+Hellcat:
+    if(Hellcat == 0){
+        Hellcat = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Hellcat
+    }Else{
+        Hellcat = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Hellcat
+    }
+Return
+; Peugeotsr1
+Peugeotsr1:
+    if(Peugeotsr1 == 0){
+        Peugeotsr1 = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Peugeotsr1
+    }Else{
+        Peugeotsr1 = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Peugeotsr1
+    }
+Return
+; Lamborghinicountach25th
+Lamborghinicountach25th:
+    if(Lamborghinicountach25th == 0){
+        Lamborghinicountach25th = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Lamborghinicountach25th
+    }Else{
+        Lamborghinicountach25th = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Lamborghinicountach25th
+    }
+Return
+; Srt8
+Srt8:
+    if(Srt8 == 0){
+        Srt8 = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Srt8
+    }Else{
+        Srt8 = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Srt8
+    }
+Return
+; Saleens1
+Saleens1:
+    if(Saleens1 == 0){
+        Saleens1 = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Saleens1
+    }Else{
+        Saleens1 = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Saleens1
+    }
+Return
+; Ferrarimonzasp1
+Ferrarimonzasp1:
+    if(Ferrarimonzasp1 == 0){
+        Ferrarimonzasp1 = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Ferrarimonzasp1
+    }Else{
+        Ferrarimonzasp1 = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Ferrarimonzasp1
+    }
+Return
+; Jaguarxesvproject
+Jaguarxesvproject:
+    if(Jaguarxesvproject == 0){
+        Jaguarxesvproject = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Jaguarxesvproject
+    }Else{
+        Jaguarxesvproject = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Jaguarxesvproject
+    }
+Return
+; Lamborghinimiura
+Lamborghinimiura:
+    if(Lamborghinimiura == 0){
+        Lamborghinimiura = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Lamborghinimiura
+    }Else{
+        Lamborghinimiura = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Lamborghinimiura
+    }
+Return
+; Bugattieb110
+Bugattieb110:
+    if(Bugattieb110 == 0){
+        Bugattieb110 = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Bugattieb110
+    }Else{
+        Bugattieb110 = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Bugattieb110
+    }
+Return
+; Porsche911gscoupe
+Porsche911gscoupe:
+    if(Porsche911gscoupe == 0){
+        Porsche911gscoupe = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Porsche911gscoupe
+    }Else{
+        Porsche911gscoupe = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Porsche911gscoupe
+    }
+Return
+; Nissanr390
+Nissanr390:
+    if(Nissanr390 == 0){
+        Nissanr390 = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Nissanr390
+    }Else{
+        Nissanr390 = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Nissanr390
+    }
+Return
+; Ferrarienzo
+Ferrarienzo:
+    if(Ferrarienzo == 0){
+        Ferrarienzo = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Ferrarienzo
+    }Else{
+        Ferrarienzo = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Ferrarienzo
+    }
+Return
+; Lamborghiniessenza
+Lamborghiniessenza:
+    if(Lamborghiniessenza == 0){
+        Lamborghiniessenza = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Lamborghiniessenza
+    }Else{
+        Lamborghiniessenza = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Lamborghiniessenza
+    }
+Return
+; Porschecarrera
+Porschecarrera:
+    if(Porschecarrera == 0){
+        Porschecarrera = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Porschecarrera
+    }Else{
+        Porschecarrera = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Porschecarrera
+    }
+Return
+; Vulkan
+Vulkan:
+    if(Vulkan == 0){
+        Vulkan = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Vulkan
+    }Else{
+        Vulkan = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Vulkan
+    }
+Return
+; Sennagtr
+Sennagtr:
+    if(Sennagtr == 0){
+        Sennagtr = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Sennagtr
+    }Else{
+        Sennagtr = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Sennagtr
+    }
+Return
+; Zondar
+Zondar:
+    if(Zondar == 0){
+        Zondar = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Zondar
+    }Else{
+        Zondar = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Zondar
+    }
+Return
+; Centenario
+Centenario:
+    if(Centenario == 0){
+        Centenario = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Centenario
+    }Else{
+        Centenario = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Centenario
+    }
+Return
+; RaesrTacheon
+RaesrTacheon:
+    if(RaesrTacheon == 0){
+        RaesrTacheon = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, RaesrTacheon
+    }Else{
+        RaesrTacheon = 0
+        IniWrite, 0, %myinipath%, CarsSkip, RaesrTacheon
+    }
+Return
+; Trion
+Trion:
+    if(Trion == 0){
+        Trion = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Trion
+    }Else{
+        Trion = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Trion
+    }
+Return
+; Naran
+Naran:
+    if(Naran == 0){
+        Naran = Checked
+        IniWrite, 1, %myinipath%, CarsSkip, Naran
+    }Else{
+        Naran = 0
+        IniWrite, 0, %myinipath%, CarsSkip, Naran
+    }
+Return
+; cars to skip labels end
 
-    t1:=A_TickCount, X:=Y:=""
+script_start:
+    MsgBox, %iniLancer%
+Return
+Gui, Destroy
 
-    Sleep, 1000
+; MsgBox, %iniSrt8_to%
 
-    ; close a9
-    WinClose , Asphalt 9: Legends
-    Sleep , 1000
+If (Mute_System != 0){
+    SoundSet,+1,,Mute
+}
 
-    Run, "Asphalt 9" %A_ScriptDir%
+t1:=A_TickCount, X:=Y:=""
 
-    Sleep, 2000
-    ; restore a9 window
-    WinRestore, Asphalt 9: Legends
+Sleep, 1000
 
-    ; activate a9 window
-    Sleep , 2000
-    WinActivate , Asphalt 9: Legends
-    Sleep , 1000
+; close a9
+WinClose , Asphalt 9: Legends
+Sleep , 1000
 
-    ; resize a9 window to 720p
-    WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
-    Sleep, 1000
+Run, "Asphalt 9" %A_ScriptDir%
 
-    ; restore a9 window
-    WinRestore, Asphalt 9: Legends
+Sleep, 2000
+; restore a9 window
+WinRestore, Asphalt 9: Legends
 
-    Sleep, 2000
+; activate a9 window
+Sleep , 2000
+WinActivate , Asphalt 9: Legends
+Sleep , 1000
+
+; resize a9 window to 720p
+WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
+Sleep, 1000
+
+; restore a9 window
+WinRestore, Asphalt 9: Legends
+
+Sleep, 2000
 
 stuck_on_GL_logo_start:
 
