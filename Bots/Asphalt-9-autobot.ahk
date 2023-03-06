@@ -11,7 +11,6 @@ SetKeyDelay 0
 SetMouseDelay -1
 SetBatchLines -1
 
-; Goto, skip_cars
 ; run as admin if not running as admin
 CommandLine := DllCall("GetCommandLine", "Str")
 If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
@@ -27,52 +26,50 @@ If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
 
 date_check:
 
-    ; ; Create WinHttpRequest object
-    ; WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+    ; Create WinHttpRequest object
+    WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 
-    ; ; Set URL and disable asynchronous requests
-    ; WinHttp.Open("GET", "http://worldtimeapi.org/api/ip", false)
+    ; Set URL and disable asynchronous requests
+    WinHttp.Open("GET", "http://worldtimeapi.org/api/ip", false)
 
-    ; ; Loop until successful response is received
-    ; Loop
-    ; {
-    ;     ; Display alert message
-    ;     MsgBox, 262144, , Connecting to internet... [ctrl + Q to exit], 1
+    ; Loop until successful response is received
+    Loop
+    {
+        ; Display alert message
+        MsgBox, 262144, , Connecting to internet... [ctrl + Q to exit], 1
 
-    ;     ; Send request
-    ;     try
-    ;     {
-    ;         WinHttp.Send()
-    ;         break
-    ;     }
-    ;     catch
-    ;     {
-    ;         ; Wait for 1 second before retrying
-    ;         Sleep, 1000
-    ;     }
-    ; }
+        ; Send request
+        try
+        {
+            WinHttp.Send()
+            break
+        }
+        catch
+        {
+            ; Wait for 1 second before retrying
+            Sleep, 1000
+        }
+    }
 
-    ; ; Response received, process data
-    ; data := WinHttp.ResponseText
-    ; Pos := InStr(data, "datetime")
-    ; Pos += 11
-    ; CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
+    ; Response received, process data
+    data := WinHttp.ResponseText
+    Pos := InStr(data, "datetime")
+    Pos += 11
+    CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
 
-    ; ; Year Month Day
-    ; ExpirationDate := 2023 03 01
-    ; PurchaseDate := 2023 01 01
+    ; Year Month Day
+    ExpirationDate := 2023 04 01
+    PurchaseDate := 2023 02 01
 
-    ; if (CurrentDate >= ExpirationDate or !data)
-    ; {
-    ;     msgbox, The subscription period is over.
-    ;     ExitApp
-    ; }Else if (CurrentDate <= PurchaseDate)
-    ; {
-    ;     msgbox, Warning dont change the system date
-    ;     ExitApp
-    ; }Else{
-    ;     ToolTip, ExpirationDate : 01 March 2023 , 640, 0,
-    ; }
+    if (CurrentDate >= ExpirationDate or !data)
+    {
+        msgbox, The subscription period is over.
+        ExitApp
+    }Else if (CurrentDate <= PurchaseDate)
+    {
+        msgbox, Warning dont change the system date
+        ExitApp
+    }
 
     ; READING INI FILE TO CONFIGURE BOT
     myinipath=%A_ScriptDir%\options.ini
@@ -85,15 +82,21 @@ date_check:
         ; Goto, script_start
     }
 
+    ;  *--------------------------------------------------*
+    ;               |     Main variables      |       
+    ;  *--------------------------------------------------*
+
     IniRead, inihunt, %myinipath%, Main, Hunt
     IniRead, iniads, %myinipath%, Main, MP1_Ads
     IniRead, iniLowGarage, %myinipath%, Main, LowGarage
     IniRead, iniMute_System, %myinipath%, Main, Mute_System
+    IniRead, iniLeagueDetection, %myinipath%, Main, LeagueDetection
 
     Hunt = 0
     MPads = 0
     LowGarage = 0
     Mute_System = 0
+    LeagueDetection = 0
 
     If (inihunt == 1){
         Hunt = Checked
@@ -107,126 +110,13 @@ date_check:
     If (iniMute_System == 1){
         Mute_System = checked
     }
-main_gui:
-
-    Gui -MinimizeBox -MaximizeBox -DPIScale ;-Caption
-    ; play 
-    Gui Add, Button, gscript_start x3 y3 w130 h60 , Play
-    ; exit
-    Gui Add, Button, gexitscript x134 y3 w70 h60, Exit
-    ; play hunt
-    Gui Add, CheckBox, gplayhunt %Hunt% x7 y70 w80 h25 , Play Hunt
-    Gui Add, Button, gdefine_cars x90 y70 w75 h25 , Hunt Cars
-    Gui Add, CheckBox, gPlayMPAds %MPads% x7 y100 w100 h25 , Play MP Ads
-    Gui Add, CheckBox, gmute_volume %Mute_System% x7 y130 w150 h25, Mute System Volume
-    Gui Add, CheckBox, vLeagueDetection %LeagueDetection% x7 y160 w150 h25, League Detection
-    ; Gui Add, CheckBox, gLowGarageMode %LowGarage% x7 y190 w150 h25, Low Garage Mode
-    Gui Add, Button, gskip_cars x7 y190 w100 h25 , Skip MP Cars
-    ; Gui Add, Text, x0 y160 w220 h2 +0x10
-    Gui Show, w210 h300, Asphat 9 Autobot
-    WinSet, Style, -0x80000, Asphat 9 Autobot
-Return
-
-; exit button action
-exitscript:
-    SoundSet,0,,Mute
-ExitApp
-Return
-
-playhunt:
-    if(hunt == 0){
-        hunt = Checked
-        IniWrite, 1, %myinipath%, Main,Hunt
-    }Else{
-        hunt = 0
-        IniWrite, 0, %myinipath%, Main,Hunt
+    If (iniLeagueDetection == 1){
+        LeagueDetection = checked
     }
-Return
 
-PlayMPAds:
-    if(MPads == 0){
-        MPads = Checked
-        IniWrite, 1, %myinipath%, Main,MP1_Ads
-    }Else{
-        MPads = 0
-        IniWrite, 0, %myinipath%, Main,MP1_Ads
-    }
-Return
-
-LowGarageMode:
-    if(LowGarage == 0){
-        LowGarage = Checked
-        IniWrite, 1, %myinipath%, Main, LowGarage
-    }Else{
-        LowGarage = 0
-        IniWrite, 0, %myinipath%, Main, LowGarage
-    }
-Return
-
-mute_volume:
-    if(Mute_System == 0){
-        Mute_System = Checked
-        IniWrite, 1, %myinipath%, Main, Mute_System
-    }Else{
-        Mute_System = 0
-        IniWrite, 0, %myinipath%, Main, Mute_System
-    }
-Return
-
-define_cars:
-    ; MsgBox, %inihunt% 
-    Gui, Destroy
-    Gui -MinimizeBox -MaximizeBox ;-DPIScale ;-Caption
-    ; car1
-    Gui, Add, Text, w30 h25 y7, Car 1:
-    Gui, Add, Edit, vcar_1 w25 h20 x40 y3
-    ; car2
-    Gui, Add, Text, w30 h25 x70 y7, Car 2:
-    Gui, Add, Edit, vcar_2 w25 h20 x100 y3
-    ; car3
-    Gui, Add, Text, w30 h25 x10 y33 , Car 3:
-    Gui, Add, Edit, vcar_3 w25 h20 x40 y30
-    ; car4
-    Gui, Add, Text, w30 h25 x70 y33 , Car 4:
-    Gui, Add, Edit, vcar_4 w25 h20 x100 y30
-    ; car5
-    Gui, Add, Text, w30 h25 x10 y63 , Car 5:
-    Gui, Add, Edit, vcar_5 w25 h20 x40 y60
-
-    Gui, Add, Button, gsave_cars Default w55 h20 x70 y61, Save
-
-    Gui Add, Text, x10 y87 w120 h50, Insert Numbers only to avoide errors
-
-    Gui, Show, w135 h120, Define Cars
-    WinSet, Style, -0x80000, Define Cars
-
-    IniRead, inicar1, %myinipath%, HUNT ,car_1
-    IniRead, inicar2, %myinipath%, HUNT ,car_2
-    IniRead, inicar3, %myinipath%, HUNT ,car_3
-    IniRead, inicar4, %myinipath%, HUNT ,car_4
-    IniRead, inicar5, %myinipath%, HUNT ,car_5
-    ; setting current ini values to inputs
-    GuiControl, , car_1, %inicar1%
-    GuiControl, , car_2, %inicar2%
-    GuiControl, , car_3, %inicar3%
-    GuiControl, , car_4, %inicar4%
-    GuiControl, , car_5, %inicar5%
-Return
-
-save_cars:
-    Gui, Submit, NoHide
-    IniWrite, %car_1%, %myinipath%, HUNT,car_1
-    IniWrite, %car_2%, %myinipath%, HUNT,car_2
-    IniWrite, %car_3%, %myinipath%, HUNT,car_3
-    IniWrite, %car_4%, %myinipath%, HUNT,car_4
-    IniWrite, %car_5%, %myinipath%, HUNT,car_5
-    Gui, Destroy
-    Goto, main_gui
-Return
-
-skip_cars:
-
-    ; readming cars values form ini file
+    ;  *--------------------------------------------------*
+    ;               |     Cars variables      |       
+    ;  *--------------------------------------------------*
 
     ; Lancer
     IniRead, iniLancer, %myinipath%, CarsSkip, Lancer
@@ -295,7 +185,10 @@ skip_cars:
     IniRead, iniNaran, %myinipath%, CarsSkip, Naran
     IniRead, iniNaran_to, %myinipath%, CarsSkip, Naran_to
 
-    ; cars to skip variables
+    ;  *--------------------------------------------------*
+    ;         |     Cars checkbox variables      |       
+    ;  *--------------------------------------------------*
+
     Lancer=0
     Hellcat=0
     Peugeotsr1=0
@@ -319,6 +212,10 @@ skip_cars:
     Trion=0
     Naran=0
 
+    ;  *-----------------------------------------------------------------------*
+    ;       |     Setting checkbox values whether its checked or not      |       
+    ;  *------------------------------------------------------------------------*
+
     Lancer := (iniLancer = 1) ? "Checked":Lancer
     Hellcat := (iniHellcat = 1) ? "Checked":Hellcat
     Peugeotsr1 := (iniPeugeotsr1 = 1) ? "Checked":Peugeotsr1
@@ -341,6 +238,147 @@ skip_cars:
     RaesrTacheon := (iniRaesrTacheon = 1) ? "Checked":RaesrTacheon
     Trion := (iniTrion = 1) ? "Checked":Trion
     Naran := (iniNaran = 1) ? "Checked":Naran
+
+    ;  *--------------------------------------------------*
+    ;         |     Mani GUi / shows first      |       
+    ;  *--------------------------------------------------*
+
+main_gui:
+
+    Gui -MinimizeBox -MaximizeBox -DPIScale ;-Caption
+    ; play 
+    Gui Add, Button, gscript_start x3 y3 w130 h60 , Play
+    ; exit
+    Gui Add, Button, gexitscript x134 y3 w70 h60, Exit
+    ; play hunt
+    Gui Add, CheckBox, gplayhunt %Hunt% x7 y70 w80 h25 , Play Hunt
+    Gui Add, Button, gdefine_cars x90 y70 w75 h25 , Hunt Cars
+    Gui Add, CheckBox, gPlayMPAds %MPads% x7 y100 w100 h25 , Play MP Ads
+    Gui Add, CheckBox, gmute_volume %Mute_System% x7 y130 w150 h25, Mute System Volume
+    Gui Add, CheckBox, gLeagueDetection %LeagueDetection% x7 y160 w150 h25, League Detection
+    ; Gui Add, CheckBox, gLowGarageMode %LowGarage% x7 y190 w150 h25, Low Garage Mode
+    Gui Add, Button, gskip_cars x7 y190 w100 h25 , Skip MP Cars
+    ; Gui Add, Text, x0 y160 w220 h2 +0x10
+    Gui Show, w210 h300, Asphat 9 Autobot
+    WinSet, Style, -0x80000, Asphat 9 Autobot
+Return
+
+; exit button action
+exitscript:
+    SoundSet,0,,Mute
+ExitApp
+Return
+
+;  *--------------------------------------------------*
+;        |     Toggling main bot functions      |       
+;  *--------------------------------------------------*
+
+playhunt:
+    if(hunt == 0){
+        hunt = Checked
+        IniWrite, 1, %myinipath%, Main,Hunt
+    }Else{
+        hunt = 0
+        IniWrite, 0, %myinipath%, Main,Hunt
+    }
+Return
+
+PlayMPAds:
+    if(MPads == 0){
+        MPads = Checked
+        IniWrite, 1, %myinipath%, Main,MP1_Ads
+    }Else{
+        MPads = 0
+        IniWrite, 0, %myinipath%, Main,MP1_Ads
+    }
+Return
+
+LowGarageMode:
+    if(LowGarage == 0){
+        LowGarage = Checked
+        IniWrite, 1, %myinipath%, Main, LowGarage
+    }Else{
+        LowGarage = 0
+        IniWrite, 0, %myinipath%, Main, LowGarage
+    }
+Return
+
+mute_volume:
+    if(Mute_System == 0){
+        Mute_System = Checked
+        IniWrite, 1, %myinipath%, Main, Mute_System
+    }Else{
+        Mute_System = 0
+        IniWrite, 0, %myinipath%, Main, Mute_System
+    }
+Return
+
+LeagueDetection:
+    if(LeagueDetection == 0){
+        LeagueDetection = Checked
+        IniWrite, 1, %myinipath%, Main, LeagueDetection
+    }Else{
+        LeagueDetection = 0
+        IniWrite, 0, %myinipath%, Main, LeagueDetection
+    }
+Return
+
+;  *-----------------------------------------------------------------------------*
+;         |     Define Cars GUi / Shows after clicking on hunt cars       |       
+;  *-----------------------------------------------------------------------------*
+
+define_cars:
+    ; MsgBox, %inihunt% 
+    Gui, Destroy
+    Gui -MinimizeBox -MaximizeBox ;-DPIScale ;-Caption
+    ; car1
+    Gui, Add, Text, w30 h25 y7, Car 1:
+    Gui, Add, Edit, vcar_1 w25 h20 x40 y3
+    ; car2
+    Gui, Add, Text, w30 h25 x70 y7, Car 2:
+    Gui, Add, Edit, vcar_2 w25 h20 x100 y3
+    ; car3
+    Gui, Add, Text, w30 h25 x10 y33 , Car 3:
+    Gui, Add, Edit, vcar_3 w25 h20 x40 y30
+    ; car4
+    Gui, Add, Text, w30 h25 x70 y33 , Car 4:
+    Gui, Add, Edit, vcar_4 w25 h20 x100 y30
+    ; car5
+    Gui, Add, Text, w30 h25 x10 y63 , Car 5:
+    Gui, Add, Edit, vcar_5 w25 h20 x40 y60
+
+    Gui, Add, Button, gsave_cars Default w55 h20 x70 y61, Save
+
+    Gui Add, Text, x10 y87 w120 h50, Insert Numbers only to avoide errors
+
+    Gui, Show, w135 h120, Define Cars
+    WinSet, Style, -0x80000, Define Cars
+
+    IniRead, inicar1, %myinipath%, HUNT ,car_1
+    IniRead, inicar2, %myinipath%, HUNT ,car_2
+    IniRead, inicar3, %myinipath%, HUNT ,car_3
+    IniRead, inicar4, %myinipath%, HUNT ,car_4
+    IniRead, inicar5, %myinipath%, HUNT ,car_5
+    ; setting current ini values to inputs
+    GuiControl, , car_1, %inicar1%
+    GuiControl, , car_2, %inicar2%
+    GuiControl, , car_3, %inicar3%
+    GuiControl, , car_4, %inicar4%
+    GuiControl, , car_5, %inicar5%
+Return
+
+save_cars:
+    Gui, Submit, NoHide
+    IniWrite, %car_1%, %myinipath%, HUNT,car_1
+    IniWrite, %car_2%, %myinipath%, HUNT,car_2
+    IniWrite, %car_3%, %myinipath%, HUNT,car_3
+    IniWrite, %car_4%, %myinipath%, HUNT,car_4
+    IniWrite, %car_5%, %myinipath%, HUNT,car_5
+    Gui, Destroy
+    Goto, main_gui
+Return
+
+skip_cars:
 
     Gui, Destroy
     Gui -MinimizeBox -MaximizeBox ;-Caption ;-DPIScale
@@ -701,43 +739,42 @@ Return
 ; cars to skip labels end
 
 script_start:
-    MsgBox, %iniLancer%
-Return
-Gui, Destroy
 
-; MsgBox, %iniSrt8_to%
+    Gui, Destroy
 
-If (Mute_System != 0){
-    SoundSet,+1,,Mute
-}
+    ToolTip, ExpirationDate : 01 April 2023 , 640, 0,
 
-t1:=A_TickCount, X:=Y:=""
+    If (Mute_System != 0){
+        SoundSet,+1,,Mute
+    }
 
-Sleep, 1000
+    t1:=A_TickCount, X:=Y:=""
 
-; close a9
-WinClose , Asphalt 9: Legends
-Sleep , 1000
+    Sleep, 1000
 
-Run, "Asphalt 9" %A_ScriptDir%
+    ; close a9
+    WinClose , Asphalt 9: Legends
+    Sleep , 1000
 
-Sleep, 2000
-; restore a9 window
-WinRestore, Asphalt 9: Legends
+    Run, "Asphalt 9" %A_ScriptDir%
 
-; activate a9 window
-Sleep , 2000
-WinActivate , Asphalt 9: Legends
-Sleep , 1000
+    Sleep, 2000
+    ; restore a9 window
+    WinRestore, Asphalt 9: Legends
 
-; resize a9 window to 720p
-WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
-Sleep, 1000
+    ; activate a9 window
+    Sleep , 2000
+    WinActivate , Asphalt 9: Legends
+    Sleep , 1000
 
-; restore a9 window
-WinRestore, Asphalt 9: Legends
+    ; resize a9 window to 720p
+    WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
+    Sleep, 1000
 
-Sleep, 2000
+    ; restore a9 window
+    WinRestore, Asphalt 9: Legends
+
+    Sleep, 2000
 
 stuck_on_GL_logo_start:
 
@@ -1137,9 +1174,10 @@ hunt_card_check_start:
 
     ; hunt card
 
-    Text:="|<>*133$73.U002000Dzk7zU0010003zs1zk000U001zs0zw000E001zw0Tzz0zzy1zzy07zzUTzz1zzy03zzkDzzUzzz11zzs7zzkTzzUUTzw3zzsDzzkMDzy1zzw7zzkQ7zz0zzy3zzsC1zzUTzz1zzw7UzzkDzzUzzw7kTzs7zzkTzy3sDzw3zzsDzz1y3zy1zzw7zzUz1zz0zzy3zzUzUzzUTzz1zzkTkTzkDzzUzzsDw7zs7zzkTzs7y3zw3zzsDzw7z1zy1zzw7zy1zUTz0zzy3zz000DzUTzz1zz0007zkDzzUzzU003zs7zzkTzk000zw3zzsDzkDzkTy1zzw7zs7zsDz0zzy3zw7zw7zUTzz1zy3zz1zkDzzUzy1zzUzs7zzkTz1zzkTw3zzsDzUzzw7z3zzy7zkzzy6"
+    Text:="|<>*141$79.001zy003zzk07U00Dz000zzU00k003zU00DzU008000zk003zU0043z0TsDy0zk7w03zsDw7zUTkDz01zw3y3zsDsDzk0zy1z1zw7w7zs0Tz0zUzy3y3zw0DzUTkTz1z1zy07zkDsDzUzUzz03zs7w7zkTkTzU1zw3y3zsDsDzk0zy1z1zsDw7zs0Tz0zU007y3zw07z0zk007z1zy0000Ts007zUzz0000Tw000zkTzU000Ty000DsDzk000Tz1zs7w7zs000TzUzy3y3zw07sDzkTz0z1zy07w3zsDzUTUzz03y1zw7zkDkTzU1zUTy3zs7sDzk0zkDz1zw3w7zs0Tw3zUzy1y3zw0Dy1zkTz1z0zy07zUTsDz0zUDy03zkDw000Ts0001zw3y000Tw000Uzy1z000Tz000kTzUzU00Tzk00wDzsTk01zzz03y"
 
-    if (ok:=FindText(X, Y, 631, 217, 741, 264, 0, 0, Text))
+    if (ok:=FindText(X, Y, 549, 211, 649, 272, 0, 0, Text))
+
     {
         Loop, 2{
             Send, {Enter}
@@ -1715,6 +1753,8 @@ random_select:
 
                     ; <======================== Hunt ended ==============================>
 
+                starting_mp1:
+
                     Loop,50{
                         sleep, 1000
                         CoordMode , Pixel, Screen
@@ -1792,11 +1832,13 @@ random_select:
 
                 entering_mp_1_end:
 
-                    bronze = 0xD88560
-                    silver = 0x96B2D4
-                    gold = 0xF1CB30
-                    platinum = 0x9365F8
-                    legend = 0xF5E2A4
+                    if (LeagueDetection !== 0){
+                        bronze = 0xD88560
+                        silver = 0x96B2D4
+                        gold = 0xF1CB30
+                        platinum = 0x9365F8
+                        legend = 0xF5E2A4
+                    }
 
                     Loop, 25{
 
@@ -2650,302 +2692,369 @@ random_select:
 
                                     ; <============ D ============>
 
-                                    ; lancer to e tense
-                                    Text:="|<>*134$93.w00y0Q1s7y1zwDy7U0Ds3kD3zsDzXzww01z0T1sTzVzwTzrU0Ds3sD7zwDz3zyw01z0TVsw3ls0S3rU0Sw3wD7USD03kSw03rUTlsw3ls0S3rU0SQ3yD7U0D03kSw03XkTtsw01zsS3rU0wS3rD7U0Dz3zyw07XkSxsw01zsTzrU0wC3nj7U0Dz3zww071sSTsw01s0Tz7U1zz3lz7USD03lsw0DzsSDsw3ls0S7bU1zz3kz7USD03kwzyS0wS7szzVzwS3rznk7XkT3zwDzXkSzyS0wS3sDz1zwS3zznk7XUD0zUDzVkDU"
+                                    ; lancer
+                                    if (Lancer !== 0){
+                                        Text:="|<>*134$93.w00y0Q1s7y1zwDy7U0Ds3kD3zsDzXzww01z0T1sTzVzwTzrU0Ds3sD7zwDz3zyw01z0TVsw3ls0S3rU0Sw3wD7USD03kSw03rUTlsw3ls0S3rU0SQ3yD7U0D03kSw03XkTtsw01zsS3rU0wS3rD7U0Dz3zyw07XkSxsw01zsTzrU0wC3nj7U0Dz3zww071sSTsw01s0Tz7U1zz3lz7USD03lsw0DzsSDsw3ls0S7bU1zz3kz7USD03kwzyS0wS7szzVzwS3rznk7XkT3zwDzXkSzyS0wS3sDz1zwS3zznk7XUD0zUDzVkDU"
 
-                                    if (ok:=FindText(X, Y, 174, 160, 280, 189, 0, 0, Text))
-                                    {
-                                        Loop, 6
+                                        if (ok:=FindText(X, Y, 174, 160, 280, 189, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniLancer_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; hellcat to i8
-                                    Text:="|<>*132$64.zw0Dk0zUC1vzw0z0DzVsDjzs7w1zz7UwzzUTs7zwS7XkS1zUS3lsyD1s7S1sD7Xkw7Uws7UwSS3kS3nkS01vsD1sDD1s07j0wDUsw7U0Tw3zy7VkS01zsDzkS7Vs07zUzy1sS7U0Tj3k07zsS3lwwD00zzVsD7Vsw03zz7UwS3nk0D0wTzlsDD01s3lzz7USw07U73zsS1zk0S0S3y0s3s"
+                                    ; hellcat
+                                    if (Hellcat !== 0){
 
-                                    if (ok:=FindText(X, Y, 535, 155, 613, 195, 0, 0, Text))
-                                    {
-                                        Loop, 3
-                                        {
-                                            Sleep, 300
-                                            Send, {PgDn}
-                                        }
-                                        Goto, tiers_lock_check_start
-                                    }
-                                    ; peugeot sr1 to elise
-                                    Text:="|<>*137$42.7w1zk0STz1zw0zzz1zy3zzzVzy3zw7VsS3zw7VsD3Dw01sD0Dw01sD0Dzs1sS0Dzy1zy0DTz1zy0D3zVzw0D0DVzs0DM7Vts0Dw7Vsw0Dw7Vsw0DzzVsS0DzzVsS0DTz1sD0D7w1kD0CU"
+                                        Text:="|<>*132$64.zw0Dk0zUC1vzw0z0DzVsDjzs7w1zz7UwzzUTs7zwS7XkS1zUS3lsyD1s7S1sD7Xkw7Uws7UwSS3kS3nkS01vsD1sDD1s07j0wDUsw7U0Tw3zy7VkS01zsDzkS7Vs07zUzy1sS7U0Tj3k07zsS3lwwD00zzVsD7Vsw03zz7UwS3nk0D0wTzlsDD01s3lzz7USw07U73zsS1zk0S0S3y0s3s"
 
-                                    if (ok:=FindText(X, Y, 175, 161, 233, 185, 0, 0, Text))
-                                    {
-                                        Loop, 3
+                                        if (ok:=FindText(X, Y, 535, 155, 613, 195, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniHellcat_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; lambo countach 25th to trezor
-                                    Text:="|<>*134$60.7s3zwTznkCTy3zwTznkDzz3zwTznkDyT3zwDzXkDwD3k01s3kDwD3k01s3kDwD3k01s3kD0D3zs1s3kD0T3zw1s3zz0y3zw1s3zz1w3kS1s3zz7s00S1s3zzDk00S1s3kDTU1US1s3kDy03kS1s3kDw03kS1s3kDzz3xw1s3kDzz3zw1s3kDzz1zs1s3kDzz0Tk1s3kCU"
+                                    ; peugeot sr1
+                                    If (Peugeotsr1 !== 0){
 
-                                    if (ok:=FindText(X, Y, 315, 159, 386, 188, 0, 0, Text))
-                                    {
-                                        Loop, 6
+                                        Text:="|<>*137$42.7w1zk0STz1zw0zzz1zy3zzzVzy3zw7VsS3zw7VsD3Dw01sD0Dw01sD0Dzs1sS0Dzy1zy0DTz1zy0D3zVzw0D0DVzs0DM7Vts0Dw7Vsw0Dw7Vsw0DzzVsS0DzzVsS0DTz1sD0D7w1kD0CU"
+
+                                        if (ok:=FindText(X, Y, 175, 161, 233, 185, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniPeugeotsr1_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
+                                    ; lambo countach 25th 
+                                    If (Lamborghinicountach25th !== 0){
+
+                                        Text:="|<>*134$60.7s3zwTznkCTy3zwTznkDzz3zwTznkDyT3zwDzXkDwD3k01s3kDwD3k01s3kDwD3k01s3kD0D3zs1s3kD0T3zw1s3zz0y3zw1s3zz1w3kS1s3zz7s00S1s3zzDk00S1s3kDTU1US1s3kDy03kS1s3kDw03kS1s3kDzz3xw1s3kDzz3zw1s3kDzz1zs1s3kDzz0Tk1s3kCU"
+
+                                        if (ok:=FindText(X, Y, 315, 159, 386, 188, 0, 0, Text))
+                                        {
+                                            Loop, %iniLamborghinicountach25th_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
+                                        }
+                                    }
                                     ; <============ C ============>
 
-                                    ; SRT8 to H2
-                                    Text:="|<>*135$60.7y1zsDzsDsDz1zyDzszyTzVzzDzszzTzVzz7zlyzw3lsD0S1sDw3lsD0S1sDw01sD0S1sDS01sD0S1sDTw1sD0S0zzTz1zz0S0zyDzVzz0S0zy3zlzy0S1yT07lzw0S1sDQ3lsw0S1sDw3lsy0S1sDQ3lsS0S1sDTzlsT0S1zzTzVsD0S0zzDzVsDUS0zy3y1s7US0DsU"
+                                    ; SRT8
 
-                                    if (ok:=FindText(X, Y, 343, 163, 410, 186, 0, 0, Text))
-                                    {
-                                        Loop, 12
+                                    If (Srt8 !== 0){
+
+                                        Text:="|<>*135$60.7y1zsDzsDsDz1zyDzszyTzVzzDzszzTzVzz7zlyzw3lsD0S1sDw3lsD0S1sDw01sD0S1sDS01sD0S1sDTw1sD0S0zzTz1zz0S0zyDzVzz0S0zy3zlzy0S1yT07lzw0S1sDQ3lsw0S1sDw3lsy0S1sDQ3lsS0S1sDTzlsT0S1zzTzVsD0S0zzDzVsDUS0zy3y1s7US0DsU"
+
+                                        if (ok:=FindText(X, Y, 343, 163, 410, 186, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniSrt8_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; Saleen S1 to Acura 2017 nsx
+                                    ; Saleen S1
+                                    If (Saleens1 !== 0 ){
 
-                                    Text:="|<>*133$25.7w07jzUDzzkDzzwDzkS7zsD3Dw007y003zy01vzk0xzw0S7z0D0DU7c3k3z1s1zUw0zzy0Tzz0DTz07Xy03s"
+                                        Text:="|<>*133$25.7w07jzUDzzkDzzwDzkS7zsD3Dw007y003zy01vzk0xzw0S7z0D0DU7c3k3z1s1zUw0zzy0Tzz0DTz07Xy03s"
 
-                                    if (ok:=FindText(X, Y, 177, 163, 215, 185, 0, 0, Text))
-                                    {
-                                        Loop, 1
+                                        if (ok:=FindText(X, Y, 177, 163, 215, 185, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniSaleens1_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; ferrari monza sp1 to ATS corsa
+                                    ; ferrari monza sp1 
 
-                                    Text:="|<>*132$41.7w1zs0Szy3zs3zzw7zsDzzwDzkzz1sS3lzy3kw7XDw01sD0Ts03kS0zzU7Uw1zzkD3k3rzkTzU7Vzkzz0D0DVzs0S0D3k00zkS7U01zUwD003zzsS007zzUw00DTz1s00SDs3U00y"
+                                    If (Ferrarimonzasp1 !== 0){
 
-                                    if (ok:=FindText(X, Y, 274, 161, 325, 187, 0, 0, Text))
-                                    {
-                                        Loop, 1
+                                        Text:="|<>*132$41.7w1zs0Szy3zs3zzw7zsDzzwDzkzz1sS3lzy3kw7XDw01sD0Ts03kS0zzU7Uw1zzkD3k3rzkTzU7Vzkzz0D0DVzs0S0D3k00zkS7U01zUwD003zzsS007zzUw00DTz1s00SDs3U00y"
+
+                                        if (ok:=FindText(X, Y, 274, 161, 325, 187, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniFerrarimonzasp1_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
+
+                                    }
+                                    ; jaguar xe sv project
+                                    If (Jaguarxesvproject !== 0){
+
+                                        Text:="|<>*133$69.w1szy01z0w1vkT7zk0Ty7UDS3kzy07zsy3lsy7zU0zz3kSD7Uw00D1wS3kxw7U01s7XkS7j0w00D00S7UTk7U01w01sw3y0zw07z0D7UDk7zU0zy1sw3y0zw03zsD70Tk7z007z0ts7z0w0001w7j0xs7U00k7UxsDbUw00D0w7i1sw7U01s7UTkT7kzw07zw3y3kS7zk0zz0Tky3szy03zk1w7UD7zk0Dw0DUU"
+
+                                        if (ok:=FindText(X, Y, 174, 161, 257, 186, 0, 0, Text))
+                                        {
+                                            Loop, %iniJaguarxesvproject_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
+                                        }
+                                    }
+                                    ; lambo miura
+
+                                    If (Lamborghinimiura !== 0){
+
+                                        Text:="|<>*134$78.z0T1kw3kzs0DUz0z3kw3lzy0DkzUz3kw3lzz0TkzUz3kw3lzz0TkzVz3kw3lsD0TszVz3kw3lsD0xsxlr3kw3lsD0xsxlr3kw3lsD0wsxnb3kw3lsD0wwwvb3kw3lzz1swwvb3kw3lzz1swwz73kw3lzy1sQwz73kw3lzw1sSwT73kw3lsw3zywS73kw3lsS3zyw073kw3lsS3zyw073kzzVsT3kDw073kTzVsD7UDw073kDz1sDbUDw071k7y0s7bU7U"
+
+                                        if (ok:=FindText(X, Y, 171, 157, 268, 194, 0, 0, Text))
+                                        {
+                                            Loop, %iniLamborghinimiura_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
+                                        }
                                     }
 
-                                    ; jaguar xe sv project to ferrari f40
+                                    ; bugatti eb 110
+                                    If (Bugattieb110 !== 0){
 
-                                    Text:="|<>*133$69.w1szy01z0w1vkT7zk0Ty7UDS3kzy07zsy3lsy7zU0zz3kSD7Uw00D1wS3kxw7U01s7XkS7j0w00D00S7UTk7U01w01sw3y0zw07z0D7UDk7zU0zy1sw3y0zw03zsD70Tk7z007z0ts7z0w0001w7j0xs7U00k7UxsDbUw00D0w7i1sw7U01s7UTkT7kzw07zw3y3kS7zk0zz0Tky3szy03zk1w7UD7zk0Dw0DUU"
+                                        Text:="|<>*135$56.zy7zU0w03zzVzw0z03zzsTzUTk1zzy7VwDw0Tz01sD3z07zk0S3knk1Dw07Uw0w03z01sD0D00zzkTzU3k0Dzw7zk0w03zz1zy0D00zzkS7k3k0Dw07Uw0w03z01sD0D00zk0S3k3k0Dw07Uw0w03zzVzz0D00zzsTzU3k0Dzy7zs0w03zzVzs0D00y"
 
-                                    if (ok:=FindText(X, Y, 174, 161, 257, 186, 0, 0, Text))
-                                    {
-                                        Loop, 1
+                                        if (ok:=FindText(X, Y, 175, 160, 264, 188, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniBugattieb110_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
-                                    }
-
-                                    ; lambo miura to porsche gt4 clubsport
-
-                                    Text:="|<>*134$78.z0T1kw3kzs0DUz0z3kw3lzy0DkzUz3kw3lzz0TkzUz3kw3lzz0TkzVz3kw3lsD0TszVz3kw3lsD0xsxlr3kw3lsD0xsxlr3kw3lsD0wsxnb3kw3lsD0wwwvb3kw3lzz1swwvb3kw3lzz1swwz73kw3lzy1sQwz73kw3lzw1sSwT73kw3lsw3zywS73kw3lsS3zyw073kw3lsS3zyw073kzzVsT3kDw073kTzVsD7UDw073kDz1sDbUDw071k7y0s7bU7U"
-
-                                    if (ok:=FindText(X, Y, 171, 157, 268, 194, 0, 0, Text))
-                                    {
-                                        Loop, 1
-                                        {
-                                            Sleep, 300
-                                            Send, {PgDn}
-                                        }
-                                        Goto, tiers_lock_check_start
-                                    }
-
-                                    ; bugatti eb 110 to mcgt
-                                    Text:="|<>*135$56.zy7zU0w03zzVzw0z03zzsTzUTk1zzy7VwDw0Tz01sD3z07zk0S3knk1Dw07Uw0w03z01sD0D00zzkTzU3k0Dzw7zk0w03zz1zy0D00zzkS7k3k0Dw07Uw0w03z01sD0D00zk0S3k3k0Dw07Uw0w03zzVzz0D00zzsTzU3k0Dzy7zs0w03zzVzs0D00y"
-
-                                    if (ok:=FindText(X, Y, 175, 160, 264, 188, 0, 0, Text))
-                                    {
-                                        Loop, 2
-                                        {
-                                            Sleep, 300
-                                            Send, {PgDn}
-                                        }
-                                        Goto, tiers_lock_check_start
                                     }
 
                                     ; <============ B ============>
 
-                                    ; 911 gs coupe to mclaren elva
+                                    ; 911 gs coupe 
+                                    If (Porsche911gscoupe !== 0){
 
-                                    Text:="|<>*136$46.00000000Dw7zsDs1zsTzVzsDzlzyDzkzz7ztzz7US1s7UwS1s7US1ls70S1s07U01s7k0S007UTy1szUS0zy7Xy1s1zwSDs7U1zlsDUS00DbUS1s30SS1s7US1ts7US1s7Xzw1s7zwDzk7UDzkTy0S0Ty0zk1s0zk00000002"
+                                        Text:="|<>*136$46.00000000Dw7zsDs1zsTzVzsDzlzyDzkzz7ztzz7US1s7UwS1s7US1ls70S1s07U01s7k0S007UTy1szUS0zy7Xy1s1zwSDs7U1zlsDUS00DbUS1s30SS1s7US1ts7US1s7Xzw1s7zwDzk7UDzkTy0S0Ty0zk1s0zk00000002"
 
-                                    if (ok:=FindText(X, Y, 234, 162, 285, 188, 0, 0, Text))
-                                    {
-                                        Loop, 16
+                                        if (ok:=FindText(X, Y, 234, 162, 285, 188, 0, 0, Text))
                                         {
-                                            Sleep, 250
-                                            Send, {PgDn}
+                                            Loop, %iniPorsche911gscoupe_to%
+                                            {
+                                                Sleep, 250
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; nissan r390 gt1 to chevrolet grand sport
-                                    Text:="|<>*135$93.zw0Tk0zU3y0Dw7zzzs7zUTz1zw3zkzzzzVzy7zsDzkzz7zzzwD7kzzXzy7zszzw7XkS7UwS3ls7US7UwS3kw7XkSD0w3kw7VkS7UwS3ls70S7Uw03kw7XkSD003kw7U3y7UwS3ls00S7zw0zUzzXkSD7s3kzz07w7zwS3lszUS7zs0TkTzXkSD7w3kzy00S0zwS3lsDUS7XkC3k07XkSD0w3kwT3kS00wS3ls7US7VsS3k07XkSD0w3kwD1zy3zwTzkzz0S7UwDzkTz1zy7zs3kw7Uzw3zsDzUTy0S7US3y0Tw0Tk1zU3kU"
+                                    ; nissan r390 gt1
+                                    If (Nissanr390 !== 0){
 
-                                    if (ok:=FindText(X, Y, 174, 157, 297, 189, 0, 0, Text))
-                                    {
-                                        Loop, 4
+                                        Text:="|<>*135$93.zw0Tk0zU3y0Dw7zzzs7zUTz1zw3zkzzzzVzy7zsDzkzz7zzzwD7kzzXzy7zszzw7XkS7UwS3ls7US7UwS3kw7XkSD0w3kw7VkS7UwS3ls70S7Uw03kw7XkSD003kw7U3y7UwS3ls00S7zw0zUzzXkSD7s3kzz07w7zwS3lszUS7zs0TkTzXkSD7w3kzy00S0zwS3lsDUS7XkC3k07XkSD0w3kwT3kS00wS3ls7US7VsS3k07XkSD0w3kwD1zy3zwTzkzz0S7UwDzkTz1zy7zs3kw7Uzw3zsDzUTy0S7US3y0Tw0Tk1zU3kU"
+
+                                        if (ok:=FindText(X, Y, 174, 157, 297, 189, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniNissanr390_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; enzo to apollo N
-                                    Text:="|<>*135$61.zy70S7zs7yTz3kD3zwDzjzVw7Vzy7zzzky3kzz7zzk0TVs0D3kTs0Dkw0DVs7w07wS07Uw3y03yD07kS1zz1zbU7kD0zzUxnk3k7UTzkSxs3k3kDzsDCw3s1s7w07by1s0w3y03lz1s0S1z01szVw0D0zU0wDkw07UzzsS7szzXzzzwD1wTzkzzzy7UyDzsTzTz3UD7zw3y8"
+                                    ; enzo
+                                    If (Ferrarienzo !==0){
 
-                                    if (ok:=FindText(X, Y, 175, 159, 249, 189, 0, 0, Text))
-                                    {
-                                        Loop, 2
+                                        Text:="|<>*135$61.zy70S7zs7yTz3kD3zwDzjzVw7Vzy7zzzky3kzz7zzk0TVs0D3kTs0Dkw0DVs7w07wS07Uw3y03yD07kS1zz1zbU7kD0zzUxnk3k7UTzkSxs3k3kDzsDCw3s1s7w07by1s0w3y03lz1s0S1z01szVw0D0zU0wDkw07UzzsS7szzXzzzwD1wTzkzzzy7UyDzsTzTz3UD7zw3y8"
+
+                                        if (ok:=FindText(X, Y, 175, 159, 249, 189, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniFerrarienzo_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; essenza to Evo
-                                    Text:="|<>*140$28.3k0TUz07zbw0zzTk3txz0D3ow0wD3k3kwD003kw00T3k03sD00T0w03s3k0z0D07s0w0y03k3s0D0Dzkw0zz3k3zwD0Dzs"
+                                    ; essenza 
+                                    If (Lamborghiniessenza !== 0){
 
-                                    if (ok:=FindText(X, Y, 344, 157, 386, 192, 0, 0, Text))
-                                    {
-                                        Loop, 2
+                                        Text:="|<>*140$28.3k0TUz07zbw0zzTk3txz0D3ow0wD3k3kwD003kw00T3k03sD00T0w03s3k0z0D07s0w0y03k3s0D0Dzkw0zz3k3zwD0Dzs"
+
+                                        if (ok:=FindText(X, Y, 344, 157, 386, 192, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniLamborghiniessenza_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; carrera to Vulkan
-                                    Text:="|<>*135$28.7w3zxzwTzrztzzzzXzzkS0wD1s3kw3UD3k00wD003kwTUD3ly0wD7s3kw7UD3kS0wD1s3kw7UD3zy0w7zs3kTz0D0Tk0w8"
+                                    ; carrera 
+                                    If (Porschecarrera !== 0){
 
-                                    if (ok:=FindText(X, Y, 297, 158, 337, 187, 0, 0, Text))
-                                    {
-                                        Loop, 9
+                                        Text:="|<>*135$28.7w3zxzwTzrztzzzzXzzkS0wD1s3kw3UD3k00wD003kwTUD3ly0wD7s3kw7UD3kS0wD1s3kw7UD3zy0w7zs3kTz0D0Tk0w8"
+
+                                        if (ok:=FindText(X, Y, 297, 158, 337, 187, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniPorschecarrera_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
                                     ; <============ A ============>
 
-                                    ; vulkan to ZR1
+                                    ; vulkan
 
-                                    Text:="|<>*140$161.07U7wTyDwC3U3UC0w3z3zb71k000D0TwTszwQ707Uw1s7z3yCD3U000T0kM61UswC0D1s7kA61UQS70000q1UkA30lwQ0S3kBUMC30syC0003g300M61Xss0yBUPUkQ61lwQ0006M700kA37tk1gP0n1UsA3Xws000AMDk1UM6CnU3Aa3631UM77Nk000MkDs30kARr06PA6C7z0kCCPU001VU3s61UMti0AqMAQDw1UQQr00033U0kA30lnw0MsksMQs30ssy0007z21UM61XXs0llVzklk61llw000Dy630kA773k1V33zlVkA3XVs000kAAC1UQCC7U306C1X3UM773k001UQTw30TsQ7060AQ3630kCC3U0030MTk60TUsA0A0Mk6A71UAQ70000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000Tzzzzzzzzk00000000000000000zzzzzzzzzU00000000000000001zzzzzzzzz3k7bUwD00zk0y0S1s3zzzzzzzzy7UDD1sS03zk1y0w3k7zzzzzzzzwDUwS3kw0Dzk7w1w7UDzzzzzzzzsD1sw7Vs0TzkDs3sD0TzzzzzzzzkS3lsD3k1s7UTs7sS0zzzzzzzzzUw7XkS7U3kD1vkDkw1zzzzzzzzz1sS7UwD07US3rUTls3zzzzzzzzy1swD1sS0D007b0zXk7zzzzzzzzw3lsS3kw0S00DD1zbUDzzzzzzzzs7Xkw7Vs0w00wS3rD0TzzzzzzzzkD71sD3k1s01sw7jS0zzzzzzzzzUCS3kS7U3k03kwDDw1zzzzzzzzz0Sw7UwD07U07VsSTs3zzzzzzzzy0xsD1sS0D0wTzkwTk7zzzzzzzzw1vUS3kw0S1szzVszUDzzzzzzzzs1z0w7Vs0w3lzzXkz0Tzzzzzzzzk3y1zz3zszzXkD7Vy0zzzzzzzzzU7w3zy7zlzyD0SD1w1zzzzzzzzz07k3zsDzVzsS0wS1s3zzzzzzzzy0DU1z0Tz1zUw0sw3k7zzzzzzzzy"
+                                    If (Vulkan !== 0){
 
-                                    if (ok:=FindText(X, Y, 173, 131, 338, 193, 0, 0, Text))
-                                    {
-                                        Loop, 11
+                                        Text:="|<>*140$161.07U7wTyDwC3U3UC0w3z3zb71k000D0TwTszwQ707Uw1s7z3yCD3U000T0kM61UswC0D1s7kA61UQS70000q1UkA30lwQ0S3kBUMC30syC0003g300M61Xss0yBUPUkQ61lwQ0006M700kA37tk1gP0n1UsA3Xws000AMDk1UM6CnU3Aa3631UM77Nk000MkDs30kARr06PA6C7z0kCCPU001VU3s61UMti0AqMAQDw1UQQr00033U0kA30lnw0MsksMQs30ssy0007z21UM61XXs0llVzklk61llw000Dy630kA773k1V33zlVkA3XVs000kAAC1UQCC7U306C1X3UM773k001UQTw30TsQ7060AQ3630kCC3U0030MTk60TUsA0A0Mk6A71UAQ70000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000Tzzzzzzzzk00000000000000000zzzzzzzzzU00000000000000001zzzzzzzzz3k7bUwD00zk0y0S1s3zzzzzzzzy7UDD1sS03zk1y0w3k7zzzzzzzzwDUwS3kw0Dzk7w1w7UDzzzzzzzzsD1sw7Vs0TzkDs3sD0TzzzzzzzzkS3lsD3k1s7UTs7sS0zzzzzzzzzUw7XkS7U3kD1vkDkw1zzzzzzzzz1sS7UwD07US3rUTls3zzzzzzzzy1swD1sS0D007b0zXk7zzzzzzzzw3lsS3kw0S00DD1zbUDzzzzzzzzs7Xkw7Vs0w00wS3rD0TzzzzzzzzkD71sD3k1s01sw7jS0zzzzzzzzzUCS3kS7U3k03kwDDw1zzzzzzzzz0Sw7UwD07U07VsSTs3zzzzzzzzy0xsD1sS0D0wTzkwTk7zzzzzzzzw1vUS3kw0S1szzVszUDzzzzzzzzs1z0w7Vs0w3lzzXkz0Tzzzzzzzzk3y1zz3zszzXkD7Vy0zzzzzzzzzU7w3zy7zlzyD0SD1w1zzzzzzzzz07k3zsDzVzsS0wS1s3zzzzzzzzy0DU1z0Tz1zUw0sw3k7zzzzzzzzy"
+
+                                        if (ok:=FindText(X, Y, 173, 131, 338, 193, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniVulkan_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; senna gtr to 918
-                                    Text:="|<>*134$44.7w7zwzw7zlzzDzlzyTznzyzzXzszzj1s3kD1vkS0w3kSw3UD0w7j003kD1vk00w3kSwTUD0zzjDs3kDznny0w3zww7UD0zyD1s3kD7XkS0w3lww7UD0wDDzs3kD3tzy0w3kSTz0D0w7lz03UD0y"
+                                    ; senna gtr
 
-                                    if (ok:=FindText(X, Y, 268, 161, 323, 190, 0, 0, Text))
-                                    {
-                                        Loop, 2
+                                    If (Sennagtr !== 0){
+
+                                        Text:="|<>*134$44.7w7zwzw7zlzzDzlzyTznzyzzXzszzj1s3kD1vkS0w3kSw3UD0w7j003kD1vk00w3kSwTUD0zzjDs3kDznny0w3zww7UD0zyD1s3kD7XkS0w3lww7UD0wDDzs3kD3tzy0w3kSTz0D0w7lz03UD0y"
+
+                                        if (ok:=FindText(X, Y, 268, 161, 323, 190, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniSennagtr_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; zonda r to scg 007
+                                    ; zonda r
 
-                                    Text:="|<>*135$13.zwTzjzrzzkTsDw7y3z1zzzzxzwzwSDD7bVvkxsTw7y3s"
+                                    If (Zondar !== 0){
 
-                                    if (ok:=FindText(X, Y, 267, 158, 293, 190, 0, 0, Text))
-                                    {
-                                        Sleep, 300
-                                        Send, {PgDn}
-                                        Sleep, 300
-                                        Goto, tiers_lock_check_start
+                                        Text:="|<>*135$13.zwTzjzrzzkTsDw7y3z1zzzzxzwzwSDD7bVvkxsTw7y3s"
+
+                                        if (ok:=FindText(X, Y, 267, 158, 293, 190, 0, 0, Text))
+                                        {
+                                            Loop, %iniZondar_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
+                                        }
                                     }
-
                                     ; <============ S ============>
 
-                                    ; centenario to icona
-                                    Text:="|<>*134$55.1w0zs3k7w1z0Tz1sDzUzUDzkw7zsTk7zsS7zwTs3UwD3kSDS1kC7Vs77j0s73kw3XbUQ3VsS1nnkC3kwD0tsw7zsS7UQwS3zwD3kCQD1zw7Vs7S7Uzw3kw3jzsQS1sS1rzwC7UwD0zzy73kS7Uzk73UwD3zzs3lkS7Uzzw1ss7XkTzQ0wQ3ls3y8"
+                                    ; centenario
 
-                                    if (ok:=FindText(X, Y, 268, 159, 341, 190, 0, 0, Text))
-                                    {
-                                        Loop, 2
+                                    If (Centenario !== 0){
+
+                                        Text:="|<>*134$55.1w0zs3k7w1z0Tz1sDzUzUDzkw7zsTk7zsS7zwTs3UwD3kSDS1kC7Vs77j0s73kw3XbUQ3VsS1nnkC3kwD0tsw7zsS7UQwS3zwD3kCQD1zw7Vs7S7Uzw3kw3jzsQS1sS1rzwC7UwD0zzy73kS7Uzk73UwD3zzs3lkS7Uzzw1ss7XkTzQ0wQ3ls3y8"
+                                        if (ok:=FindText(X, Y, 268, 159, 341, 190, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniCentenario_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; raesr to egoista
-                                    Text:="|<>*146$60.zk7UDwDsDyzs7UDsTwDykM7kA0MCC7kMCkA0MCC7kMCkA0M0C7kMAkA0Q0C7ksAMDkTkC7zsQMDs7wDyzkMMC00wDwnUMQA00CCQlkTwA0MCCAkkzwA0MCCCkkkAA0QCCCkskCDwTwC7kMk6Dw7sC3U"
+                                    ; raesr
 
-                                    if (ok:=FindText(X, Y, 178, 136, 251, 161, 0, 0, Text))
-                                    {
-                                        Loop, 3
+                                    If (RaesrTacheon !== 0){
+
+                                        Text:="|<>*146$60.zk7UDwDsDyzs7UDsTwDykM7kA0MCC7kMCkA0MCC7kMCkA0M0C7kMAkA0Q0C7ksAMDkTkC7zsQMDs7wDyzkMMC00wDwnUMQA00CCQlkTwA0MCCAkkzwA0MCCCkkkAA0QCCCkskCDwTwC7kMk6Dw7sC3U"
+
+                                        if (ok:=FindText(X, Y, 178, 136, 251, 161, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniRaesrTacheon_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; trion to zenvo
-                                    Text:="|<>*132$107.w3kzy7k7sTz0zUC0zVs7VzwDkDkzy7zUS7znsD3zsTUzVzwTzUwDzrsS7zUz1z3zkzzVszzjkwD01y3y7U1sD3lsDTlsS03y7wD03kS7XkSzXkw07QRsS07U0D7U1zbVs0Csvkw0D00SDU3rD3zkQtrVzsTw0wTw7jS7zUtrD3zkzy1sTzDCwDz1niS7zUzy3kTzSTsTy3XwwDy0Dy7UDywTkw077lsS001wD00xszVs0CDXkw001sS00zkz3k0QT7Vs0S3kwS1zVy7U0s0D3k0w7Vsw7j1wDzVk0S7zVzz3lzzS3sTz3U0wDzXzw7Vzyw3kzy701sTz3zsD3zts3VzwC03kzy1z0Q1z2"
+                                    ; trion 
 
-                                    if (ok:=FindText(X, Y, 176, 161, 296, 189, 0, 0, Text))
-                                    {
-                                        Loop, 8
+                                    If (Trion !== 0){
+
+                                        Text:="|<>*132$107.w3kzy7k7sTz0zUC0zVs7VzwDkDkzy7zUS7znsD3zsTUzVzwTzUwDzrsS7zUz1z3zkzzVszzjkwD01y3y7U1sD3lsDTlsS03y7wD03kS7XkSzXkw07QRsS07U0D7U1zbVs0Csvkw0D00SDU3rD3zkQtrVzsTw0wTw7jS7zUtrD3zkzy1sTzDCwDz1niS7zUzy3kTzSTsTy3XwwDy0Dy7UDywTkw077lsS001wD00xszVs0CDXkw001sS00zkz3k0QT7Vs0S3kwS1zVy7U0s0D3k0w7Vsw7j1wDzVk0S7zVzz3lzzS3sTz3U0wDzXzw7Vzyw3kzy701sTz3zsD3zts3VzwC03kzy1z0Q1z2"
+
+                                        if (ok:=FindText(X, Y, 176, 161, 296, 189, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniTrion_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
-                                    ; Naran to regera
-                                    Text:="|<>*132$78.w3nk7XzUDzXzkw3ls7bzsDzXzww3lsD7zwDzXzww3lwD7zwDz3zyw3kwS7UwC03kSw3kyS7USC03kSw3kSS7USC03kSw3kSw7USC03kSzzkDw7UyDy3kSzzkDs7kwDz3zyzzk7s7zwDz3zwzzk7k7zsDy3zsw3k3k7zkC03zkw3k3k7U0C03lsw3k3k7U0C03lsw3k3k7U0C03kww3k3k7U0Dz3kww3k3k7U0DzXkSw3k3k7U0DzXkSw3k3k3U0DzXkDU"
+                                    ; Naran
 
-                                    if (ok:=FindText(X, Y, 175, 159, 269, 194, 0, 0, Text))
-                                    {
-                                        Loop, 2
+                                    If (Naran !== 0){
+
+                                        Text:="|<>*132$78.w3nk7XzUDzXzkw3ls7bzsDzXzww3lsD7zwDzXzww3lwD7zwDz3zyw3kwS7UwC03kSw3kyS7USC03kSw3kSS7USC03kSw3kSw7USC03kSzzkDw7UyDy3kSzzkDs7kwDz3zyzzk7s7zwDz3zwzzk7k7zsDy3zsw3k3k7zkC03zkw3k3k7U0C03lsw3k3k7U0C03lsw3k3k7U0C03kww3k3k7U0Dz3kww3k3k7U0DzXkSw3k3k7U0DzXkSw3k3k3U0DzXkDU"
+
+                                        if (ok:=FindText(X, Y, 175, 159, 269, 194, 0, 0, Text))
                                         {
-                                            Sleep, 300
-                                            Send, {PgDn}
+                                            Loop, %iniNaran_to%
+                                            {
+                                                Sleep, 300
+                                                Send, {PgDn}
+                                            }
+                                            Goto, tiers_lock_check_start
                                         }
-                                        Goto, tiers_lock_check_start
                                     }
 
                                 cars_skip_end:
@@ -2963,9 +3072,9 @@ random_select:
                                     }
                                     ; td check end
 
-                                    CoordMode, Pixel, Screen
-                                    PixelSearch, FoundX, FoundY, 1200, 630, 1214, 657, 0xFFFFFF, 0, Fast RGB
-                                    If (ErrorLevel = 0)
+                                    ; check if car have no fuel
+                                    Text:="|<>*147$65.7zU70D1kDzkzzUS0w3UTzlzzUw1s70zzrkD1s7UC1k7j0C3kS0Q3U7y0Q7Vs0s70Dw0sD3k1kC0Ts00SD03UQ0zk00ww070s1vw01ts0C1k3rzU3rU0Q3U77zs7zU0s70S3zsDzU1kDzw0DkTj03UTzk07UyD070zz007VwD0C1k0D0D3kS0Q3U0S0S7US0s700w0wD0S1kC01s3kS0w3UQ01zzUw0w70s03zy1s1sC1k01zs1k1sQ3U0E"
+                                    if (ok:=FindText(X, Y, 1049, 612, 1157, 668, 0, 0, Text))
                                     {
                                         Sleep, 350
                                         Send, {PgDn}
@@ -3008,8 +3117,15 @@ random_select:
 
                                     Sleep, 10000
 
-                                    ; syncing to the server start
+                                    ; check if clicked on refilling car and stuck on watch screen
+                                    Text:="|<>*147$35.0S07zs1y0Dzs3w0Tzs7s0s3kTs1k3Utk3U71nU70C7bUC0QDD0Q0sQC0s1ksQ1k3Xkw3U770s70CC1kC0Qw3kQ0tzzUs1nzz1k3b0C3U7S0S70Cw0wD1xk0sTzrU1szz601UzkE"
 
+                                    if (ok:=FindText(X, Y, 859, 500, 910, 541, 0, 0, Text))
+                                    {
+                                        Goto, starting_mp1
+                                    }
+
+                                    ; syncing to the server start
                                     Loop, 30
                                     {
                                         Text:="|<>*127$33.zzzzzwwz7k7bXsw0QwD73XbVssyAw777lbUsszwwX77zbaMszwwl761bb8ssAww77lbbUsyAwy77lbbkswQwz7U3bbsy0zzzzzzU"
