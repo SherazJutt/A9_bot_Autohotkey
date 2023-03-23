@@ -60,8 +60,8 @@ date_check:
     CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
 
     ; Year Month Day
-    ExpirationDate := 2023 04 01
-    PurchaseDate := 2023 02 01
+    ExpirationDate := 2023 06 01
+    PurchaseDate := 2023 03 01
 
     if (CurrentDate >= ExpirationDate or !data)
     {
@@ -72,7 +72,7 @@ date_check:
         msgbox, Warning dont change the system date
         ExitApp
     }Else{
-        ToolTip, ExpirationDate : 01 April 2023 , 640, 0,
+        ToolTip, ExpirationDate : 01 June 2023 , 640, 0,
     }
 
     ; READING INI FILE TO CONFIGURE BOT
@@ -1176,9 +1176,9 @@ hunt_card_check_start:
 
     ; hunt card
 
-    Text:="|<>*152$133.000TzU0Dzy01zsDzs70zzU0007z003zw00Dw3zw3kDzUE003z000zw003z0zw3s7zk8001zU00Dw000zkTy3y1zkA001zUDk3y0z0Ts7y1z0zs63zzzkDy1z1zs7y3z1zkDs71zzzsDzUz0zw3z0z0zs7w7Uzzzw7zkTUTz1zkTUzy1w3kTzzy3zsDkDzUzs7UTzUy3sDzzz1zw7s7zkTy3kTzkC1w7zzzUzy3w3zsDz0kDzw71y3kzzkTz1y1zw7zkMDzy10z101zsDzUz0zy3zs07zzU0zU00Tw7zkTUTz1zy07zzk0Tk007y3zsDkDzUzz03zzw0Ts001z0zw7w3zkTzk3zzy0Dw3z0zU7w3y0TkDzs1zzzUDy3zkTs001z0007zs0zzzU3zzzsDy000zk003zw0Dzzk1zzzw7zU00Tw001zw07zzk0Tzzy3zw00DzU00zy01zzs0DzzzVzzzw7zzzUTy1Uzzs43zzzkzzzy3zzzsDz0kDzs71y7zsTzzz1zzzw7z0w3zw3UT1zwDzzzUzzzy3zUy1zw3s7Uzy7zzzkTzzz1zUTUzy1w3kTy3zzzsDzzz0zkTkDy1z0sDz1zzzs7zzzUTkDw3z0zUQ3z0zzzw3zzzUTsDy1z0zs6000Tw003zU00Ds7zUTUTw3U00Tw001zk00Dw7zkDUTz0s00Ty001zs007w3zw3kDzUS00Tz001zw00Dy3zy1kDzs7k1zzk0Dzz00zz3zzUwDzy6"
+    Text:="|<>*148$70.w01zk001s003U01z0007U008003w000S000U007k001s0001z0TzUTzUTzkDz1zz1zy1zz1zw3zw7zs7zw7zkDzkTzUTzkTz0zz1zy1zz1zw3zw7zs7zw7zsTzkTzUTzkTzzzz1zy1zz1zzzzw7zs7zw7zzzzkTzUTzkTzzzz1zy0031zzzzw7zs00A7s0DzkTzU00kTU0zz1zy0031y03zw7zs00A7s0DzkTzUTzkTz0zz1zy1zz1zw3zw7zs7zw7zkDzkTzUTzkTz0zz1zy1zz1zw3zw7zs7zw7zkDzkTzUTzkTz0zz1zy1zz1zw3zw7zs7zw3zUTzkTzUTzs001zz1zy000U00Dzw7zs003000zzkTzU00C00Dzz1zy000z07zzyDzw006"
 
-    if (ok:=FindText(X, Y, 508, 213, 660, 275, 0, 0, Text))
+    if (ok:=FindText(X, Y, 320, 217, 407, 269, 0, 0, Text))
 
     {
         Loop, 2{
