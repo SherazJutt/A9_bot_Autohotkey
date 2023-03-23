@@ -28,7 +28,7 @@ date_check:
     Pos := InStr(data, "datetime")
     Pos += 11
     CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
-    ExpirationDate := 2023 03 15
+    ExpirationDate := 2023 04 15
     PurchaseDate := 20220108
 
     if (CurrentDate >= ExpirationDate or !data)
