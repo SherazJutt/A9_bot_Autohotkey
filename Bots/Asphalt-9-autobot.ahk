@@ -23,6 +23,8 @@ If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
     }
     ExitApp
 }
+; set tooltip coords screen base instead of focused window
+CoordMode, ToolTip, Screen
 
 date_check:
 
@@ -69,6 +71,8 @@ date_check:
     {
         msgbox, Warning dont change the system date
         ExitApp
+    }Else{
+        ToolTip, ExpirationDate : 01 April 2023 , 640, 0,
     }
 
     ; READING INI FILE TO CONFIGURE BOT
@@ -742,8 +746,6 @@ script_start:
 
     Gui, Destroy
 
-    ToolTip, ExpirationDate : 01 April 2023 , 640, 0,
-
     If (Mute_System != 0){
         SoundSet,+1,,Mute
     }
@@ -1174,9 +1176,9 @@ hunt_card_check_start:
 
     ; hunt card
 
-    Text:="|<>*141$79.001zy003zzk07U00Dz000zzU00k003zU00DzU008000zk003zU0043z0TsDy0zk7w03zsDw7zUTkDz01zw3y3zsDsDzk0zy1z1zw7w7zs0Tz0zUzy3y3zw0DzUTkTz1z1zy07zkDsDzUzUzz03zs7w7zkTkTzU1zw3y3zsDsDzk0zy1z1zsDw7zs0Tz0zU007y3zw07z0zk007z1zy0000Ts007zUzz0000Tw000zkTzU000Ty000DsDzk000Tz1zs7w7zs000TzUzy3y3zw07sDzkTz0z1zy07w3zsDzUTUzz03y1zw7zkDkTzU1zUTy3zs7sDzk0zkDz1zw3w7zs0Tw3zUzy1y3zw0Dy1zkTz1z0zy07zUTsDz0zUDy03zkDw000Ts0001zw3y000Tw000Uzy1z000Tz000kTzUzU00Tzk00wDzsTk01zzz03y"
+    Text:="|<>*152$133.000TzU0Dzy01zsDzs70zzU0007z003zw00Dw3zw3kDzUE003z000zw003z0zw3s7zk8001zU00Dw000zkTy3y1zkA001zUDk3y0z0Ts7y1z0zs63zzzkDy1z1zs7y3z1zkDs71zzzsDzUz0zw3z0z0zs7w7Uzzzw7zkTUTz1zkTUzy1w3kTzzy3zsDkDzUzs7UTzUy3sDzzz1zw7s7zkTy3kTzkC1w7zzzUzy3w3zsDz0kDzw71y3kzzkTz1y1zw7zkMDzy10z101zsDzUz0zy3zs07zzU0zU00Tw7zkTUTz1zy07zzk0Tk007y3zsDkDzUzz03zzw0Ts001z0zw7w3zkTzk3zzy0Dw3z0zU7w3y0TkDzs1zzzUDy3zkTs001z0007zs0zzzU3zzzsDy000zk003zw0Dzzk1zzzw7zU00Tw001zw07zzk0Tzzy3zw00DzU00zy01zzs0DzzzVzzzw7zzzUTy1Uzzs43zzzkzzzy3zzzsDz0kDzs71y7zsTzzz1zzzw7z0w3zw3UT1zwDzzzUzzzy3zUy1zw3s7Uzy7zzzkTzzz1zUTUzy1w3kTy3zzzsDzzz0zkTkDy1z0sDz1zzzs7zzzUTkDw3z0zUQ3z0zzzw3zzzUTsDy1z0zs6000Tw003zU00Ds7zUTUTw3U00Tw001zk00Dw7zkDUTz0s00Ty001zs007w3zw3kDzUS00Tz001zw00Dy3zy1kDzs7k1zzk0Dzz00zz3zzUwDzy6"
 
-    if (ok:=FindText(X, Y, 549, 211, 649, 272, 0, 0, Text))
+    if (ok:=FindText(X, Y, 508, 213, 660, 275, 0, 0, Text))
 
     {
         Loop, 2{
@@ -3080,37 +3082,63 @@ random_select:
                                         Send, {PgDn}
                                         Sleep, 350
                                         Goto, tiers_lock_check_start
-                                    }
-                                    Else
+                                    }Else
                                     {
-                                        ; upgrade text color check to verify car selection screen
-                                        CoordMode, Pixel, Screen
-                                        PixelSearch, FoundX, FoundY, 114, 628, 151, 656, 0x0D2240, 0, Fast RGB
-                                        If (ErrorLevel = 0)
+                                        ; check if get blueprint screen
+                                        Text:="|<>*148$68.zzU3US073zzzzw1s7k1kzzzzzUS1w0QDzzw1w7UTU707kD0D1s7s1k0w3k3kS1z0Q0D0w0w7UTk703kD0D1s7y1k0w3k3kS1vUQ0D0w0w7USw703kD0D1s7bVk0w3k3kS1tsQ0D0zzw7USD703kDzy1s7Xlk0w3zz0S1sSQ0D0zzU7US7b03kD1s1s7Uxk0w3kS0S1s7w0D0w3k7US1z03kD0w1s7UDk0w3k7US1s3w0D0w1s7US0T03kD0D1s7U7k0w3k3kS1s0w0D0w0S3US0D03k8"
+
+                                        if (ok:=FindText(X, Y, 1135, 609, 1222, 648, 0, 0, Text))
                                         {
-                                            ; click on play button to start the race
-                                            Sleep, 150
-                                            Click, 1183, 634 Left, 1
-                                            Sleep, 250
-                                        }
-                                        else
-                                        {
-                                            Sleep, 2000
-                                            IfWinExist, Asphalt 9: Legends
+                                            Sleep, 350
+                                            Send, {PgDn}
+                                            Sleep, 350
+                                            Goto, tiers_lock_check_start
+                                        }Else{
+
+                                            ; check if get KEY screen
+                                            Text:="|<>*151$99.T00Ds3zzzVz007wDzw03y0zzzw7w00zVzzU0zU7zzzUzU0DsDzw07w0zzzw3w01z1zzU1z07zzzUTk0TkDzw0Tk0zU001y03y1zzU7w07w000Ds0TUDzw0zU0zU000z07w1zzUDs07w0007w0z0Dzw3y00zU000TUDs1zzUTU07w0003w1y0Dzw7w00zU000TkTk1zzVz007w0001y3w0DzwTk00zU000DszU1zzXy007w0000z7s0DzwzU00zU0007wz00zzjs007zzw00Tjk07zxz000zzzk03zy00zzzw007zzy00DzU07zzzU00zzzk01zw00yzzy007zzy007z007rzzs00zU0000zs00yzwz007w00003y007rz3w00zU0000Tk00yzkTk07w00003y007ry1y00zU0000Dk000zUDs07w00001y0007w0zU0zU0000Dk000zU3w07w00001y0007w0Tk0zU0000Dk00yzU1z07w00001y007zw07s0zU0000Dk00zzU0zU7w00001y007zw03y0zk0000Dk00zzU0Dk7zzzU01y007zw01z0zzzw00Dk00zzU07w7zzzU01y007vs00TUTzzw00DU00zT001w3zzz001w007o"
+
+                                            if (ok:=FindText(X, Y, 1089, 606, 1203, 657, 0, 0, Text))
                                             {
-                                                WinActivate, Asphalt 9: Legends
-                                                WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
-                                                WinRestore, Asphalt 9: Legends
-                                            }
-                                            else
-                                            {
-                                                ToolTip, play buttton, 640, 0,
-                                                Sleep, 1000
-                                                Goto, script_start
+                                                Sleep, 350
+                                                Send, {PgDn}
+                                                Sleep, 350
+                                                Goto, tiers_lock_check_start
+                                            }Else{
+
+                                                ; upgrade text color check to verify car selection screen
+                                                CoordMode, Pixel, Screen
+                                                PixelSearch, FoundX, FoundY, 114, 628, 151, 656, 0x0D2240, 0, Fast RGB
+                                                If (ErrorLevel = 0)
+                                                {
+                                                    ; click on play button to start the race
+                                                    Sleep, 150
+                                                    Click, 1183, 634 Left, 1
+                                                    Sleep, 250
+                                                }
+                                                else
+                                                {
+                                                    Sleep, 2000
+                                                    IfWinExist, Asphalt 9: Legends
+                                                    {
+                                                        WinActivate, Asphalt 9: Legends
+                                                        WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
+                                                        WinRestore, Asphalt 9: Legends
+                                                    }
+                                                    else
+                                                    {
+                                                        ToolTip, play buttton, 640, 0,
+                                                        Sleep, 1000
+                                                        Goto, script_start
+                                                    }
+
+                                                    Goto, script_start
+                                                }
+
                                             }
 
-                                            Goto, script_start
                                         }
+
                                     }
 
                                 play_end:
