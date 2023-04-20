@@ -1176,9 +1176,9 @@ hunt_card_check_start:
 
     ; hunt card
 
-    Text:="|<>*144$65.w01zk001zy1k00zU003zs3000z0007z04000y000Ds007w1zy1zzU00Ty3zy3zz001zw3zw7zy303zs7zsDzwS07zsDzkTzzw0DzkTzUzzzs0TzVzz1zzzk0zzzzy3zzzU1zzzzw7zzz03zzzzsDzzy07zzzzkTzzw0DzzzzUzzzs0TU0zz1zzzk0z01zy3zzzU1y03zw7zzz03w07zsDzzy07zkDzkTzzw0DzkTzUzzzs0TzUzz1zzzk0zz1zy3zzzU1zy3zw7zzz03zw7zsDzzy07zkDzkTzzw0DzUTzUzzzs0Dy1zz1zzzkE003zy3zzzUU00Dzw7zzz1U00TzsDzzy3U03zzkTzzw7s0zzzlzzzwM"
+    Text:="|<>*149$74.y00zk001zzk7y003w000Dzs0z000T0003zy0DU007k001zz03s7y0zz0zzzU0y3zkDzkTzzs8D1zy3zw7zzw63kTzUzz1zzz1Uw7zsDzkTzzUsD1zy3zw7zzsC3kTzkzz1zzw7Uw7zzzzkTzz1sD1zzzzw7zzUy3kTzzzz1zzsTUw7zzzzkTzw7sD1z07zw7zy3y3kTU0zz1zzUzUw7s0DzkTzkTsD1y03zw7zw7y3kTk0zz1zy3zUw7zsDzkTzUzsD1zy3zw7zkTy3kTzUzz1zw00047zsDzkTy00001zy3zw7zU0000TzUzz1zs00007zsDzkTz0000Uzw3zw7zzzy3s7z0zz1zzzzUy000TzkTzzzsDk007zw7zzzy3y003zz1zzzzUzk03zzkTzzzsDzzzzzyDzzzzDs"
 
-    if (ok:=FindText(X, Y, 625, 213, 711, 271, 0, 0, Text))
+    if (ok:=FindText(X, Y, 277, 263, 374, 315, 0, 0, Text))
     {
         Loop, 2{
             Send, {Enter}
