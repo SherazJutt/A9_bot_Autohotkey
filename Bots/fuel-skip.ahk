@@ -13,34 +13,52 @@ SetBatchLines -1
 
 date_check:
 
+    ; Create WinHttpRequest object
     WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+
+    ; Set URL and disable asynchronous requests
     WinHttp.Open("GET", "http://worldtimeapi.org/api/ip", false)
-    try
+
+    ; Loop until successful response is received
+    Loop
     {
-        WinHttp.Send()
+        ; Display alert message
+        MsgBox, 262144, , Connecting to internet... [ctrl + Q to exit], 1
+
+        ; Send request
+        try
+        {
+            WinHttp.Send()
+            break
+        }
+        catch
+        {
+            ; Wait for 1 second before retrying
+            Sleep, 1000
+        }
     }
-    catch
-    {
-        MsgBox, 262144, , Could not connect to the internet`, Please connect to the internet and try again [ retry in 5 sec ] [ctrl + Q to exit], 5
-        Goto, date_check
-    }
+
+    ; Response received, process data
     data := WinHttp.ResponseText
     Pos := InStr(data, "datetime")
     Pos += 11
     CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
-    ExpirationDate := 2023 04 15
-    PurchaseDate := 20220108
+
+    ; Year Month Day
+    ExpirationDate := 2023 06 01
+    PurchaseDate := 2023 03 01
 
     if (CurrentDate >= ExpirationDate or !data)
     {
         msgbox, The subscription period is over.
         ExitApp
-    }Else if (CurrentDate <= PurchaseDate or !data)
+    }Else if (CurrentDate <= PurchaseDate)
     {
-        msgbox, Warning dont change the system date.
+        msgbox, Warning dont change the system date
         ExitApp
+    }Else{
+        ToolTip, ExpirationDate : 01 June 2023 , 640, 0,
     }
-    ToolTip, ExpirationDate : 15 March 2023 , 640, 0,
 
     t1:=A_TickCount, X:=Y:=""
 
@@ -53,6 +71,52 @@ start:
     Sleep, 250
     WinClose, Privacy - Vungle - Google Chrome
     Sleep, 250
+
+    ; watch
+
+    ; normal garage
+    Text:="|<>*150$66.000000000001z0707Vs7zU7zk7UDVsDzsDzs7UD1sDzwT1w7US1sD0yS0w7Uw1sD0SQ0w7Vw1sD0CQ0w7Vs1sD0CQ007Xk1sD0CS007bU1sD0CT007bU1sD0CTw07j01sD0CDzU7z01sD0S7zs7zU1sDzy0Tw7vk1sDzw01w7vk1sDzs00w7ls1sDz0A0Q7Uw1sD00Q0Q7Uw1sD00Q0Q7US1sD00S0w7UC1sD00T1w7UD1sD00Dzs7U7VsD007zs7U7VsD003zU7U3lsD0000000000000U"
+
+    if (ok:=FindText(X, Y, 1062, 630, 1145, 668, 0, 0, Text))
+    {
+        Click, 1199, 633 Left, 1
+    }
+    ;  mp garage
+
+    Text:="|<>*148$67.000000000001zs1k3kQ3zw3zy1s3kC1zz1zzUw1s70zzlw3kS1s3UQ1sw0sD1s1kC0SS0Q7Vs0s70DD0C3kw0Q3U7bU01sw0C1k3nk00ww070s1sz00SS03UQ0wTy0DS01kC0Q7zs7zU0s70S0zy3zs0Q3zz00z1yw0C1zz007UyD070zz001sT3k3UQ00w0wD1s1kC00S0S7US0s700D0D3k7UQ3U07UD1s3kC1k01zzUw0w70s00zzUS0S3UQ007zU707VkC0000000000000E"
+
+    if (ok:=FindText(X, Y, 1062, 621, 1144, 661, 0, 0, Text))
+    {
+        Click, 1199, 633 Left, 1
+    }
+
+    ; watch ad events
+    Text:="|<>*152$32.1w0zz0T0Dzs7s3zy3i0w3kvUD0QCs3k77b0w1llkD0QQQ3k777Uw1nUsD0QsC3k7C3Uw1rzwD0Rzz3k7Tzkw1r0SD0zk3XkSs0szzi0CDzm"
+
+    if (ok:=FindText(X, Y, 844, 496, 885, 532, 0, 0, Text))
+    {
+        Click, 923, 492 Left, 1
+    }
+
+    ;  DS
+    Text:="|<>*153$34.0w0DzU7s1zz0TU7zy1y0S1sDw1s3ktk7UD3b0S0wSS1s3lts7UD73US0wQC1s3nkw7UDC1kS0ws71s3rzy7UDTzsS0xzzVs3r0C7UDw0wS0vk3lzzi077zws0QDzW"
+
+    if (ok:=FindText(X, Y, 929, 473, 982, 521, 0, 0, Text))
+    {
+        Click, 1003, 486 Left, 1
+
+    }
+
+    ; play ad
+
+    Text:="|<>*150$143.s1s3k3s3zz0zk3U7000S07zls7k7UDk7zy7zs70D001y0DzvkDUD0TUDzwTzsC0S003w0TzzUT0S0zU0w0w3kQ0w007s0s3z0z1s1z01s1k3Us1s00Ts1k3y1y3k7i03k3U7Vk3k00tk3U7Q7Q7UCQ07U70D3U7U01nU70CwCMD0Qw0D0C0S70D007b0C0RsQsS1ss0S0Q00C0S00DD0Q0vktks3Vk0w0s00Q0w00QC0s1rXXXk73U1s1k00zzs00sQ1k3b777US7U3k3U01zzk03kw3U7CC7D0w707U7003zzU071s70CQQCS1kC0D0C0070D00C1kC0QwkQs3US0S0Q00C0S00w3UQ0tvUtkDzw0w0s1sQ0w01zzUs1lr1vUTzs1s1k3ks1s03zz1k3Xi1z0zzs3k3U7Vk3k07zy3U77w3y1k3k7U70C3U7U0S0S70CDk7s7U3UD0DVw70D00w0wC1wTUDkC070S0TzsC0S01k0sTzkT0DUQ0D0w0TzUQ0w07U1kzzUy0T0s0S0s0Dw0s1k0D03VzwE"
+
+    if (ok:=FindText(X, Y, 861, 502, 1023, 543, 0, 0, Text))
+    {
+        Click, 1034, 515 Left, 1
+    }
+
+    ; close ad
     CoordMode, Pixel, Screen
     PixelSearch, FoundX, FoundY, 1218, 43, 1261, 54, 0xFFFFFF, 0, Fast RGB
     If (ErrorLevel = 0)
@@ -77,50 +141,6 @@ start:
         Sleep, 250
         Click, 1228, 73 Left, 1
         Sleep, 250
-    }
-
-    ; watch
-    ; normal garage
-    Text:="|<>*150$66.000000000001z0707Vs7zU7zk7UDVsDzsDzs7UD1sDzwT1w7US1sD0yS0w7Uw1sD0SQ0w7Vw1sD0CQ0w7Vs1sD0CQ007Xk1sD0CS007bU1sD0CT007bU1sD0CTw07j01sD0CDzU7z01sD0S7zs7zU1sDzy0Tw7vk1sDzw01w7vk1sDzs00w7ls1sDz0A0Q7Uw1sD00Q0Q7Uw1sD00Q0Q7US1sD00S0w7UC1sD00T1w7UD1sD00Dzs7U7VsD007zs7U7VsD003zU7U3lsD0000000000000U"
-
-    if (ok:=FindText(X, Y, 1062, 630, 1145, 668, 0, 0, Text))
-    {
-        Click, 1199, 633 Left, 1
-    }
-    ;  mp garage
-
-    Text:="|<>*148$67.000000000001zs1k3kQ3zw3zy1s3kC1zz1zzUw1s70zzlw3kS1s3UQ1sw0sD1s1kC0SS0Q7Vs0s70DD0C3kw0Q3U7bU01sw0C1k3nk00ww070s1sz00SS03UQ0wTy0DS01kC0Q7zs7zU0s70S0zy3zs0Q3zz00z1yw0C1zz007UyD070zz001sT3k3UQ00w0wD1s1kC00S0S7US0s700D0D3k7UQ3U07UD1s3kC1k01zzUw0w70s00zzUS0S3UQ007zU707VkC0000000000000E"
-
-    if (ok:=FindText(X, Y, 1062, 621, 1144, 661, 0, 0, Text))
-    {
-        Click, 1199, 633 Left, 1
-    }
-
-    ;  DS
-    Text:="|<>*153$34.0w0DzU7s1zz0TU7zy1y0S1sDw1s3ktk7UD3b0S0wSS1s3lts7UD73US0wQC1s3nkw7UDC1kS0ws71s3rzy7UDTzsS0xzzVs3r0C7UDw0wS0vk3lzzi077zws0QDzW"
-
-    if (ok:=FindText(X, Y, 929, 473, 982, 521, 0, 0, Text))
-    {
-        Click, 1003, 486 Left, 1
-
-    }
-
-    ; watch
-
-    Text:="|<>*150$143.w1s3k3s3zz0zs3U7U00S07zts7k7UDk7zy7zs70D001y0DzvkDUD0TUDzwTzsC0S003w0TzzUTUS0zU0w0w3kQ0w007s0s3z0z1s1r01s1k3ks1s00Ts1k3y1y3k7i03k3U7Vk3k00tk3U7Q7Q7UCQ07U70D3U7U01nU70CwCQD0Qw0D0C0Q70D007bUC0RsQsS1ss0S0Q00C0S00DD0Q0vktks3Vk0w0s00Q0w00QC0s1nXXVk73k1s1k00zzs00sQ1k3b777US3U3k3U01zzk03kw3U7CC7D0w707U7003zzU070s70CSQCS1kD0D0C0070D00C1kC0QwkQs3US0S0Q00C0S00w3kQ0svUtkDzw0w0s1sQ0w01zzUs1lr0vUTzs1s1k3ks1s03zz1k3Xi1z0w1s3k3U7Vk3k070C3U77w3y1k3k7U7UC3U7U0S0S70CDk7s7U3UD0DVw70D00w0wD1wTU7kD070S0DzsC0S01k0sTzkT0DUQ0D0w0DzUQ0w07U1szz0Q0C0k0C0k03s0s0k0601VzkE"
-
-    if (ok:=FindText(X, Y, 737, 498, 927, 536, 0, 0, Text))
-    {
-        Click, 923, 492 Left, 1
-    }
-
-    ; watch ad events
-
-    Text:="|<>*152$32.1w0zz0T0Dzs7s3zy3i0w3kvUD0QCs3k77b0w1llkD0QQQ3k777Uw1nUsD0QsC3k7C3Uw1rzwD0Rzz3k7Tzkw1r0SD0zk3XkSs0szzi0CDzm"
-
-    if (ok:=FindText(X, Y, 844, 496, 885, 532, 0, 0, Text))
-    {
-        Click, 923, 492 Left, 1
     }
 
     ; ad with close text
@@ -155,8 +175,7 @@ start:
 
     }
 
-    ; march of empires
-
+    ; march of empire
     Text:="|<>*161$22.Xzz47zs0Dz00Ts20z0Q1s3s30Tk03zU0Tz03zy0Tzs1zz03zs07z00Ds30T0S0s3w10Ts03zk8TzVnzzC"
 
     if (ok:=FindText(X, Y, 1213, 58, 1248, 91, 0, 0, Text))
@@ -167,16 +186,7 @@ start:
 
     }
 
-    ; resume ad
-    Text:="|<>*123$77.03z00000000000zzk0000000003zzs000000000Tzzs000000001zzzs000000003z0zk00000000Ds0Tk00000000zU0TU00000001y00zU1zU003w7w00k0Tzs1yTyDs0001zzs3xzyTU0007zzk7zzyz0000DzzkDzzxy0000zUzUTwDzw0001y0z0zkDzs0000Q1y1z0Tzk000003w3w0TzU00000Ds7s0zz00000DzkDk1zy00007zzUTU3zw00M0Tzz0z07zw00y3zty1y0Dzs03y7w3w3w0Tjk07wTU7s7s0zTk0Tkz0DkDk1yTk1zVy0zUTU3wzs7y3y3z0z07szzzs7zzy1y0Dkzzzk7zzw3w0TUTzy07zvw7s0z0Tzs07zbsDk1y07y003w7kTU3y"
-
-    if (ok:=FindText(X, Y, 478, 266, 592, 326, 0, 0, Text))
-    {
-        Sleep, 500
-        Click, 857, 448 Left, 1
-        Sleep, 500
-    }
-
+    ; close
     Text:="|<>*177$23.XzzW3zy03zs03zU83y0s3s3s3UDs20zs03zs0Dzs0zzs3zzU3zy03zs03zU83y0s3s3s3UDs20zs03zs0Dzs8zzsk"
 
     if (ok:=FindText(X, Y, 1206, 60, 1245, 99, 0, 0, Text))
@@ -186,9 +196,20 @@ start:
         Sleep, 250
     }
 
+    ; resume ad
+    Text:="|<>*124$67.07w000000000Tzk00000000zzw00000000zzz00000000zkTk0000000TU7s0000000TU1y0000000DU0T07y0DVwDk0A0Dzk7nzbs000Dzw3zzvw000Dzz1zzzw0007kTUzkzy0003sDkTUTz0000M3sDk7zU00001w7s3zk00003y3s1zw0000zz1w0zy01U3zzUy0Tz00w3z7kT0DjU0T3w3sDU7rs0TVw1w7k3ty0TUy1y3s1wzkTkTVz1w0yDzzkDzzUy0T3zzk3zzkT0DUTzk1ztwDU7k3z00Dky7k3w"
+
+    if (ok:=FindText(X, Y, 505, 286, 587, 324, 0, 0, Text))
+    {
+        Sleep, 500
+        Click, 857, 448 Left, 1
+        Sleep, 500
+    }
+
     Goto, start
 
     ^p:: Pause
+
 ^q:: ExitApp
 
 ; ok:=FindText(X:="wait", Y:=3, 0,0,0,0,0,0,Text)    ; Wait 3 seconds for appear
