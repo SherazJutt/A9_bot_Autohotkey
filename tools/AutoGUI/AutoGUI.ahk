@@ -141,7 +141,7 @@ If (!g_DesignMode) {
 
 ; Dispatch messages
 OnMessage(0x136, "OnWM_CTLCOLORDLG")
-OnMessage(0x3,   "OnWM_MOVE")
+OnMessage(0x3, "OnWM_MOVE")
 OnMessage(0x201, "OnWM_LBUTTONDOWN")
 OnMessage(0x204, "OnWM_RBUTTONDOWN")
 OnMessage(0x207, "OnWM_MBUTTONDOWN")
@@ -151,17 +151,17 @@ OnMessage(0x101, "OnWM_KEYUP")
 OnMessage(0x104, "OnWM_SYSKEYDOWN")
 OnMessage(0x203, "OnWM_LBUTTONDBLCLK")
 OnMessage(0x232, "OnWM_EXITSIZEMOVE")
-OnMessage(0x18,  "OnWM_SHOWWINDOW")
-OnMessage(0xA0,  "OnWM_NCMOUSEMOVE")
+OnMessage(0x18, "OnWM_SHOWWINDOW")
+OnMessage(0xA0, "OnWM_NCMOUSEMOVE")
 OnMessage(0x138, "OnWM_CTLCOLORSTATIC")
-OnMessage(0x20,  "OnWM_SETCURSOR")
+OnMessage(0x20, "OnWM_SETCURSOR")
 OnMessage(0x202, "OnWM_LBUTTONUP")
-OnMessage(0x4A,  "OnWM_COPYDATA")
-OnMessage(0x1C,  "OnWM_ACTIVATEAPP")
+OnMessage(0x4A, "OnWM_COPYDATA")
+OnMessage(0x1C, "OnWM_ACTIVATEAPP")
 OnMessage(0x211, "OnWM_ENTERMENULOOP")
 OnMessage(0x116, "OnWM_INITMENU")
 OnMessage(10000, "CustomMessage")
-OnMessage(0x16,  "SaveSettings") ; WM_ENDSESSION
+OnMessage(0x16, "SaveSettings") ; WM_ENDSESSION
 
 LoadRecentFiles()
 SetSessionsDir()
@@ -185,19 +185,19 @@ g_AhkPath3264 := AhkDir . (A_PtrSize == 4 ? "\AutoHotkeyU64.exe" : "\AutoHotkeyU
 
 Global g_ThemeFix := DllCall("UxTheme.dll\IsThemeActive") ? "" : "-Theme" ; Temp
 
-StartAutoSave()
+    StartAutoSave()
 
-LoadToolsMenu()
-LoadHelpMenu()
+    LoadToolsMenu()
+    LoadHelpMenu()
 
-LoadAutoComplete(A_ScriptDir . "\Include\AutoHotkey.xml")
+    LoadAutoComplete(A_ScriptDir . "\Include\AutoHotkey.xml")
 
-DeleteOldBackups()
+    DeleteOldBackups()
 
-If (!A_IsUnicode) {
-    MsgBox 0x10, Error, %g_AppName% is incompatible with the ANSI build of AutoHotkey.
-    ExitApp
-}
+    If (!A_IsUnicode) {
+        MsgBox 0x10, Error, %g_AppName% is incompatible with the ANSI build of AutoHotkey.
+        ExitApp
+    }
 Return ; End of the auto-execute section.
 
 TabHandler:
@@ -235,83 +235,83 @@ Return
 
 CreateEditorToolbar() {
     EditorTBIL := IL_Create(30)
-    IL_Add(EditorTBIL, IconLib, 7)   ; New Tab
-    IL_Add(EditorTBIL, IconLib, 9)   ; Open
-    IL_Add(EditorTBIL, IconLib, 10)  ; Save
+    IL_Add(EditorTBIL, IconLib, 7) ; New Tab
+    IL_Add(EditorTBIL, IconLib, 9) ; Open
+    IL_Add(EditorTBIL, IconLib, 10) ; Save
     IL_Add(EditorTBIL, IconLib, 125) ; Save All
     IL_Add(EditorTBIL, IconLib, 126) ; Design Mode
-    IL_Add(EditorTBIL, IconLib, 6)   ; New GUI
-    IL_Add(EditorTBIL, IconLib, 15)  ; Cut
-    IL_Add(EditorTBIL, IconLib, 16)  ; Copy
-    IL_Add(EditorTBIL, IconLib, 17)  ; Paste
-    IL_Add(EditorTBIL, IconLib, 81)  ; Undo
-    IL_Add(EditorTBIL, IconLib, 82)  ; Redo
-    IL_Add(EditorTBIL, IconLib, 21)  ; Find
-    IL_Add(EditorTBIL, IconLib, 22)  ; Replace
-    IL_Add(EditorTBIL, IconLib, 23)  ; Find in Files
+    IL_Add(EditorTBIL, IconLib, 6) ; New GUI
+    IL_Add(EditorTBIL, IconLib, 15) ; Cut
+    IL_Add(EditorTBIL, IconLib, 16) ; Copy
+    IL_Add(EditorTBIL, IconLib, 17) ; Paste
+    IL_Add(EditorTBIL, IconLib, 81) ; Undo
+    IL_Add(EditorTBIL, IconLib, 82) ; Redo
+    IL_Add(EditorTBIL, IconLib, 21) ; Find
+    IL_Add(EditorTBIL, IconLib, 22) ; Replace
+    IL_Add(EditorTBIL, IconLib, 23) ; Find in Files
     IL_Add(EditorTBIL, IconLib, 130) ; Mark Current Line
     IL_Add(EditorTBIL, IconLib, 131) ; Mark Selected Text
     IL_Add(editorTBIL, IconLib, 137) ; Line numbers
-    IL_Add(EditorTBIL, IconLib, 83)  ; Fold Margin
-    IL_Add(EditorTBIL, IconLib, 85)  ; Word Wrap
-    IL_Add(EditorTBIL, IconLib, 87)  ; Read Only
-    IL_Add(EditorTBIL, IconLib, 86)  ; Syntax Highlighting
-    IL_Add(EditorTBIL, IconLib, 84)  ; Show White Spaces
+    IL_Add(EditorTBIL, IconLib, 83) ; Fold Margin
+    IL_Add(EditorTBIL, IconLib, 85) ; Word Wrap
+    IL_Add(EditorTBIL, IconLib, 87) ; Read Only
+    IL_Add(EditorTBIL, IconLib, 86) ; Syntax Highlighting
+    IL_Add(EditorTBIL, IconLib, 84) ; Show White Spaces
     IL_Add(EditorTBIL, IconLib, 104) ; Debug Run
     IL_Add(EditorTBIL, IconLib, 106) ; Debug Stop
     IL_Add(EditorTBIL, IconLib, 109) ; Step Into
     IL_Add(EditorTBIL, IconLib, 110) ; Step Over
     IL_Add(EditorTBIL, IconLib, 111) ; Step Out
     IL_Add(EditorTBIL, IconLib, 115) ; Inspect Variables
-    IL_Add(EditorTBIL, IconLib, 12)  ; Execute
-    IL_Add(EditorTBIL, IconLib, 78)  ; Help
+    IL_Add(EditorTBIL, IconLib, 12) ; Execute
+    IL_Add(EditorTBIL, IconLib, 78) ; Help
 
     EditorTBBtns = 
     (LTrim
-        -
-        New File
-        Open
-        Save
-        Save All
-        -
-        Design Mode
-        New GUI
-        -
-        Cut
-        Copy
-        Paste
-        -
-        Undo
-        Redo
-        -
-        Find
-        Replace
-        Find in Files
-        -
-        Mark Current Line
-        Mark Selected Text
-        -
-        Line Numbers,,,, 2140
-        Fold Margin,,,, 2150
-        Word Wrap,,,, 2160
-        Read Only,,,, 2170
-        Syntax Highlighting,,,, 2180
-        Show White Spaces,,,, 2190
-        -
-        Start Debugging / Continue,,,, 2500
-        Stop Debugging,, HIDDEN,, 2501
-        Step Into,, HIDDEN,, 2502
-        Step Over,, HIDDEN,, 2503
-        Step Out,, HIDDEN,, 2504
-        Inspect Variables,, HIDDEN,, 2505
-        -
-        Execute,,, SHOWTEXT
-        -
-        Help
+    -
+    New File
+    Open
+    Save
+    Save All
+    -
+    Design Mode
+    New GUI
+    -
+    Cut
+    Copy
+    Paste
+    -
+    Undo
+    Redo
+    -
+    Find
+    Replace
+    Find in Files
+    -
+    Mark Current Line
+    Mark Selected Text
+    -
+    Line Numbers,,,, 2140
+    Fold Margin,,,, 2150
+    Word Wrap,,,, 2160
+    Read Only,,,, 2170
+    Syntax Highlighting,,,, 2180
+    Show White Spaces,,,, 2190
+    -
+    Start Debugging / Continue,,,, 2500
+    Stop Debugging,, HIDDEN,, 2501
+    Step Into,, HIDDEN,, 2502
+    Step Over,, HIDDEN,, 2503
+    Step Out,, HIDDEN,, 2504
+    Inspect Variables,, HIDDEN,, 2505
+    -
+    Execute,,, SHOWTEXT
+    -
+    Help
     )
 
-    Extra := (g_TabBarPos == 1) ? "+E0x200" : ""
-    Extra .= (g_DesignMode) ? " Hidden" : ""
+Extra := (g_TabBarPos == 1) ? "+E0x200" : ""
+Extra .= (g_DesignMode) ? " Hidden" : ""
 
     hMainToolbar := ToolbarCreate("OnMainToolbar", EditorTBBtns, EditorTBIL, "FLAT LIST TOOLTIPS", Extra)
     SendMessage 0x41F, 0, 0x00180018,, ahk_id %hMainToolbar% ; TB_SETBUTTONSIZE
@@ -397,69 +397,69 @@ OnMainToolbar(hWnd, Event, Text, Pos, Id) {
 ; Design Mode toolbar
 CreateDesignToolbar() {
     TbarIL := IL_Create(32)
-    IL_Add(TbarIL, IconLib, 7)   ; New File
-    IL_Add(TbarIL, IconLib, 9)   ; Open
-    IL_Add(TbarIL, IconLib, 10)  ; Save
+    IL_Add(TbarIL, IconLib, 7) ; New File
+    IL_Add(TbarIL, IconLib, 9) ; Open
+    IL_Add(TbarIL, IconLib, 10) ; Save
     IL_Add(TbarIL, IconLib, 125) ; Save All
     IL_Add(TbarIL, IconLib, 126) ; Design Mode
-    IL_Add(TbarIL, IconLib, 6)   ; New GUI
-    IL_Add(TbarIL, IconLib, 38)  ; Show/Hide Preview Window
-    IL_Add(TbarIL, IconLib, 72)  ; Show Grid
-    IL_Add(TbarIL, IconLib, 73)  ; Snap to Grid
-    IL_Add(TbarIL, IconLib, 26)  ; Align Lefts
-    IL_Add(TbarIL, IconLib, 27)  ; Align Rights
-    IL_Add(TbarIL, IconLib, 28)  ; Align Tops
-    IL_Add(TbarIL, IconLib, 29)  ; Align Bottoms
-    IL_Add(TbarIL, IconLib, 30)  ; Center Horizontally
-    IL_Add(TbarIL, IconLib, 31)  ; Center Vertically
-    IL_Add(TbarIL, IconLib, 33)  ; Horizontally Space
-    IL_Add(TbarIL, IconLib, 32)  ; Vertically Space
-    IL_Add(TbarIL, IconLib, 34)  ; Make Same Width
-    IL_Add(TbarIL, IconLib, 35)  ; Make Same Height
-    IL_Add(TbarIL, IconLib, 36)  ; Make Same Size
+    IL_Add(TbarIL, IconLib, 6) ; New GUI
+    IL_Add(TbarIL, IconLib, 38) ; Show/Hide Preview Window
+    IL_Add(TbarIL, IconLib, 72) ; Show Grid
+    IL_Add(TbarIL, IconLib, 73) ; Snap to Grid
+    IL_Add(TbarIL, IconLib, 26) ; Align Lefts
+    IL_Add(TbarIL, IconLib, 27) ; Align Rights
+    IL_Add(TbarIL, IconLib, 28) ; Align Tops
+    IL_Add(TbarIL, IconLib, 29) ; Align Bottoms
+    IL_Add(TbarIL, IconLib, 30) ; Center Horizontally
+    IL_Add(TbarIL, IconLib, 31) ; Center Vertically
+    IL_Add(TbarIL, IconLib, 33) ; Horizontally Space
+    IL_Add(TbarIL, IconLib, 32) ; Vertically Space
+    IL_Add(TbarIL, IconLib, 34) ; Make Same Width
+    IL_Add(TbarIL, IconLib, 35) ; Make Same Height
+    IL_Add(TbarIL, IconLib, 36) ; Make Same Size
     IL_Add(TbarIL, "Icons\WCT.ico") ; Window Cloning Tool
-    IL_Add(TbarIL, IconLib, 12)  ; Execute
-    IL_Add(TbarIL, IconLib, 25)  ; Properties
+    IL_Add(TbarIL, IconLib, 12) ; Execute
+    IL_Add(TbarIL, IconLib, 25) ; Properties
 
     TbarButtons = 
-        (LTrim
-            -
-            New File
-            Open
-            Save
-            Save All
-            -
-            Design Mode,,,, 1060
-            New GUI
-            Show/Hide Preview Window,,,, 1070
-            -
-            Show Grid,,,, 1080
-            Snap to Grid,,,, 1090
-            -
-            Align Lefts
-            Align Rights
-            Align Tops
-            Align Bottoms
-            -
-            Center Horizontally
-            Center Vertically
-            -
-            Horizontally Space
-            Vertically Space
-            -
-            Make Same Width
-            Make Same Height
-            Make Same Size
-            -
-            Window Cloning Tool
-            -
-            Execute,,, SHOWTEXT
-            -
-            Properties
-        )
+    (LTrim
+    -
+    New File
+    Open
+    Save
+    Save All
+    -
+    Design Mode,,,, 1060
+    New GUI
+    Show/Hide Preview Window,,,, 1070
+    -
+    Show Grid,,,, 1080
+    Snap to Grid,,,, 1090
+    -
+    Align Lefts
+    Align Rights
+    Align Tops
+    Align Bottoms
+    -
+    Center Horizontally
+    Center Vertically
+    -
+    Horizontally Space
+    Vertically Space
+    -
+    Make Same Width
+    Make Same Height
+    Make Same Size
+    -
+    Window Cloning Tool
+    -
+    Execute,,, SHOWTEXT
+    -
+    Properties
+    )
 
-    Extra := (g_TabBarPos == 1) ? "+E0x200" : ""
-    Extra .= (g_DesignMode) ? "" : " Hidden"
+Extra := (g_TabBarPos == 1) ? "+E0x200" : ""
+Extra .= (g_DesignMode) ? "" : " Hidden"
 
     hGUIToolbar := ToolbarCreate("OnGUIToolbar", TbarButtons, TbarIL, "FLAT LIST TOOLTIPS", Extra)
     SendMessage 0x41F, 0, 0x00180018,, ahk_id %hGUIToolbar% ; TB_SETBUTTONSIZE
@@ -553,7 +553,7 @@ SetStatusBar(GD := 0) {
         SB_SetParts()
         SB_SetParts(162, 170, 170, 170)
 
-        SB_SetIcon(IconLib, 4,  1) ; GUI Designer
+        SB_SetIcon(IconLib, 4, 1) ; GUI Designer
         SB_SetIcon(IconLib, 75, 2) ; Position
         SB_SetIcon(IconLib, 76, 3) ; Size
         SB_SetIcon(IconLib, 77, 4) ; Cursor
@@ -564,7 +564,7 @@ SetStatusBar(GD := 0) {
         SB_SetParts(162, 200, 200, 62) ; Mode | Line:Pos | Document Status | Overtype Mode | Save Encoding
 
         If (g_Insert) {
-            SB_SetText("    Insert", 4)
+            SB_SetText(" Insert", 4)
         } Else {
             SB_SetText("Overstrike", 4)
         }
@@ -654,7 +654,7 @@ AutoExit:
     FileDelete %A_Temp%\Toolbar.ahk
     FileDelete %A_Temp%\ControlColor.ahk
 
-    ExitApp
+ExitApp
 Return
 
 ChildSize:
@@ -685,7 +685,7 @@ OnWM_CTLCOLORDLG() {
         Brush := DllCall("Gdi32.dll\CreatePatternBrush", "Ptr", hBitmapTile, "Ptr")
     }
 
-    Return Brush
+Return Brush
 }
 
 OnWM_MOVE(wParam, lParam, msg, hWnd) {
@@ -890,7 +890,7 @@ OnWM_LBUTTONDOWN(wParam, lParam, msg, hWnd) {
         Return
     }
 
-    Return 0
+Return 0
 }
 
 OnWM_LBUTTONDBLCLK(wParam, lParam, msg, hWnd) {
@@ -913,7 +913,7 @@ OnWM_LBUTTONDBLCLK(wParam, lParam, msg, hWnd) {
         GoSub ChangeText
     }
 
-    Return 0
+Return 0
 }
 
 OnWM_MBUTTONDOWN(wParam, lParam, msg, hWnd) {
@@ -927,7 +927,7 @@ OnWM_MBUTTONDOWN(wParam, lParam, msg, hWnd) {
         GoSub ShowProperties
     }
 
-    Return
+Return
 }
 
 OnWM_RBUTTONDOWN(wParam, lParam, msg, hWnd) {
@@ -969,7 +969,7 @@ OnWM_RBUTTONDOWN(wParam, lParam, msg, hWnd) {
         ShowContextMenu()
     }
 
-    Return 0
+Return 0
 }
 
 OnWM_KEYDOWN(wParam, lParam, msg, hWnd) {
@@ -1046,7 +1046,7 @@ OnWM_KEYDOWN(wParam, lParam, msg, hWnd) {
             } Else {
                 g_Insert := !g_Insert
                 If (g_Insert) {
-                    SB_SetText("    Insert", 4)
+                    SB_SetText(" Insert", 4)
                 } Else {
                     SB_SetText("Overstrike", 4)
                 }
@@ -1066,7 +1066,7 @@ OnWM_KEYDOWN(wParam, lParam, msg, hWnd) {
             }
         }
 
-    ; Preview window
+        ; Preview window
     } Else If (hActiveWnd == hChildWnd) {
         If (ShiftP) {
             If (wParam == 37) { ; Shift + Left
@@ -1355,99 +1355,99 @@ Open(Files := "", Flag := 0) {
         }
 
         _Open:
-        Try {
-            fOpen := FileOpen(File, "r")
-            fRead := fOpen.Read()
-            ;fEncoding := fOpen.Encoding
-            fOpen.Close()
-        } Catch e {
-            MsgBox 0x16
-            , Error %A_LastError%
-            , % ((File != "") ? File . "`n" : "") . e.Message . "`n" . e.Extra
-            IfMsgBox TryAgain, {
-                GoTo _Open
-            } Else IfMsgBox Continue, {
-                Continue
-            } Else {
-                Return 0
+            Try {
+                fOpen := FileOpen(File, "r")
+                fRead := fOpen.Read()
+                ;fEncoding := fOpen.Encoding
+                fOpen.Close()
+            } Catch e {
+                MsgBox 0x16
+                , Error %A_LastError%
+                , % ((File != "") ? File . "`n" : "") . e.Message . "`n" . e.Extra
+                IfMsgBox TryAgain, {
+                    GoTo _Open
+                } Else IfMsgBox Continue, {
+                    Continue
+                } Else {
+                    Return 0
+                }
             }
+
+            SplitPath File, FileName, g_OpenDir, FileExt
+
+            If (Flag == 1 && FileExt = "ahk") {
+                Gosub NewGUI
+                ParseScript(fRead) ; Import GUI
+            } Else {
+                n := TabEx.GetSel()
+                If (Flag == 0 && (Sci[n].FileName != "" || Sci[n].GetModify() || n == g_GuiTab)) {
+                    n := NewTab()
+                } Else {
+                    SetWindowTitle(File)
+                }
+
+                TabEx.SetText(n, FileName)
+
+                If (FileExt = "ahk") {
+                    TabEx.SetIcon(n, 2)
+                } Else {
+                    Sci[n].SetLexer(0)
+                }
+
+                Sci[n].FullName := File
+                Sci[n].FileName := FileName
+                Sci[n].SetText("", fRead, 1)
+                Sci[n].SetSavePoint()
+                ;Sci[n].Encoding := fEncoding
+
+                If (Flag == 0) {
+                    Sci[n].EmptyUndoBuffer()
+                }
+
+                FileGetTime Timestamp, %File%
+                Sci[n].LastWriteTime := Timestamp
+            }
+
+            fRead := ""
+
+            AddToRecentFiles(File)
         }
 
-        SplitPath File, FileName, g_OpenDir, FileExt
+        Return n
+    }
 
-        If (Flag == 1 && FileExt = "ahk") {
-            Gosub NewGUI
-            ParseScript(fRead) ; Import GUI
-        } Else {
-            n := TabEx.GetSel()
-            If (Flag == 0 && (Sci[n].FileName != "" || Sci[n].GetModify() || n == g_GuiTab)) {
-                n := NewTab()
-            } Else {
-                SetWindowTitle(File)
-            }
+    SaveAs:
+        SaveAs(TabEx.GetSel())
+    Return
 
-            TabEx.SetText(n, FileName)
+    SaveAs(n) {
+        TabEx.SetSel(n)
 
-            If (FileExt = "ahk") {
-                TabEx.SetIcon(n, 2)
-            } Else {
-                Sci[n].SetLexer(0)
-            }
-
-            Sci[n].FullName := File
-            Sci[n].FileName := FileName
-            Sci[n].SetText("", fRead, 1)
-            Sci[n].SetSavePoint()
-            ;Sci[n].Encoding := fEncoding
-
-            If (Flag == 0) {
-                Sci[n].EmptyUndoBuffer()
-            }
-
-            FileGetTime Timestamp, %File%
-            Sci[n].LastWriteTime := Timestamp
+        StartPath := (Sci[n].FileName != "") ? Sci[n].FullName : g_SaveDir
+        Gui Auto: +OwnDialogs
+        FileSelectFile SelectedFile, S16, %StartPath%, Save, AutoHotkey Scripts (*.ahk)
+        If (ErrorLevel) {
+            Return
         }
 
-        fRead := ""
+        SplitPath SelectedFile, FileName,, Extension
+        If (Extension == "" && !FileExist(SelectedFile . ".ahk")) {
+            FileName .= ".ahk"
+            SelectedFile .= ".ahk"
+            Extension := "ahk"
+        }
 
-        AddToRecentFiles(File)
-    }
+        Sci[n].FullName := SelectedFile
+        Sci[n].FileName := FileName
 
-    Return n
-}
+        If (Extension != "ahk") {
+            Sci[n].SetLexer(0)
+            DisableSyntaxHighlighting(n)
+        } Else If (Sci[n].GetLexer() != 200) {
+            Sci_Config(n)
+        }
 
-SaveAs:
-    SaveAs(TabEx.GetSel())
-Return
-
-SaveAs(n) {
-    TabEx.SetSel(n)
-
-    StartPath := (Sci[n].FileName != "") ? Sci[n].FullName : g_SaveDir
-    Gui Auto: +OwnDialogs
-    FileSelectFile SelectedFile, S16, %StartPath%, Save, AutoHotkey Scripts (*.ahk)
-    If (ErrorLevel) {
-        Return
-    }
-
-    SplitPath SelectedFile, FileName,, Extension
-    If (Extension == "" && !FileExist(SelectedFile . ".ahk")) {
-        FileName .= ".ahk"
-        SelectedFile .= ".ahk"
-        Extension := "ahk"
-    }
-
-    Sci[n].FullName := SelectedFile
-    Sci[n].FileName := FileName
-
-    If (Extension != "ahk") {
-        Sci[n].SetLexer(0)
-        DisableSyntaxHighlighting(n)
-    } Else If (Sci[n].GetLexer() != 200) {
-        Sci_Config(n)
-    }
-
-    SetWindowTitle(SelectedFile)
+        SetWindowTitle(SelectedFile)
 
     Return Save(n)
 }
@@ -1461,7 +1461,7 @@ Save(n) {
         Return SaveAs(n)
     }
 
-    SciText  := GetText(n)
+    SciText := GetText(n)
     FullPath := Sci[n].FullName
     Encoding := GetSaveEncoding(FullPath)
 
@@ -1501,7 +1501,7 @@ Save(n) {
     FileGetTime Timestamp, %FullPath%
     Sci[n].LastWriteTime := Timestamp
 
-    Return 1
+Return 1
 }
 
 SaveAll:
@@ -1617,7 +1617,7 @@ RunScript(Mode := 1) {
     If (g_CaptureStdErr) {
         AhkRunGetStdErr(n, AhkPath, FullPath, g_parameters, WorkingDir)
     } Else {
-        Run % AhkPath . " """ . FullPath . """ " . g_Parameters, %WorkingDir%    
+        Run % AhkPath . " """ . FullPath . """ " . g_Parameters, %WorkingDir% 
     }
 }
 
@@ -1639,8 +1639,8 @@ GetAltRun() {
 
 ShowParamsDlg:
     Info := "Parameters are stored in the variables %1%, %2%, and so on.`n"
-         .  "They are also stored as an array in the built-in variable A_Args.`n"
-         .  "See the online <a href=""https://autohotkey.com/docs/Scripts.htm#cmd"">help topic</a> for details."
+    . "They are also stored as an array in the built-in variable A_Args.`n"
+    . "See the online <a href=""https://autohotkey.com/docs/Scripts.htm#cmd"">help topic</a> for details."
 
     Params := InputBoxEx("Script Parameters", Info, "Command Line Parameters", g_Parameters, "", "", hAutoWnd, 440, "", IconLib, 91)
 
@@ -1814,7 +1814,7 @@ AboutClose:
 Return
 
 ShowTabContextMenu() {
-    Action := FileExist(Sci[g_TabIndex].FullName) ? "Enable" : "Disable"
+Action := FileExist(Sci[g_TabIndex].FullName) ? "Enable" : "Disable"
     Menu TabContextMenu, %Action%, Open Folder in Explorer
     Menu TabContextMenu, %Action%, Copy Path to Clipboard
     Menu TabContextMenu, %Action%, Open in a New Window
@@ -1916,13 +1916,13 @@ SendData(ByRef String, ByRef hWnd) {
     NumPut(cbSize, COPYDATASTRUCT, A_PtrSize)
     NumPut(&String, COPYDATASTRUCT, 2 * A_PtrSize)
     SendMessage 0x4A, 0, &COPYDATASTRUCT,, ahk_id %hWnd%
-    Return ErrorLevel
+Return ErrorLevel
 }
 
 OnWM_COPYDATA(wParam, lParam, msg, hWnd) {
     Data := StrGet(NumGet(lParam + 2 * A_PtrSize)) ; COPYDATASTRUCT lpData
     Open([Data])
-    Return True
+Return True
 }
 
 ShowImportGUIDialog:
@@ -1962,7 +1962,7 @@ ImportGUIDlgOK:
 Return
 
 OnWM_ENTERMENULOOP() {
-    Return 1 ; Prevent repainting problems on XP?
+Return 1 ; Prevent repainting problems on XP?
 }
 
 OnWM_INITMENU(wParam) {
@@ -1976,7 +1976,7 @@ OnWM_ACTIVATEAPP(wParam, lParam, msg, hWnd) {
         CheckModified()
     }
 
-    Return 0
+Return 0
 }
 
 RestoreWindow() {
@@ -2145,7 +2145,7 @@ Return
 EnumIncludesCallback(Param) {
     SplitPath Param, Filename, FilePath
     LV_Add("", Filename, FilePath)
-    Return True ; must return true to continue enumeration
+Return True ; must return true to continue enumeration
 }
 
 IncludesDlgEscape:
@@ -2367,16 +2367,16 @@ CreateTabControl:
 
     SendMessage 0x1329, 0, 0x00180055,, ahk_id %hTab% ; TCM_SETITEMSIZE (0x18 = 24)
 
-    Ptr := A_PtrSize == 8 ? "Ptr" : ""
+Ptr := A_PtrSize == 8 ? "Ptr" : ""
     Global OldTabProc := DllCall("GetWindowLong" . Ptr, "Ptr", hTab, "Int", -4, "Ptr") ; GWL_WNDPROC
     NewTabProc := RegisterCallback("NewTabProc", "", 4) ;
     DllCall("SetWindowLong" . Ptr, "Ptr", hTab, "Int", -4, "Ptr", NewTabProc, "Ptr")
 
     TabEx := New GuiTabEx(hTab)
     TabExIL := IL_Create(3)
-    IL_Add(TabExIL, IconLib, 3)   ; Unsaved file
+    IL_Add(TabExIL, IconLib, 3) ; Unsaved file
     IL_Add(TabExIL, A_AhkPath, 2) ; AHK default icon
-    IL_Add(TabExIL, IconLib, 5)   ; GUI icon
+    IL_Add(TabExIL, IconLib, 5) ; GUI icon
     TabEx.SetImageList(TabExIL)
     TabEx.SetIcon(1, 1)
     TabEx.SetPadding(5, 4)
@@ -2441,7 +2441,7 @@ NewTabProc(hWnd, msg, wParam, lParam) {
         Return True
     }
 
-    Return DllCall("CallWindowProcA", "Ptr", OldTabProc, "Ptr", hWnd, "UInt", msg, "Ptr", wParam, "Ptr", lParam, "Ptr")
+Return DllCall("CallWindowProcA", "Ptr", OldTabProc, "Ptr", hWnd, "UInt", msg, "Ptr", wParam, "Ptr", lParam, "Ptr")
 }
 
 ; nTab := TabHitTest(hTab, lParam & 0xFFFF, lParam >> 16)
@@ -2451,7 +2451,7 @@ TabHitTest(hWnd, x, y) {
     NumPut(y, TCHITTESTINFO, 4)
     NumPut(6, HITTESTINFO, 8) ; 6 = TCHT_ONITEM
     SendMessage 0x130D, 0, &TCHITTESTINFO,, ahk_id %hWnd% ; TCM_HITTEST
-    Return Int(ErrorLevel) + 1
+Return Int(ErrorLevel) + 1
 }
 
 ; Drag: source. Drop: destination.
@@ -2623,7 +2623,7 @@ AutoSaveTimer() {
                     FileExt := "." . FileExt . ".tmp"
                     Sci[A_Index].BackupName := g_BackupDir . "\" . Filename . " [" . CRC32 . "]" . FileExt
                 }
-            ; For unnamed documents
+                ; For unnamed documents
             } Else If (Sci[A_Index].BackupName == "") {
                 Sci[A_Index].BackupName := GetTempFileName(g_BackupDir, "tmp")
             }
@@ -2651,7 +2651,7 @@ CRC32(String, Encoding = "UTF-8") {
     hMod := DllCall("Kernel32.dll\LoadLibrary", "Str", "Ntdll.dll", "Ptr")
     CRC32 := DllCall("Ntdll.dll\RtlComputeCrc32", "UInt", 0, "UInt", &Data, "UInt", Length, "UInt")
     DllCall("Kernel32.dll\FreeLibrary", "Ptr", hMod)
-    Return Format("{:08X}", CRC32)
+Return Format("{:08X}", CRC32)
 }
 
 GetTempFileName(Dir, Ext := "tmp") {
@@ -2673,7 +2673,7 @@ GetTempFileName(Dir, Ext := "tmp") {
     }
 
     Attempts := 0
-    Return Filename
+Return Filename
 }
 
 DeleteOldBackups(Ext := "tmp") {
@@ -2691,7 +2691,7 @@ BackupDirCreated() {
         FileCreateDir %g_BackupDir%
         Return !ErrorLevel
     }
-    Return True
+Return True
 }
 
 StartAutoSave() {
@@ -2818,13 +2818,13 @@ AhkRunGetStdErr(n, AhkPath, AhkScript, Parameters, WorkingDir, AhkDbgParams := "
 
         ; Debug
         If (AhkDbgParams) {
-            GoSub DebugError            
+            GoSub DebugError 
         }
     }
 }
 
 GetSaveEncoding(Filename) {
-    Return (SubStr(Filename, -2) = "INI") ? "UTF-16" : A_FileEncoding
+Return (SubStr(Filename, -2) = "INI") ? "UTF-16" : A_FileEncoding
 }
 
 WriteFile(Filename, String, Encoding := "UTF-8") {
@@ -2835,7 +2835,7 @@ WriteFile(Filename, String, Encoding := "UTF-8") {
     }
     Bytes := f.Write(String)
     f.Close()
-    Return Bytes
+Return Bytes
 }
 
 #Include %A_ScriptDir%\Lib\CommonDialogs.ahk
