@@ -1,5 +1,5 @@
 ; READING INI FILE TO CONFIGURE BOT
-myinipath=%A_ScriptDir%\options.ini
+myinipath=%A_ScriptDir%\settings.ini
 
 ; if ini file does not exist then create one and write deafault values
 if !FileExist(myinipath){

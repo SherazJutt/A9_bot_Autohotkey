@@ -4,70 +4,70 @@
 
 ; Lancer
 IniRead, iniLancer, %myinipath%, CarsSkip, Lancer
-IniRead, iniLancer_to, %myinipath%, CarsSkip, Lancer_to
+IniRead, iniLancer_to, %myinipath%, CarsSkipTo, Lancer_to
 ; Hellcat
 IniRead, iniHellcat, %myinipath%, CarsSkip, Hellcat
-IniRead, iniHellcat_to, %myinipath%, CarsSkip, Hellcat_to
+IniRead, iniHellcat_to, %myinipath%, CarsSkipTo, Hellcat_to
 ; Peugeotsr1
 IniRead, iniPeugeotsr1, %myinipath%, CarsSkip, Peugeotsr1
-IniRead, iniPeugeotsr1_to, %myinipath%, CarsSkip, Peugeotsr1_to
+IniRead, iniPeugeotsr1_to, %myinipath%, CarsSkipTo, Peugeotsr1_to
 ; Lamborghinicountach25th
 IniRead, iniLamborghinicountach25th, %myinipath%, CarsSkip, Lamborghinicountach25th
-IniRead, iniLamborghinicountach25th_to, %myinipath%, CarsSkip, Lamborghinicountach25th_to
+IniRead, iniLamborghinicountach25th_to, %myinipath%, CarsSkipTo, Lamborghinicountach25th_to
 ; Srt8
 IniRead, iniSrt8, %myinipath%, CarsSkip, Srt8
-IniRead, iniSrt8_to, %myinipath%, CarsSkip, Srt8_to
+IniRead, iniSrt8_to, %myinipath%, CarsSkipTo, Srt8_to
 ; Saleens1
 IniRead, iniSaleens1, %myinipath%, CarsSkip, Saleens1
-IniRead, iniSaleens1_to, %myinipath%, CarsSkip, Saleens1_to
+IniRead, iniSaleens1_to, %myinipath%, CarsSkipTo, Saleens1_to
 ; Ferrarimonzasp1
 IniRead, iniFerrarimonzasp1, %myinipath%, CarsSkip, Ferrarimonzasp1
-IniRead, iniFerrarimonzasp1_to, %myinipath%, CarsSkip, Ferrarimonzasp1_to
+IniRead, iniFerrarimonzasp1_to, %myinipath%, CarsSkipTo, Ferrarimonzasp1_to
 ; Jaguarxesvproject
 IniRead, iniJaguarxesvproject, %myinipath%, CarsSkip, Jaguarxesvproject
-IniRead, iniJaguarxesvproject_to, %myinipath%, CarsSkip, Jaguarxesvproject_to
+IniRead, iniJaguarxesvproject_to, %myinipath%, CarsSkipTo, Jaguarxesvproject_to
 ; Lamborghinimiura
 IniRead, iniLamborghinimiura, %myinipath%, CarsSkip, Lamborghinimiura
-IniRead, iniLamborghinimiura_to, %myinipath%, CarsSkip, Lamborghinimiura_to
+IniRead, iniLamborghinimiura_to, %myinipath%, CarsSkipTo, Lamborghinimiura_to
 ; Bugattieb110
 IniRead, iniBugattieb110, %myinipath%, CarsSkip, Bugattieb110
-IniRead, iniBugattieb110_to, %myinipath%, CarsSkip, Bugattieb110_to
+IniRead, iniBugattieb110_to, %myinipath%, CarsSkipTo, Bugattieb110_to
 ; Porsche911gscoupe
 IniRead, iniPorsche911gscoupe, %myinipath%, CarsSkip, Porsche911gscoupe
-IniRead, iniPorsche911gscoupe_to, %myinipath%, CarsSkip, Porsche911gscoupe_to
+IniRead, iniPorsche911gscoupe_to, %myinipath%, CarsSkipTo, Porsche911gscoupe_to
 ; Nissanr390
 IniRead, iniNissanr390, %myinipath%, CarsSkip, Nissanr390
-IniRead, iniNissanr390_to, %myinipath%, CarsSkip, Nissanr390_to
+IniRead, iniNissanr390_to, %myinipath%, CarsSkipTo, Nissanr390_to
 ; Ferrarienzo
 IniRead, iniFerrarienzo, %myinipath%, CarsSkip, Ferrarienzo
-IniRead, iniFerrarienzo_to, %myinipath%, CarsSkip, Ferrarienzo_to
+IniRead, iniFerrarienzo_to, %myinipath%, CarsSkipTo, Ferrarienzo_to
 ; Lamborghiniessenza
 IniRead, iniLamborghiniessenza, %myinipath%, CarsSkip, Lamborghiniessenza
-IniRead, iniLamborghiniessenza_to, %myinipath%, CarsSkip, Lamborghiniessenza_to
+IniRead, iniLamborghiniessenza_to, %myinipath%, CarsSkipTo, Lamborghiniessenza_to
 ; Porschecarrera
 IniRead, iniPorschecarrera, %myinipath%, CarsSkip, Porschecarrera
-IniRead, iniPorschecarrera_to, %myinipath%, CarsSkip, Porschecarrera_to
+IniRead, iniPorschecarrera_to, %myinipath%, CarsSkipTo, Porschecarrera_to
 ; Vulkan
 IniRead, iniVulkan, %myinipath%, CarsSkip, Vulkan
-IniRead, iniVulkan_to, %myinipath%, CarsSkip, Vulkan_to
+IniRead, iniVulkan_to, %myinipath%, CarsSkipTo, Vulkan_to
 ; Sennagtr
 IniRead, iniSennagtr, %myinipath%, CarsSkip, Sennagtr
-IniRead, iniSennagtr_to, %myinipath%, CarsSkip, Sennagtr_to
+IniRead, iniSennagtr_to, %myinipath%, CarsSkipTo, Sennagtr_to
 ; Zondar
 IniRead, iniZondar, %myinipath%, CarsSkip, Zondar
-IniRead, iniZondar_to, %myinipath%, CarsSkip, Zondar_to
+IniRead, iniZondar_to, %myinipath%, CarsSkipTo, Zondar_to
 ; Centenario
 IniRead, iniCentenario, %myinipath%, CarsSkip, Centenario
-IniRead, iniCentenario_to, %myinipath%, CarsSkip, Centenario_to
+IniRead, iniCentenario_to, %myinipath%, CarsSkipTo, Centenario_to
 ; RaesrTacheon
 IniRead, iniRaesrTacheon, %myinipath%, CarsSkip, RaesrTacheon
-IniRead, iniRaesrTacheon_to, %myinipath%, CarsSkip, RaesrTacheon_to
+IniRead, iniRaesrTacheon_to, %myinipath%, CarsSkipTo, RaesrTacheon_to
 ; Trion
 IniRead, iniTrion, %myinipath%, CarsSkip, Trion
-IniRead, iniTrion_to, %myinipath%, CarsSkip, Trion_to
+IniRead, iniTrion_to, %myinipath%, CarsSkipTo, Trion_to
 ; Naran
 IniRead, iniNaran, %myinipath%, CarsSkip, Naran
-IniRead, iniNaran_to, %myinipath%, CarsSkip, Naran_to
+IniRead, iniNaran_to, %myinipath%, CarsSkipTo, Naran_to
 
 ;  *-----------------------------------------------------------------------*
 ;       |     Setting checkbox values whether its checked or not      |       
