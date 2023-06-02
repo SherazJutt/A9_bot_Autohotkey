@@ -22,7 +22,20 @@ carNames := ["Lancer", "Hellcat", "Peugeotsr1", "Lamborghinicountach25th", "Srt8
 ; #Include, %A_ScriptDir%\src\Guis\CarsSkip.ahk
 script_start:
 
+    ToolTip, Script start, 640, 0,
+
     Gui, Destroy
+
+    ;     Text:="|<>*147$12.Tzzzzzzzw0w0w0w0w0w0zyzyzyw0w0w0w0w0w0w0zzzzzzU"
+
+    ;     if (ok:=FindText(X, Y, 499, 641, 523, 676, 0, 0, Text))
+    ;     {
+    ;         MsgBox, found
+    ;     }Else{
+    ;         MsgBox, not found
+    ;     }
+
+    ; Return
 
     If (Mute_System != 0){
         SoundSet,+1,,Mute
@@ -31,25 +44,49 @@ script_start:
     start_game()
     Sleep, 5000
 
-    StuckOnGlLogo := StuckOnGlLogo()
-    If (StuckOnGlLogo ){
+    If (StuckOnGlLogo()) {
         Goto, script_start
     }
 
-    StuckOnLoadingScreen:= StuckOnLoadingScreen()
-    If (StuckOnLoadingScreen){
+    If (StuckOnLoadingScreen()) {
         Goto, script_start
     }
 
-    MainMenuLoadedCheck:= MainMenuLoadedCheck()
-    If (!MainMenuLoadedCheck){
+MainMenuLoadedCheck:
+
+    If (!MainMenuLoadedCheck()) {
         Goto, script_start
     }
 
-    SeasonalEvents:= SeasonalEvents()
-    If (!SeasonalEvents){
+    Sleep, 3000
+
+    CheckGame()
+    FullScreenAD()
+    exitGamePopUp()
+    RewardsNext()
+
+    If (!SeasonalEvents()) {
         Goto, script_start
     }
+
+    Sleep, 3000
+
+    If (!EnterEventsTab()) {
+        Goto, MainMenuLoadedCheck
+    }
+
+HuntStart:
+
+    If (!EnterHuntTab()) {
+        Goto, MP1Start
+    }
+
+    If (!isRaceScreen()) {
+        Goto, MainMenuLoadedCheck
+    }
+
+MP1Start:
+    MsgBox, Playing MP1
 
 ExitApp
 
@@ -58,10 +95,13 @@ ExitApp
     SoundSet, 0, , mute
 ExitApp
 
-#Include, %A_ScriptDir%\src\functions\MainMenuLoadedCheck.ahk
 #Include, %A_ScriptDir%\src\functions\StartGame.ahk
 #Include, %A_ScriptDir%\src\functions\StuckOnGlLogo.ahk
 #Include, %A_ScriptDir%\src\functions\StuckOnLoadingScreen.ahk
+#Include, %A_ScriptDir%\src\functions\MainMenuLoadedCheck.ahk
+#Include, %A_ScriptDir%\src\functions\Events.ahk
+#Include, %A_ScriptDir%\src\functions\Hunt.ahk
+
 #Include, %A_ScriptDir%\src\functions\CommonFunctions.ahk
 
 #Include, %A_ScriptDir%\src\libs\JSON.ahk

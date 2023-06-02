@@ -2,10 +2,11 @@ StuckOnLoadingScreen() {
 
     isStuck := true 
 
-    Loop, 60 {
-        CoordMode, Pixel, Screen
-        PixelSearch, FoundX, FoundY, 650, 356, 679, 378, 0x000000, 0, Fast RGB
-        If (ErrorLevel = 0) {
+    Loop, 5 {
+
+        Text:="|<>*118$18.zzzi0ziATiSRiSNiSNiSTiSTiSTiSTiANi0Nz0tzzzU"
+
+        if (ok:=FindText(X, Y, 167, 56, 191, 77, 0, 0, Text)) {
             Sleep, 1000
         } Else {
             isStuck := False 

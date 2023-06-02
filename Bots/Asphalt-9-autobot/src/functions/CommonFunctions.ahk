@@ -7,27 +7,36 @@ PressEscape(count){
 }
 
 CheckGame(){
+
+    isRunning := True
+
     IfWinExist, Asphalt 9: Legends
     {
         WinActivate, Asphalt 9: Legends
         WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
         WinRestore, Asphalt 9: Legends
+    }else{
+        Reload ; Restart the script
+        isRunning := False
     }
-    else
-    {
-        ToolTip, main menu loaded check, 640, 0,
-        Sleep, 1000
-        Goto, script_start
-    }
+
+    Return isRunning
 }
 
 FullScreenAD(){
 
-    Text:="|<>*117$61.zk600C0k1XTy3U0DUQ1lzzVk07kD1ky1ks03s3UsT0MQ03g1sMDUAC01r0QQ7k6700nUCC3s33U0sk3i1w3Vk0QQ1z0z1ks0CC0T0PzsQ0630DUBzsC071k3U6s0703zs1k0M03U1zw0s0A01k1sC0Q0q00s0s3UC0T00TyQ1k70DU0DzA0s3U7k07za0A1k3E"
+    Text:="|<>*48$29.bzzzm7zzz07zzw47zzkQ7zz1w7zw7w7zkTw7z1zw7w7zw7kTzw71zzw07zzw0Tzzw1zzzs7zzzk7zzz07zzw47zzkQ7zz1w7zw7w7zkTw7z1zw7w7zw7kTzw71zzw47zzw0TzzwNzzzxk"
 
-    if (ok:=FindText(X, Y, 909, 544, 997, 585, 0, 0, Text))
-    {
-        Click, 1058, 138 Left, 1
+    if (ok:=FindText(X, Y, 1030, 124, 1074, 172, 0, 0, Text)){
+        Click, 1052, 147 Left, 1
+        Sleep, 1000
+    }
+
+    Text:="|<>*65$29.bzzzW7zzz07zzw47zzkQ7zz1w7zs7w7zkTw7z1zw7w7zw7kTzw71zzw07zzw0Tzzw1zzzs3zzzk7zzz07zzw47zzkQ7zy1w7zw7w7zkTw7z1zw7w7zw7UTzw71zzw47zzw4TzzwNzzzxk"
+
+    if (ok:=FindText(X, Y, 1030, 124, 1073, 172, 0, 0, Text)){
+        Click, 1052, 147 Left, 1
+        Sleep, 1000
     }
 }
 
@@ -38,38 +47,20 @@ RewardsNext(){
     if (ok:=FindText(X, Y, 1103, 628, 1190, 672, 0, 0, Text))
     {
         Click, 1207, 642 Left, 1
+        Sleep, 3000
     }
 }
 
-SeasonalEvents(){
+exitGamePopUp(){
 
-    isLoaded := False
+    Text:="|<>*116$63.U0D3zVwS00801sTsD1k0000D1z1sC00001wDsT1s011zzUy3sDw7sTzy7Uz1zkz3zzkQDsDy7sTzz31z1zkz3zzs8TsDy7sTzzU3z1zkz00zy0zsDy7s03zk7z1zkz00Ty0zsDy7s03zk7z1zkz1zzw0zsDy7sTzzU3z1zkz3zzs8TsDy7sTzz31z1zkz3zzkQ7sDy7sTzy7kz1zkz3zzUy3sDy7s3zwDsT1zkz00D1z1sDy7s01sTwD1zkz00D3zVwTyDw"
 
-    ; seasonal events red
-    Loop, 60 {
-        CoordMode, Pixel, Screen
-        PixelSearch, FoundX, FoundY, 240, 603, 270, 625, 0xFF0049, 0, Fast RGB
-        If (ErrorLevel = 0){
-            ; click on seasonal events tabe to active
-            Click, 349, 637 Left, 1
-            Sleep, 1000
-        }else{
-            isLoaded := True
-            Loop, 10{
-                ; check if seasonal events tabe active
-                CoordMode, Pixel, Screen
-                PixelSearch, FoundX, FoundY, 251, 648, 276, 674, 0xFFFFFF, 0, Fast RGB
-                If (ErrorLevel = 0){
-                    PressEscape(1)
-                    Break
-                }else{
-                    ; click on seasonal events tabe to active
-                    Click, 349, 637 Left, 1
-                    PressEscape(1)
-                }
-            }
-            Break
-        }
+    if (ok:=FindText(X, Y, 556, 241, 633, 280, 0, 0, Text))
+    {
+        PressEscape(1)
+        Sleep, 1000
     }
+
 }
+
 ; need to include funtions like if gotany rewards or completed milestone or any other
