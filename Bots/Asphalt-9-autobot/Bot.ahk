@@ -13,6 +13,8 @@ SetBatchLines -1
 
 t1:=A_TickCount, X:=Y:=""
 
+global SettingsIni := A_ScriptDir "\settings.ini"
+
 carNames := ["Lancer", "Hellcat", "Peugeotsr1", "Lamborghinicountach25th", "Srt8", "Saleens1", "Ferrarimonzasp1", "Jaguarxesvproject", "Lamborghinimiura", "Bugattieb110", "Porsche911gscoupe", "Nissanr390", "Ferrarienzo", "Lamborghiniessenza", "Porschecarrera", "Vulkan", "Sennagtr", "Zondar", "Centenario", "RaesrTacheon", "Trion", "Naran"]
 
 ; #Include, %A_ScriptDir%\src\Boot.ahk
@@ -69,8 +71,6 @@ MainMenuLoadedCheck:
         Goto, script_start
     }
 
-    Sleep, 3000
-
     If (!EnterEventsTab()) {
         Goto, MainMenuLoadedCheck
     }
@@ -78,11 +78,32 @@ MainMenuLoadedCheck:
 HuntStart:
 
     If (!EnterHuntTab()) {
+        If (!MainMenuLoadedCheck()) {
+            Goto, script_start
+        }
         Goto, MP1Start
     }
 
     If (!isRaceScreen()) {
-        Goto, MainMenuLoadedCheck
+        Reload
+    }
+
+    Sleep, 2000
+
+    If (!TicketCheck()) {
+        If (!MainMenuLoadedCheck()) {
+            Goto, script_start
+        }
+        Goto, MP1Start
+    }
+
+    Sleep, 1000
+    SelectCarToPlayHunt()
+    Sleep, 1000
+    TdCheck()
+
+    if(PlayButton()){
+        MsgBox, play button found
     }
 
 MP1Start:

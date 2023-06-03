@@ -11,7 +11,7 @@ if !FileExist(myinipath){
 }
 
 ;  *--------------------------------------------------*
-;               |     Main variables      |       
+;               |     Main variables      |
 ;  *--------------------------------------------------*
 
 IniRead, inihunt, %myinipath%, Main, Hunt
