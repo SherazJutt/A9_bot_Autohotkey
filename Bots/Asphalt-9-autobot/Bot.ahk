@@ -64,7 +64,7 @@ MainMenuLoadedCheck:
 
     CheckGame()
     FullScreenAD()
-    exitGamePopUp()
+    ExitGamePopUp()
     RewardsNext()
 
     If (!SeasonalEvents()) {

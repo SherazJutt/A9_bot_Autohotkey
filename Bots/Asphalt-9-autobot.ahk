@@ -60,7 +60,7 @@ date_check:
     CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
 
     ; Year Month Day
-    ExpirationDate := 2023 06 01
+    ExpirationDate := 2023 06 10
     PurchaseDate := 2023 03 01
 
     if (CurrentDate >= ExpirationDate or !data)
@@ -1176,9 +1176,10 @@ hunt_card_check_start:
 
     ; hunt card
 
-    Text:="|<>*128$130.000TU00TzzkDzzz1zzy00w001y000zzw0zzzk3zzk00k007s001zzU3zzw0Dzy001000TU003zs0DzzU0zzk0043zzy1zkDz00zzw03zy0T00Tzzs7zUTw03zzk0Dzs7z01zzzUTz1zkMDzz30zzUzy07zzy1zw7z7UzzwQ3zy3zs0Tzzs7zkTxy3zzrkDzsDzU1zzzUTz1zzsDzzz0zzUzy07zzy1zw7zzUzzzw3zy3zs0Tzzs7zkTzy3zzzkDzsDzU1zzzUTy1zzsDzzz0zzUzy07zzy1zkDzzUzzzw3zy3zs000Ts000zzy3zzzkDzsDzU001zU007zzsDzzz0zzUzy0007y000zzzUzzzw3zy3zs000Ts001zzy3zzzkDzsDzU001zU003zzsDzzz0zzUzy03zzy1zs7zzUzzzw3zy3zs0Tzzs7zkTzy3zzzkDzsDzU1zzzUTz1zzsDzzz0zzUzy07zzy1zw7zzUzzzw3zy3zs0Tzzs7zkTzy3zzzkDzsDzU0zzzUTz1zzsDzzz0zzUzy03zzy1zw7zzUzzzw3zy3zs0Tzzs7zkTzy3zzzkDzsDzU1zzzUTz1zzsDzzz0zzUTy03zzy1zs7zzUzzzw3zy1zk0007s000Tzy3zzzkDzw000000TU003zzsDzzz0zzk004001y000TzzUzzzw3zzU00k007s003zzy3zzzkDzz007U00zk01zzzsTzzzVzzzU1y"
+    Text:="|<>*132$132.0Dzy0zkTsDzkTk00Tzzk7z0Dzw0zkTsDzkTk007zzU7z07zw0zkTsDzkTk003zzU3z07zw0zkTsDzkTk001zzU3z07zs0zkTsDzkTkDw1zz03z03zs0zkTsDzkTkTy1zz01z03zk0zkTsDzkTkTz0zz11z03zk0zkTsDzkTkTz0zy11z11zkUzkTsDzkTkTz0zy31z1VzUUzkTsDzkTkTz0zy3Uz1VzVUzkTsDzkTkTz0zy3Uz1UzVUzkTsDzkTkTz0zw7Uz1kz1UzkTsDzkTkTz0zw7kz1kT3UzkTsDzkTkTz0zw7kT1sS3UzkTsDzkTkTz1zs7kT1sS3UzkTsDzkTkTy1zsDkT1sC7UzkTsDzkTk001zsDsD1wA7UzkTsDzkTk003zsDsD1wA7UzkTsDzkTk007zkTsD1w4DUzkTsDzkTk00DzkTs71y0DUzkTsDzkTk00TzkTw71y0DUzkTsDzkTkTUTzUTs71y0TUzkTsDzkTkTkDzU0071z0TUzkTsDzkTkTkDzU0031z0zUzkTsDzkTkTs7zU0031z0zUzkTsDzkTkTs7z00031zzzUzkTsDzkTkTw3z1zy11zzzUzkTsDzUTkTw3z1zy11zzzUzkTs7z0zkTy1y1zz11zzzUzkTw000zkTy1y3zz11zzzUzkTw001zkTz0y3zz01zzzUzkTy001zkTz0y3zzU1zzzUzkTz007zkTzUw3zzUVzzzlzszzs0TzsTzky7zzkU"
 
-    if (ok:=FindText(X, Y, 322, 220, 465, 265, 0, 0, Text))
+    if (ok:=FindText(X, Y, 322, 216, 466, 267, 0, 0, Text))
+
     {
         Loop, 2{
             Send, {Enter}

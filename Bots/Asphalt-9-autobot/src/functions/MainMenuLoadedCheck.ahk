@@ -14,7 +14,7 @@ MainMenuLoadedCheck(){
             PressEscape(1)
             CheckGame()
             FullScreenAD()
-            exitGamePopUp()
+            ExitGamePopUp()
             RewardsNext()
         }
         Sleep, 1000
