@@ -49,9 +49,9 @@ TicketCheck(){
 
     Click, 1162, 135 Left, 1
 
-    Text:="|<>*131$127.003zs007s007kTsDzzUzzU00Tw003w003sDw7zzkTzk007y001y001w7y3zzsDzs003z000z000y3z1zzw7zw7y0zUzzzUzzz1zUzzy3zy3zkTkTzzkTzzUzkTzz1zz1zsDsDzzsDzzkTsDzzUzzUzw7w7zzw7zzsDw7zzkTzkTy3y3zzy3zzw7y3zzsDzsDz1z1zzz1zzy3z1zzw7zw7zUzUzzzUzzz1zUzzy3zy3zkTkTzzkTzzUzkTzz1zz1zsDsDzzsDzzkTsDzzUzzUzw7w7zzw7zzsDw7zzkTzkTy3y007y3zzw7y3zzsDzsDy1z003z003y3z1zzw7zw001zU01zU01z1zUzzy3zy000zk00zk00zUzkTzz1zz000zsDzzs00TkTsDzzUzzU01zw7zzw7zzsDw7zzkTzkTUzy3zzy3zzw7y3zzsDzsDkDz1zzz1zzy3z1zzw7zw7w7zUzzzUzzz1zUzzy3zy3y1zkTzzkTzzUzkTzz1zz1z0zsDzzsDzzkTsDzzUzzUzkDw7zzw7zzsDw7zzkTzkTw7y3zzy3zzw7y3zzsDzsDy3z1zzz1zzy3z1zzw7zw7z0zU00TUzzz1zU00S0003zkTk00DkTzzUzk00D0001zs7s007sDzzkTs007U000zy3w003w7zzsDw003k008zzVz003z7zzyDy003w00A"
+    Text:="|<>*142$58.zs7zzzk07zy0Tzzw003zU1zzzU007w07zzw000D00TzzU000M01zzw0001007zzk3zk00UTzz0TzU0C1zzw3zz03s7zzkDzw0zUTzy0zzkDy1zzs3zz0zs7zzUDzw3zUTzy0zzkDy1zzs3zz0zs7zzUDzw3zUTzy0zzkDy1zzs3zz0zs7zzUDzw3zUTzy0zzkDy1zzs3zz0zs7zzUDzw3zUTzy0zzkDy1zzs3zz0zs7zzUDzw3zUTzy0zzkDy1zzs3zz0zs7zzUDzw3zUTzy0zzkDy1zzs3zz0zs7zzUDzw3zUTzy0zzkDy1zzw3zz0zs7zzkDzw3zUTzz0TzUDy1zzw0zw0zs7zzk0007zUTzzU000Ty1zzz0003zs7zzw000TzUTzzw003zy1zzzw01zU"
 
-    if (ok:=FindText(X:="wait", Y:=10, 433, 170, 578, 222, 0, 0, Text)) {
+    if (ok:=FindText(X:="wait", Y:=10, 695, 314, 768, 368, 0, 0, Text)) {
 
         ; 0
         Text:="|<>*119$28.zzzzzz00TzU00Tw000zU001w0003k00060Ty0M3zw1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM3zw1U7zk70000Q0003s000Tk003zU00Tzk07zzzzzs"
@@ -98,7 +98,7 @@ SelectCarToPlayHunt(){
             ; click on first car
             Click, 338, 389 Left, 1
 
-            ; check upgrade text to verify selected car screeb
+            ; check upgrade text to verify selected car screen
             Text:="|<>*148$145.s1kTz01z07zU0DU1zs0zz0DsQ0sDzs3zs7zw07k1zz0TzUTzC0Q7zy3zy3zz07s0zzkDzkTzr0C3kD1sD1s7U3y0S1w700T1vU71s3Vs3kw1s1r0D0S3U0D0Rk3Uw1kw1sS0w1vU7U71k070Cs1kS0sS0wD0S0xs3k3Us03U7Q0sD0QD0A7UD0QQ1s1kQ01k0C0Q7UC7U03k7UCC0w0sC00w070C3k73k01s3kD7US0Q700TU3U71s3Vs00w1k73kD0C3zs7z1k3Uw3kwTsTzs3Us7U71zw1zws1kTzsSDwDzs3kQ3k3Uzy0DzQ0sDzsD3y7zs1sD1s1kQ000Ti0Q7zk7UD3kw0s7Uw0sC0001z0C3k03k7VsS0TzkS0Q70000zU71s01s3kw7UTzsD0C3U0C0Tk3Uw00w1sS3kDzy7U71k070Ds1kS00S0wD0s7073k7Us03k7y1sD00DUw7US7U3Vs7kQ01s7jzw7U03zy3k73k1szzkDzkTznzw3k00zy1s3lk0wTzk7zsDzkTs1k007w0w0ss0CDzk3zw1zV"
             if (ok:=FindText(X:="wait", Y:=10, 103, 617, 274, 663, 0, 0, Text)){
                 Sleep, 1000
@@ -134,10 +134,29 @@ SelectCarToPlayHunt(){
                 }
 
             }Else{
-                Reload
+                Gosub, ScriptStart
             }
     }Else{
-        Reload
+        Gosub, ScriptStart
     }
 
+}
+
+HuntRewardsSkip(){
+    isSkipped := False
+
+    Loop,30{
+
+        Text:="|<>*153$70.000000000001s1sDzls1tzzbU7Uzz3k7bzyT0S3zwD0wTztw1sC00S3k3k7s7Us00sS0D0TkS3U03ls0w1z1sC007D03k7y7Us00Sw0D0SsS3U00zU0w1vlsDzU3w03k7b7Uzy07k0D0SSS3zs0z00w1stsC003y03k7XrUs00Ts0D0S7y3U01vk0w1sDsC00D703k7UzUs00wS0D0S1y3U07Us0w1s7sC00S3k3k7UDUzy3kD0D0S0y3zwD0S0w1s1sDzls0w3k3030zz701U60000000000002"
+        if (ok:=FindText(X, Y, 1107, 631, 1187, 670, 0, 0, Text)){
+            Click, 1211, 643 Left, 1
+            isSkipped := True
+            Sleep, 1000
+            Break
+        }Else{
+            Click, 1211, 643 Left, 1
+            Sleep, 1000
+        }
+    }
+    Return isSkipped
 }

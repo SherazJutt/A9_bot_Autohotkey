@@ -27,7 +27,7 @@ CheckGame(){
         WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
         WinRestore, Asphalt 9: Legends
     }else{
-        Reload ; Restart the script
+        Gosub, ScriptStart
         isRunning := False
     }
 
@@ -97,6 +97,15 @@ Resume(){
         Send, {Escape}
     }
 }
+WhereToGetBpsScreen(){
+    Text:="|<>*160$32.zzzzzyTzzyD3zzz3UTzzUy3zzkTkTzsDy3zw7zUTy3zw3z1zzkTUzzy3kTzzkMDzzy07zzzU3zzzw1zzzzUTzzzk3zzzs0Tzzw43zzy3UTzz1y3zzUzkTzkTy3zsDzkTw7zw3y3zzkT1zzy3UzzzkQTzzyDjzzzrzzzzzs"
+    if (ok:=FindText(X, Y, 1142, 92, 1188, 136, 0, 0, Text))
+    {
+        Click, 1163, 116 Left, 1
+        Return True
+    }
+    Return False
+}
 
 LockedOrRefueling(){
 
@@ -109,6 +118,36 @@ LockedOrRefueling(){
     }
 
     Return isRefuelingOrLocked
+}
+
+TokensColorCheckToVerifyHomeScreen(){
+
+    Text:="|<>*72$29.zzrzzzy3zzzs3zzz01zzw01zzk00zy000zs0k0z03k0Q07k0E0Tk0E0nU1U37U3067070Tz0S1zy0w3zy1wA0S7sM0QDk000Tk001zU003z0007z000Ty000zw001y"
+    if (ok:=FindText(X, Y, 787, 42, 823, 80, 0, 0, Text)){
+        Return True
+    }
+
+    Return False
+}
+
+; This shows sometimes After the MP race is completed
+ConnectingToTheServer(){
+    isError := True
+
+    Loop, 60{
+        Text:="|<>*71$43.zzzzzzzs0Dzzzzs00zzzzw00Dzzzy007zzzz3z3zzzzVzkzzzzkzsTzzzsTwDzzzwDy7zzzy7z3zzzz3zVzzzzVzUzzzzkTUzzzzs00Tzzzw00Tzzzy00zzzzz1sTzzzzVw7zzzzkz3zzzzsTUzzzzwDsTVsS67w7kwD33z3sS7VVzUwD3kkzsS7VsQTwD3kwDzzzzzzy"
+        if (ok:=FindText(X, Y, 578, 624, 628, 658, 0, 0, Text))
+        {
+            Sleep, 1000
+        }Else{
+            isError := False
+            Break
+        }
+    }
+
+    if(isError){
+        Gosub, ScriptStart
+    }
 }
 
 PlayButton(){

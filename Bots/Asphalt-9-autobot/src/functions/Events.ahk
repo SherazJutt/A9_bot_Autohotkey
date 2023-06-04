@@ -21,7 +21,7 @@ SeasonalEvents(){
                     Click, 349, 637 Left, 1
                     Sleep, 1500
                 }Else{
-                    Reload
+                    Gosub, ScriptStart
                 }
             }
         }
@@ -43,7 +43,7 @@ EnterEventsTab(){
             Sleep, 1000
         }
     }Else{
-        Reload ; Restart the script
+        Gosub, ScriptStart
     }
 
     Sleep, 3000
@@ -65,7 +65,7 @@ EnterEventsTab(){
                 Sleep, 250
             }
         }Else{
-            Reload
+            Gosub, ScriptStart
         }
     }
     Return isEventsLoaded

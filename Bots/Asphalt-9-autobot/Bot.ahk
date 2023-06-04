@@ -28,31 +28,40 @@ script_start:
 
     Gui, Destroy
 
-    ;     Text:="|<>*147$12.Tzzzzzzzw0w0w0w0w0w0zyzyzyw0w0w0w0w0w0w0zzzzzzU"
-
-    ;     if (ok:=FindText(X, Y, 499, 641, 523, 676, 0, 0, Text))
-    ;     {
-    ;         MsgBox, found
-    ;     }Else{
-    ;         MsgBox, not found
-    ;     }
-
-    ; Return
-
-    If (Mute_System != 0){
-        SoundSet,+1,,Mute
+    checksub(){
+        MsgBox, "[ Options, Title, Text, Timeout]"
+        Gosub, script_start
     }
 
-    start_game()
-    Sleep, 5000
+    checksub()
 
-    If (StuckOnGlLogo()) {
-        Goto, script_start
-    }
+Return
 
-    If (StuckOnLoadingScreen()) {
-        Goto, script_start
-    }
+;     Text:="|<>*147$12.Tzzzzzzzw0w0w0w0w0w0zyzyzyw0w0w0w0w0w0w0zzzzzzU"
+
+;     if (ok:=FindText(X, Y, 499, 641, 523, 676, 0, 0, Text))
+;     {
+;         MsgBox, found
+;     }Else{
+;         MsgBox, not found
+;     }
+
+; Return
+
+If (Mute_System != 0){
+    SoundSet,+1,,Mute
+}
+
+start_game()
+Sleep, 5000
+
+If (StuckOnGlLogo()) {
+    Goto, script_start
+}
+
+If (StuckOnLoadingScreen()) {
+    Goto, script_start
+}
 
 MainMenuLoadedCheck:
 
@@ -81,11 +90,14 @@ HuntStart:
         If (!MainMenuLoadedCheck()) {
             Goto, script_start
         }
+
         Goto, MP1Start
     }
 
+HuntRaceScreen:
+
     If (!isRaceScreen()) {
-        Reload
+        Goto, script_start
     }
 
     Sleep, 2000
@@ -103,7 +115,22 @@ HuntStart:
     TdCheck()
 
     if(PlayButton()){
-        MsgBox, play button found
+        Click, 1183, 634 Left, 1
+    }
+
+    Sleep, 8000
+
+    If (!PlayRace()){
+        Goto, script_start
+    }
+
+    MsgBox, rewards skip
+
+    If (HuntRewardsSkip()){
+        Sleep, 1000
+        Goto, HuntRaceScreen
+    }Else{
+        Goto, script_start
     }
 
 MP1Start:
@@ -122,6 +149,7 @@ ExitApp
 #Include, %A_ScriptDir%\src\functions\MainMenuLoadedCheck.ahk
 #Include, %A_ScriptDir%\src\functions\Events.ahk
 #Include, %A_ScriptDir%\src\functions\Hunt.ahk
+#Include, %A_ScriptDir%\src\functions\PlayRace.ahk
 
 #Include, %A_ScriptDir%\src\functions\CommonFunctions.ahk
 
