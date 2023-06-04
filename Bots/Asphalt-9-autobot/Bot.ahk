@@ -27,25 +27,25 @@ ScriptStart:
     ToolTip, Script start, 640, 0,
 
     Gui, Destroy
+    Sleep, 3000
 
-    ;     LeagueDetection()
-    ; ExitApp
-    ; Return
+    LeagueDetection()
+ExitApp
 
-    If (Mute_System != 0){
-        SoundSet,+1,,Mute
-    }
+If (Mute_System != 0){
+    SoundSet,+1,,Mute
+}
 
-    start_game()
-    Sleep, 5000
+start_game()
+Sleep, 5000
 
-    If (StuckOnGlLogo()) {
-        Goto, ScriptStart
-    }
+If (StuckOnGlLogo()) {
+    Goto, ScriptStart
+}
 
-    If (StuckOnLoadingScreen()) {
-        Goto, ScriptStart
-    }
+If (StuckOnLoadingScreen()) {
+    Goto, ScriptStart
+}
 
 MainMenuLoadedCheck:
 
@@ -145,9 +145,7 @@ MP1Start:
         }
     }
 
-; ///////////////////////////////////
-
-; ///////////////////////////////////
+    LeagueDetection()
 
 ExitApp
 
@@ -163,6 +161,7 @@ ExitApp
 #Include, %A_ScriptDir%\src\functions\Events.ahk
 #Include, %A_ScriptDir%\src\functions\Hunt.ahk
 #Include, %A_ScriptDir%\src\functions\PlayRace.ahk
+#Include, %A_ScriptDir%\src\functions\MP1.ahk
 
 #Include, %A_ScriptDir%\src\functions\CommonFunctions.ahk
 
