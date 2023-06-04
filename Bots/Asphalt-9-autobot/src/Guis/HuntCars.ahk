@@ -1,5 +1,5 @@
 ;  *-----------------------------------------------------------------------------*
-;         |     Define Cars GUi / Shows after clicking on hunt cars       |       
+;         |     Define Cars GUi / Shows after clicking on hunt cars       |
 ;  *-----------------------------------------------------------------------------*
 
 Hunt_Cars_Label:
@@ -29,11 +29,11 @@ Hunt_Cars_Label:
     Gui, Show, w135 h120, Define Cars
     WinSet, Style, -0x80000, Define Cars
 
-    IniRead, inicar1, %myinipath%, HUNT ,car_1
-    IniRead, inicar2, %myinipath%, HUNT ,car_2
-    IniRead, inicar3, %myinipath%, HUNT ,car_3
-    IniRead, inicar4, %myinipath%, HUNT ,car_4
-    IniRead, inicar5, %myinipath%, HUNT ,car_5
+    IniRead, inicar1, %SettingsIni%, HUNT ,car_1
+    IniRead, inicar2, %SettingsIni%, HUNT ,car_2
+    IniRead, inicar3, %SettingsIni%, HUNT ,car_3
+    IniRead, inicar4, %SettingsIni%, HUNT ,car_4
+    IniRead, inicar5, %SettingsIni%, HUNT ,car_5
     ; setting current ini values to inputs
     GuiControl, , car_1, %inicar1%
     GuiControl, , car_2, %inicar2%
@@ -44,11 +44,11 @@ Return
 
 save_cars:
     Gui, Submit, NoHide
-    IniWrite, %car_1%, %myinipath%, HUNT,car_1
-    IniWrite, %car_2%, %myinipath%, HUNT,car_2
-    IniWrite, %car_3%, %myinipath%, HUNT,car_3
-    IniWrite, %car_4%, %myinipath%, HUNT,car_4
-    IniWrite, %car_5%, %myinipath%, HUNT,car_5
+    IniWrite, %car_1%, %SettingsIni%, HUNT,car_1
+    IniWrite, %car_2%, %SettingsIni%, HUNT,car_2
+    IniWrite, %car_3%, %SettingsIni%, HUNT,car_3
+    IniWrite, %car_4%, %SettingsIni%, HUNT,car_4
+    IniWrite, %car_5%, %SettingsIni%, HUNT,car_5
     Gui, Destroy
     Goto, main_gui
 Return

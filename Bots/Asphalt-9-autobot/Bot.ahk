@@ -18,55 +18,39 @@ global SettingsIni := A_ScriptDir "\settings.ini"
 carNames := ["Lancer", "Hellcat", "Peugeotsr1", "Lamborghinicountach25th", "Srt8", "Saleens1", "Ferrarimonzasp1", "Jaguarxesvproject", "Lamborghinimiura", "Bugattieb110", "Porsche911gscoupe", "Nissanr390", "Ferrarienzo", "Lamborghiniessenza", "Porschecarrera", "Vulkan", "Sennagtr", "Zondar", "Centenario", "RaesrTacheon", "Trion", "Naran"]
 
 ; #Include, %A_ScriptDir%\src\Boot.ahk
-; #Include, %A_ScriptDir%\src\BotConfig.ahk
 ; #Include, %A_ScriptDir%\src\Guis\Main.ahk
 ; #Include, %A_ScriptDir%\src\Guis\HuntCars.ahk
 ; #Include, %A_ScriptDir%\src\Guis\CarsSkip.ahk
-script_start:
+
+ScriptStart:
 
     ToolTip, Script start, 640, 0,
 
     Gui, Destroy
 
-    checksub(){
-        MsgBox, "[ Options, Title, Text, Timeout]"
-        Gosub, script_start
+    ;     LeagueDetection()
+    ; ExitApp
+    ; Return
+
+    If (Mute_System != 0){
+        SoundSet,+1,,Mute
     }
 
-    checksub()
+    start_game()
+    Sleep, 5000
 
-Return
+    If (StuckOnGlLogo()) {
+        Goto, ScriptStart
+    }
 
-;     Text:="|<>*147$12.Tzzzzzzzw0w0w0w0w0w0zyzyzyw0w0w0w0w0w0w0zzzzzzU"
-
-;     if (ok:=FindText(X, Y, 499, 641, 523, 676, 0, 0, Text))
-;     {
-;         MsgBox, found
-;     }Else{
-;         MsgBox, not found
-;     }
-
-; Return
-
-If (Mute_System != 0){
-    SoundSet,+1,,Mute
-}
-
-start_game()
-Sleep, 5000
-
-If (StuckOnGlLogo()) {
-    Goto, script_start
-}
-
-If (StuckOnLoadingScreen()) {
-    Goto, script_start
-}
+    If (StuckOnLoadingScreen()) {
+        Goto, ScriptStart
+    }
 
 MainMenuLoadedCheck:
 
     If (!MainMenuLoadedCheck()) {
-        Goto, script_start
+        Goto, ScriptStart
     }
 
     Sleep, 3000
@@ -77,8 +61,13 @@ MainMenuLoadedCheck:
     RewardsNext()
 
     If (!SeasonalEvents()) {
-        Goto, script_start
+        Goto, ScriptStart
     }
+
+    if (Hunt == 0){
+        Goto, HuntEnded
+    }
+    ; <========== Hunt Start ==========>
 
     If (!EnterEventsTab()) {
         Goto, MainMenuLoadedCheck
@@ -88,7 +77,7 @@ HuntStart:
 
     If (!EnterHuntTab()) {
         If (!MainMenuLoadedCheck()) {
-            Goto, script_start
+            Goto, ScriptStart
         }
 
         Goto, MP1Start
@@ -97,14 +86,14 @@ HuntStart:
 HuntRaceScreen:
 
     If (!isRaceScreen()) {
-        Goto, script_start
+        Goto, ScriptStart
     }
 
     Sleep, 2000
 
     If (!TicketCheck()) {
         If (!MainMenuLoadedCheck()) {
-            Goto, script_start
+            Goto, ScriptStart
         }
         Goto, MP1Start
     }
@@ -121,7 +110,7 @@ HuntRaceScreen:
     Sleep, 8000
 
     If (!PlayRace()){
-        Goto, script_start
+        Goto, ScriptStart
     }
 
     MsgBox, rewards skip
@@ -130,11 +119,35 @@ HuntRaceScreen:
         Sleep, 1000
         Goto, HuntRaceScreen
     }Else{
-        Goto, script_start
+        Goto, ScriptStart
     }
 
+HuntEnded:
+
+; <========== Hunt Ended ==========>
+
 MP1Start:
-    MsgBox, Playing MP1
+
+    ; entering mp
+    Loop, 2
+    {
+        Click, 686, 644 Left, 1
+        Sleep, 1000
+    }
+
+    authIndex := 0
+    If (!XboxAuthentication()){
+        If (authIndex == 5){
+            Goto, ScriptStart
+        }Else{
+            authIndex ++
+            Goto, MP1Start
+        }
+    }
+
+; ///////////////////////////////////
+
+; ///////////////////////////////////
 
 ExitApp
 
