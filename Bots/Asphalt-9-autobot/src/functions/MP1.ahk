@@ -25,16 +25,22 @@ LeagueDetection(){
     ; league detection main
     currLeague := {}
     LeagueColors := [{id:1, label: "bronze", color: "0xD88560", clickX: 805, clickY: 142},{id:2, label: "silver", color: "0x96B2D4", clickX: 879, clickY: 135},{id:3, label: "gold", color: "0xF1CB30", clickX: 953, clickY: 141},{id:4, label: "platinum", color: "0x9365F8", clickX: 1023, clickY: 142},{id:5, label: "legend", color: "0xF5E2A4", clickX: 1095, clickY: 138}]
-    BackUpLeagueColors := [{id:1, label: "bronze", color: "0xD88560", clickX: 805, clickY: 142},{id:2, label: "silver", color: "0x96B2D4", clickX: 879, clickY: 135},{id:3, label: "gold", color: "0xF1CB30", clickX: 953, clickY: 141},{id:4, label: "platinum", color: "0x9365F8", clickX: 1023, clickY: 142},{id:5, label: "legend", color: "0xF5E2A4", clickX: 1095, clickY: 138}]
+    BackUpLeagueColors := ["0xD88560", "0x96B2D4", "0xF1CB30", "0x9365F8", "0xF5E2A4"]
 
     for index, car in LeagueColors{
         CoordMode, Pixel, Screen
         PixelSearch, FoundX, FoundY, 395, 343, 417, 368, car.color, 0, Fast RGB
         If (ErrorLevel = 0) {
+            ; ResetColors
+            for index, color in BackUpLeagueColors{
+                LeagueColors[index].color := color
+                ; MsgBox, "=> " . %color% . "=> " . %oldColor%
+            }
+
             currLeague := car
             car.color := ""
-            newindex := BackUpLeagueColors[index]
-            MsgBox, % newindex.color
+            ; MsgBox, % car.color
+            ; MsgBox, % newindex.color
             Break
         }
     }
