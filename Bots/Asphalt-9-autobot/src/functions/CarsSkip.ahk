@@ -1,5 +1,8 @@
 CarsSkip(){
     ; <============ D ============>
+    for index, car in carNames {
+        IniRead, %car%_to, %SettingsIni%, CarsSkip, %car%_to
+    }
 
     ; lancer
     if (Lancer !== 0){
@@ -7,7 +10,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 174, 160, 280, 189, 0, 0, Text))
         {
-            Loop, %iniLancer_to%
+            Loop, %Lancer_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -23,7 +26,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 535, 155, 613, 195, 0, 0, Text))
         {
-            Loop, %iniHellcat_to%
+            Loop, %Hellcat_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -39,7 +42,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 175, 161, 233, 185, 0, 0, Text))
         {
-            Loop, %iniPeugeotsr1_to%
+            Loop, %Peugeotsr1_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -55,7 +58,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 315, 159, 386, 188, 0, 0, Text))
         {
-            Loop, %iniLamborghinicountach25th_to%
+            Loop, %Lamborghinicountach25th_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -73,7 +76,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 343, 163, 410, 186, 0, 0, Text))
         {
-            Loop, %iniSrt8_to%
+            Loop, %Srt8_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -89,7 +92,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 177, 163, 215, 185, 0, 0, Text))
         {
-            Loop, %iniSaleens1_to%
+            Loop, %Saleens1_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -106,7 +109,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 274, 161, 325, 187, 0, 0, Text))
         {
-            Loop, %iniFerrarimonzasp1_to%
+            Loop, %Ferrarimonzasp1_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -122,7 +125,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 174, 161, 257, 186, 0, 0, Text))
         {
-            Loop, %iniJaguarxesvproject_to%
+            Loop, %Jaguarxesvproject_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -138,7 +141,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 171, 157, 268, 194, 0, 0, Text))
         {
-            Loop, %iniLamborghinimiura_to%
+            Loop, %Lamborghinimiura_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -154,7 +157,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 175, 160, 264, 188, 0, 0, Text))
         {
-            Loop, %iniBugattieb110_to%
+            Loop, %Bugattieb110_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -172,7 +175,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 234, 162, 285, 188, 0, 0, Text))
         {
-            Loop, %iniPorsche911gscoupe_to%
+            Loop, %Porsche911gscoupe_to%
             {
                 Sleep, 250
                 Send, {PgDn}
@@ -188,7 +191,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 174, 157, 297, 189, 0, 0, Text))
         {
-            Loop, %iniNissanr390_to%
+            Loop, %Nissanr390_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -204,7 +207,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 175, 159, 249, 189, 0, 0, Text))
         {
-            Loop, %iniFerrarienzo_to%
+            Loop, %Ferrarienzo_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -220,7 +223,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 344, 157, 386, 192, 0, 0, Text))
         {
-            Loop, %iniLamborghiniessenza_to%
+            Loop, %Lamborghiniessenza_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -236,7 +239,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 297, 158, 337, 187, 0, 0, Text))
         {
-            Loop, %iniPorschecarrera_to%
+            Loop, %Porschecarrera_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -255,7 +258,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 173, 131, 338, 193, 0, 0, Text))
         {
-            Loop, %iniVulkan_to%
+            Loop, %Vulkan_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -272,7 +275,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 268, 161, 323, 190, 0, 0, Text))
         {
-            Loop, %iniSennagtr_to%
+            Loop, %Sennagtr_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -289,7 +292,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 267, 158, 293, 190, 0, 0, Text))
         {
-            Loop, %iniZondar_to%
+            Loop, %Zondar_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -306,7 +309,7 @@ CarsSkip(){
         Text:="|<>*134$55.1w0zs3k7w1z0Tz1sDzUzUDzkw7zsTk7zsS7zwTs3UwD3kSDS1kC7Vs77j0s73kw3XbUQ3VsS1nnkC3kwD0tsw7zsS7UQwS3zwD3kCQD1zw7Vs7S7Uzw3kw3jzsQS1sS1rzwC7UwD0zzy73kS7Uzk73UwD3zzs3lkS7Uzzw1ss7XkTzQ0wQ3ls3y8"
         if (ok:=FindText(X, Y, 268, 159, 341, 190, 0, 0, Text))
         {
-            Loop, %iniCentenario_to%
+            Loop, %Centenario_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -323,7 +326,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 178, 136, 251, 161, 0, 0, Text))
         {
-            Loop, %iniRaesrTacheon_to%
+            Loop, %RaesrTacheon_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -340,7 +343,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 176, 161, 296, 189, 0, 0, Text))
         {
-            Loop, %iniTrion_to%
+            Loop, %Trion_to%
             {
                 Sleep, 300
                 Send, {PgDn}
@@ -357,7 +360,7 @@ CarsSkip(){
 
         if (ok:=FindText(X, Y, 175, 159, 269, 194, 0, 0, Text))
         {
-            Loop, %iniNaran_to%
+            Loop, %Naran_to%
             {
                 Sleep, 300
                 Send, {PgDn}

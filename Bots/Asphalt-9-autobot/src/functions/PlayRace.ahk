@@ -1,9 +1,38 @@
-PlayRace(){
+PlayHuntRace(){
     isCompleted := False
 
-    Loop, 120{
+    Loop, 200{
         Text:="|<>*127$64.00000000000k1UTwA0Azz7UC3zsw1nzyS0sDzVkDDztw3Us07Us3k7sC3U0C7UD0TUsC00wQ0w1z3Us01nU3k7wC3U07i0D0SssC00Dk0w1vXUzw0z03k7bC3zk1s0D0SQsDz0Dk0w1svUs00z03k7Xy3U07i0D0S7sC00Qs0w1sTUs03lk3k7Uy3U0C70D0S1sC01sC0w1s7Uzy70w3k7UC3zsw1kD0A0sDzXU70Q000000000008"
         if (ok:=FindText(X, Y, 1001, 621, 1079, 656, 0, 0, Text)){
+            isCompleted := True
+            Click, 1176, 645 Left, 1
+            Sleep, 1000
+            Break
+        }Else{
+            RampsNitros()
+            Sleep, 1000
+            NitroManagemnet()
+            TdCheckInRace()
+            Resume()
+            If (!CheckInternet()){
+                Gosub, ScriptStart
+            }
+            WhereToGetBpsScreen()
+            ConnectingToTheServer()
+            CheckGame()
+            If (TokensColorCheckToVerifyHomeScreen()){
+                Gosub, ScriptStart
+            }
+        }
+    }
+    Return isCompleted
+}
+PlayMpRace(){
+    isCompleted := False
+
+    Loop, 200{
+        Text:="|<>*122$61.s1kzz70Szzy0sTzXkCTzzUQD00sD0Q7kC7U0S70C3w73k077U71y3Vs03nU3UvVkw00vU1kRksS00Tk0sCQQDz07k0Q7CC7zk3s0C3Xb3zs1w071lvVs01z03UsRkw00vU1kQDsS00ws0sC3wD00QS0Q70y7U0S70C3UT3k0C3k71k7VzyD0s3Us3kzz70S1kQ0sTzbU70s8"
+        if (ok:=FindText(X, Y, 1018, 625, 1090, 655, 0, 0, Text)){
             isCompleted := True
             Click, 1176, 645 Left, 1
             Sleep, 1000

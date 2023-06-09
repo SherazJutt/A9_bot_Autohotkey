@@ -14,7 +14,6 @@ Skip_MP_Cars_Label:
         IniRead, skipVal, %SettingsIni%, CarsSkip, %car%_to
         GuiControl, , %car%_to_input, %skipVal%
     }
-
     Gui Add, Button, gSave_Skip_MP_Cars x10 y660 w100 h25 , Save
     Gui, Show, w240 h690, Define Cars Skip
 

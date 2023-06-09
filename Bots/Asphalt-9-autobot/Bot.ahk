@@ -15,61 +15,61 @@ t1:=A_TickCount, X:=Y:=""
 
 global SettingsIni := A_ScriptDir "\settings.ini"
 
-carNames := ["Lancer", "Hellcat", "Peugeotsr1", "Lamborghinicountach25th", "Srt8", "Saleens1", "Ferrarimonzasp1", "Jaguarxesvproject", "Lamborghinimiura", "Bugattieb110", "Porsche911gscoupe", "Nissanr390", "Ferrarienzo", "Lamborghiniessenza", "Porschecarrera", "Vulkan", "Sennagtr", "Zondar", "Centenario", "RaesrTacheon", "Trion", "Naran"]
+global carNames := ["Lancer", "Hellcat", "Peugeotsr1", "Lamborghinicountach25th", "Srt8", "Saleens1", "Ferrarimonzasp1", "Jaguarxesvproject", "Lamborghinimiura", "Bugattieb110", "Porsche911gscoupe", "Nissanr390", "Ferrarienzo", "Lamborghiniessenza", "Porschecarrera", "Vulkan", "Sennagtr", "Zondar", "Centenario", "RaesrTacheon", "Trion", "Naran"]
 
-date_check:
+; date_check:
 
-    ; Create WinHttpRequest object
-    WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+;     ; Create WinHttpRequest object
+;     WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 
-    ; Set URL and disable asynchronous requests
-    WinHttp.Open("GET", "http://worldtimeapi.org/api/ip", false)
+;     ; Set URL and disable asynchronous requests
+;     WinHttp.Open("GET", "http://worldtimeapi.org/api/ip", false)
 
-    ; Loop until successful response is received
-    Loop
-    {
-        ; Display alert message
-        MsgBox, 262144, , Connecting to internet... [ctrl + Q to exit], 1
+;     ; Loop until successful response is received
+;     Loop
+;     {
+;         ; Display alert message
+;         MsgBox, 262144, , Connecting to internet... [ctrl + Q to exit], 1
 
-        ; Send request
-        try
-        {
-            WinHttp.Send()
-            break
-        }
-        catch
-        {
-            ; Wait for 1 second before retrying
-            Sleep, 1000
-        }
-    }
+;         ; Send request
+;         try
+;         {
+;             WinHttp.Send()
+;             break
+;         }
+;         catch
+;         {
+;             ; Wait for 1 second before retrying
+;             Sleep, 1000
+;         }
+;     }
 
-    ; Response received, process data
-    data := WinHttp.ResponseText
-    Pos := InStr(data, "datetime")
-    Pos += 11
-    CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
+;     ; Response received, process data
+;     data := WinHttp.ResponseText
+;     Pos := InStr(data, "datetime")
+;     Pos += 11
+;     CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
 
-    ; Year Month Day
-    ExpirationDate := 2023 06 10
-    PurchaseDate := 2023 03 01
+;     ; Year Month Day
+;     ExpirationDate := 2023 06 10
+;     PurchaseDate := 2023 03 01
 
-    if (CurrentDate >= ExpirationDate or !data)
-    {
-        msgbox, The subscription period is over.
-        ExitApp
-    }Else if (CurrentDate <= PurchaseDate)
-    {
-        msgbox, Warning dont change the system date
-        ExitApp
-    }Else{
-        ToolTip, ExpirationDate : 10 June 2023 , 640, 0,
-    }
+;     if (CurrentDate >= ExpirationDate or !data)
+;     {
+;         msgbox, The subscription period is over.
+;         ExitApp
+;     }Else if (CurrentDate <= PurchaseDate)
+;     {
+;         msgbox, Warning dont change the system date
+;         ExitApp
+;     }Else{
+;         ToolTip, ExpirationDate : 10 June 2023 , 640, 0,
+;     }
 
-; #Include, %A_ScriptDir%\src\Boot.ahk
-; #Include, %A_ScriptDir%\src\Guis\Main.ahk
-; #Include, %A_ScriptDir%\src\Guis\HuntCars.ahk
-; #Include, %A_ScriptDir%\src\Guis\CarsSkip.ahk
+#Include, %A_ScriptDir%\src\Boot.ahk
+#Include, %A_ScriptDir%\src\Guis\Main.ahk
+#Include, %A_ScriptDir%\src\Guis\HuntCars.ahk
+#Include, %A_ScriptDir%\src\Guis\CarsSkip.ahk
 
 ScriptStart:
 
@@ -77,9 +77,9 @@ ScriptStart:
 
     Gui, Destroy
 
-    ; If (Mute_System != 0){
-    SoundSet,+1,,Mute
-    ; }
+    If (Mute_System != 0){
+        SoundSet,+1,,Mute
+    }
 
     start_game()
     Sleep, 5000
@@ -154,7 +154,7 @@ HuntRaceScreen:
 
     Sleep, 8000
 
-    If (!PlayRace()){
+    If (!PlayHuntRace()){
         Goto, ScriptStart
     }
 
@@ -187,39 +187,68 @@ MP1Start:
             Goto, MP1Start
         }
     }
-
+LeagueDetectionLabel:
     If (LeagueDetection()){
         Goto, TiersCheckLabel
     }Else{
         SelectMPCarToPlay()
     }
 
-    Sleep, 1000
+    Sleep, 3000
 
 TiersCheckLabel:
+
     TiersCheck()
+    CheckGame()
 
 CarsSkipLabel:
     If (CarsSkip()){
-        Sleep, 2000
         Goto, TiersCheckLabel
     }
 
 OwnsThisCarLabel:
     If (!OwnsThisCar()){
         Send, {PgDn}
-        Sleep, 20000
+        Sleep, 2000
         Goto, OwnsThisCarLabel
     }
 
     If (isRefueling){
         Send, {PgDn}
-        Sleep, 20000
+        Sleep, 2000
         Goto, OwnsThisCarLabel
     }
 
     TdCheck()
-    MsgBox, Script Ended
+    StartMPRace()
+    If (!PlayMpRace()){
+        Goto, ScriptStart
+    }
+
+    Sleep, 2000
+
+    ; mp rewards skip
+    Text:="|<>*144$3.zz0zzzzzzzzU"
+    if (ok:=FindText(X, Y, 1184, 184, 1223, 222, 0, 0, Text))
+    {
+        Sleep, 250
+        Click, 1188, 649 Left, 1
+        Sleep, 250
+    }Else{
+        MpSkipCheck()
+        Sleep, 1000
+        If (watch_AD_if_1st_2nd_OR_3rd()){
+            If (!close_AD()){
+                Goto, ScriptStart
+            }
+        }
+    }
+
+    If (!homeCheck()){
+        Goto, ScriptStart
+    }
+    Goto, LeagueDetectionLabel
+
 ExitApp
 
 ^p:: Pause
