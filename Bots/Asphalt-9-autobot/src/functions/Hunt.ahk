@@ -5,9 +5,9 @@ EnterHuntTab(){
     Loop, 30{
 
         ; hunt card
-        Text:="|<>*132$94.1zUzz1z001zzz0Tw7y3zw7w001zzs1zkTsDzkTk003zzU3z1zUzz1z0007zy0Dw7y3zw7w3z0Tzk0zkTsDzkTkTy1zz01z1zUzz1z1zw3zw47w7y3zw7w7zkDzUETkTsDzkTkTz0zy31z1zUzz1z1zw3zsC3w7y3zw7w7zkDzUsDkTsDzkTkTz0zw7Uz1zUzz1z1zw3zkT3w7y3zw7w7zkDz1w7kTsDzkTkTz1zs7kT1zUzz1z1zs7zUz1w7y3zw7w000Ty3y3kTsDzkTk003zsDsD1zUzz1z000Tz1zUw7y3zw7w003zw7y1kTsDzkTk00TzkTw71zUzz1z1y1zy1zUQ7y3zw7w7w3zs001kTsDzkTkTkDzU0031zUzz1z1zUTy000A7y3zw7w7y1zk000kTsDzkTkTw3z1zy11zUzy1z1zkDw7zs47y1zkDw7zUTUTzkETw000zkTy1y3zz11zk007z1zw3sDzw07zU00Tw7zkDUzzs0Tz007zkTzUw3zzUXzzU1zzVzz3sTzz2"
+        Text:="|<>*149$80.001zzy0zzsDzsE007zz07zy3zw0000zzk1zzUTz00007zw0Tzs7zk0Dw1zz03zy0zw07zkDzU0zzUDz01zw3zs8Dzs1zk0TzUzy21zy0Dw07zsDzUkTzU3z01zy3zkQ7zs0Tk0TzUzw71zy07w07zsDz1sDzU0z01zy3zUy3zs8Dk0TzUzsDUzy31w07zkDy3s7zUkD01zw3zUz1zsC3k0Dy1zkTkTy3UQ0000Tw7w7zUw70000Dz1zUzsDUk0003zUTsDy3sA0003zsDy3zUz100Dzzy1zUTsDkE0TzzzU007y3y007zzzk001zUzU01zzzw000TsDw00Tzzz0003y3z007zzzUTzUzUzs01zzzsDzsDsDz00Tzzy3zy3y3zk07zzzUzzkTUzy01zzzkDzw7sDzU0Tzzw7zz1y3zw07zzz1zzkDUzz0Vzzzkzzy7sTzsM"
 
-        if (ok:=FindText(X, Y, 359, 217, 466, 266, 0, 0, Text)) {
+        if (ok:=FindText(X, Y, 321, 219, 415, 267, 0, 0, Text)) {
             Loop, 2{
                 Send, {Enter}
                 Sleep, 1000
@@ -52,20 +52,35 @@ TicketCheck(){
     Text:="|<>*133$302.003zs007s007kTsDzzkzzzzs000w3zs03zkDz0T000Q000Tk07k00Dy001y001w7y3zzsDzzzy000D0zs00Dw1zk7k0070007s00Q001zU00TU00T1zUzzy3zzzzU003kDw001z0Ts3w001k001w003000Ts007s007kTsDzzUzzzzs000w3z000Dk7w0z000Q000S000kTs3y3zzy3zzw7y3zzsDzzzy000D0zU003w1z0Tk007000700047zUzUzzzUzzz1zUzzy3zzzzzU3zkDs0w0T0TUDw0zzzk1zk0k11zsDsDzzsDzzkTsDzzUzzzzzw1zw3y0zk7k7k7z0Tzzy1zw1zUETy3y3zzy3zzw7y3zzsDzzzzz0Tz0zUTw1w1s1zk7zzzUTz0zs07zUzUzzzUzzz1zUzzy3zzzzzk7zkDs7z0T0S0zw1zzzs7zkDy01zsDsDzzsDzzkTsDzzUzzzzzw1zw3y1zk7k70Tz0Tzzy1zw3zUETy3y3zzy3zzw7y3zzsDzzzzz0Tz0zUTw1w1k7zk7zzzUTz0zzw7zUzUzzzUzzz1zUzzy3zzzzzk7zkDs7zUz0M3zw1zzzs7zk7zz1zsDsDzzsDzzkTsDzzUzzzzzw1zw3y1zzzk41zz0Tzzy1zw0zzkTy3y3zzy3zzw7y3zzsDzzzzz0Tz0zUTzzw00zzk00TzUTz00Dw7zUzU01zUzzz1zUzzy3zzzzzk7zkDs7zzz00Dzw007zs7zk00T1zkDs00Ts00TkTsDzzUzzzzzw1zw3y1zzzk03zz001zy1zy001k007y007y007w7y3zzsDzzzzz0Tz0zUTzzw00Tzk00TzUTzk00A001zU01zU01z1zUzzy3zzzzzk7zkDs7zzz003zw007zs7zy001000zsDzzs00TkTsDzzUzzzzzw1zw3y1zzzk00zz001zy1zzw00E00zy3zzy3zzw7y3zzsDzzzzz0Tz0zUTzzw007zk7zzzUTzzw007sDzUzzzUzzz1zUzzy3zzzzzk7zkDs7zzz060zw1zzzs7zzzw01y3zsDzzsDzzkTsDzzUzzzzzw1zw3y1zk7k3UDz0Tzzy1zzzzU0TkTy3zzy3zzw7y3zzsDzzzzz0Tz0zUTw1w1w1zk7zzzUTz0zw07w3zUzzzUzzz1zUzzy3zzzzzk7zkDs7z0T0TUTw1zzzs7zkDz01z0zsDzzsDzzkTsDzzUzzzzzw1zw3y1zk7k7s3z0Tzzy1zw3zk0Ts7y3zzy3zzw7y3zzsDzzzzz0Tz0zUTw1w1z0Tk7zzzUTz0Ts07z1zUzzzUzzz1zUzzy3zzzzzk7zkDs3y0T0Tk7w1zzzs7zk7w01zkTsDzzsDzzkTsDzzUzzzzzw1zw3y000Dk7y0z000Ty1zw0000Tw3y001y3zzw7y001s007zzz0Tz0zk003w1zk7k007zUTzU0047zUzU00TUzzz1zU00S001zzzk7zkDw001z0Tw1w001zs7zs0011zs7s007sDzzkTs007U00Tzzw1zw3zU00zk7zUD000Ty1zz000kTz1y001y3zzw7y001s007zzz0Tz0zw00Tw1zw3k007zUTzw00yDzsTk00zlzzzXzk00z003zzzsDzsTzy1zzVzzky003zwDzzw3zU"
 
     if (ok:=FindText(X:="wait", Y:=10, 430, 169, 755, 224, 0, 0, Text)) {
+        Sleep, 2000
 
         ; 0
         Text:="|<>*119$28.zzzzzz00TzU00Tw000zU001w0003k00060Ty0M3zw1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM3zw1U7zk70000Q0003s000Tk003zU00Tzk07zzzzzs"
         if (ok:=FindText(X, Y, 625, 310, 676, 370, 0, 0, Text)){
-            PressEscape(1)
-            canPlay := False
+            ; canPlay := False
+
+            Text:="|<>*123$81.zy0zy7zlkQ0707zs7zkzyC3U0s0zzUzw7zVkQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707Uw7zUzwC3U0s0zzUzw7zVkQ0707zs700zwC3U0s0wS0s0701kQ0707Vk700s0C3U0s0wC0s0701kQ0707Us700s0C3U0s0w70s0701kQ0707Uw700s0C3k0w0w3Uzy701kTzbzzUS7zks0C3zwzzU"
+
+            if (ok:=FindText(X:="wait", Y:=10, 470, 495, 576, 530, 0, 0, Text))
+            {
+                Sleep, 1000
+                Click, 594, 497 Left, 1
+                Sleep, 1000
+                PressEscape(1)
+            }Else{
+                WinClose , Asphalt 9: Legends
+                Run, Shutdown, 0
+                ExitApp
+            }
+
         }
 
-        ; 1
-        Text:="|<>*113$17.zzzzkDy0Ds0T00s01U030060UA70MS0nw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs7zzy"
-        if (ok:=FindText(X, Y, 627, 308, 671, 369, 0, 0, Text)){
-            PressEscape(1)
-            canPlay := False
-        }
+        ; ; 1
+        ; Text:="|<>*113$17.zzzzkDy0Ds0T00s01U030060UA70MS0nw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs7zzy"
+        ; if (ok:=FindText(X, Y, 627, 308, 671, 369, 0, 0, Text)){
+        ;     PressEscape(1)
+        ;     canPlay := False
+        ; }
     }
 
     If (canPlay){

@@ -77,9 +77,9 @@ ScriptStart:
 
     Gui, Destroy
 
-    If (Mute_System != 0){
-        SoundSet,+1,,Mute
-    }
+    ; If (Mute_System != 0){
+    SoundSet,+1,,Mute
+    ; }
 
     start_game()
     Sleep, 5000
@@ -158,8 +158,6 @@ HuntRaceScreen:
         Goto, ScriptStart
     }
 
-    MsgBox, rewards skip
-
     If (HuntRewardsSkip()){
         Sleep, 1000
         Goto, HuntRaceScreen
@@ -190,8 +188,38 @@ MP1Start:
         }
     }
 
-    LeagueDetection()
+    If (LeagueDetection()){
+        Goto, TiersCheckLabel
+    }Else{
+        SelectMPCarToPlay()
+    }
 
+    Sleep, 1000
+
+TiersCheckLabel:
+    TiersCheck()
+
+CarsSkipLabel:
+    If (CarsSkip()){
+        Sleep, 2000
+        Goto, TiersCheckLabel
+    }
+
+OwnsThisCarLabel:
+    If (!OwnsThisCar()){
+        Send, {PgDn}
+        Sleep, 20000
+        Goto, OwnsThisCarLabel
+    }
+
+    If (isRefueling){
+        Send, {PgDn}
+        Sleep, 20000
+        Goto, OwnsThisCarLabel
+    }
+
+    TdCheck()
+    MsgBox, Script Ended
 ExitApp
 
 ^p:: Pause
@@ -207,6 +235,7 @@ ExitApp
 #Include, %A_ScriptDir%\src\functions\Hunt.ahk
 #Include, %A_ScriptDir%\src\functions\PlayRace.ahk
 #Include, %A_ScriptDir%\src\functions\MP1.ahk
+#Include, %A_ScriptDir%\src\functions\CarsSkip.ahk
 
 #Include, %A_ScriptDir%\src\functions\CommonFunctions.ahk
 
