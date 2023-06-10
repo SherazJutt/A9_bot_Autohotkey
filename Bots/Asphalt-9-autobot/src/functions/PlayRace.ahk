@@ -52,6 +52,7 @@ PlayMpRace(){
             If (TokensColorCheckToVerifyHomeScreen()){
                 Gosub, ScriptStart
             }
+            CheckInRaceIssues()
         }
     }
     Return isCompleted
@@ -161,4 +162,79 @@ NitroManagemnet(){
     Sleep, 250
     Send, {Space 1}
     Sleep, 1000
+}
+
+CheckInRaceIssues(){
+    CheckGame()
+    Resume()
+    TdCheckInRace()
+    CheckInternet()
+    ; application interuppted / no opponent / no connection to the game server start
+    Text:="|<>*159$33.zzzzzzTzzzrlzzzwQ7zzz1UTzzkC1zzw3s7zz0zUTzkDy1zw3zs7z0zzUTkDzy1w3zzs70zzzU0Dzzy03zzzs0zzzzUDzzzw1zzzz07zzzk0Tzzw21zzz0s7zzkDUTzw3y1zz0zs7zkDzUTw3zy1z0zzs7kDzzUQ3zzy1UzzzsCDzzzXzzzzyzzzzzzU"
+
+    if (ok:=FindText(X, Y, 1066, 234, 1108, 279, 0, 0, Text)){
+        Loop, 10{
+            Send, {Escape}
+            Sleep, 1000
+        }
+        Gosub, MP1Start
+    }
+    ; application interuppted / no opponent / no connection to the game server end
+
+    ; you have been disconnected from server start
+    ; still disconnected
+    Text:="|<>*117$71.7z7zUzkzwQ00DwDz0zVzks00TsTw1zXzVk00zkzs3z3z3VzlzVzl7y7wD3zXz3zW7yDsS7z7y7y4DwDkwDyDwDwQTsTXsTwTsTssTky7kzszkzVkzlwDVzk01z3lzXsT00U03yDXz3ly01007wT3y7Xw02DwDky7yC7sTwTsTVyDwQDkzszkz00DsMzVzlzVw00Tklz3zXz3s00zl3y7z7y7lzlzWDwDyDwDXzVz0TsTwTsS7z3z0zk00zkwDz7y1zU01zVszy7w7z00E"
+
+    if (ok:=FindText(X, Y, 331, 103, 410, 128, 0, 0, Text))
+    {
+        Sleep, 2500
+        Gosub, ScriptStart
+    }
+    ; you have been disconnected from server start
+
+    ; token color check to verify home screen
+    Text:="|<>*72$29.zzrzzzy3zzzs3zzz01zzw01zzk00zy000zs0k0z03k0Q07k0E0Tk0E0nU1U37U3067070Tz0S1zy0w3zy1wA0S7sM0QDk000Tk001zU003z0007z000Ty000zw001y"
+    if (ok:=FindText(X, Y, 787, 42, 823, 80, 0, 0, Text)){
+        Gosub, MP1Start
+    }
+
+    ; where to get bps screen
+    Text:="|<>*160$32.zzzzzyTzzyD3zzz3UTzzUy3zzkTkTzsDy3zw7zUTy3zw3z1zzkTUzzy3kTzzkMDzzy07zzzU3zzzw1zzzzUTzzzk3zzzs0Tzzw43zzy3UTzz1y3zzUzkTzkTy3zsDzkTw7zw3y3zzkT1zzy3UzzzkQTzzyDjzzzrzzzzzs"
+    if (ok:=FindText(X, Y, 1142, 92, 1188, 136, 0, 0, Text)){
+        Click, 1163, 116 Left, 1
+        Gosub, MP1Start
+    }
+
+    ; searching for players
+    Loop, 60{
+        Text:="|<>*118$37.zzzzzzy7tws1z3wyQ0TVyDCD7Uz3b7XmDVnXltbkNlswntAswQswmQSCSSNCD70DC77X03b3XlXlnllsnwtss0tyQyQ0Tzzzzzy"
+        if (ok:=FindText(X, Y, 712, 559, 756, 579, 0, 0, Text)){
+            Sleep, 1000
+        }Else{
+            Break
+        }
+    }
+
+    Text:="|<>*118$37.zzzzzzy7tws1z3wyQ0TVyDCD7Uz3b7XmDVnXltbkNlswntAswQswmQSCSSNCD70DC77X03b3XlXlnllsnwtss0tyQyQ0Tzzzzzy"
+    if (ok:=FindText(X, Y, 712, 559, 756, 579, 0, 0, Text)){
+        Gosub, ScriptStart
+    }
+
+    ; connecting to the server mp start
+    Loop, 60{
+
+        Text:="|<>*71$43.zzzzzzzs0Dzzzzs00zzzzw00Dzzzy007zzzz3z3zzzzVzkzzzzkzsTzzzsTwDzzzwDy7zzzy7z3zzzz3zVzzzzVzUzzzzkTUzzzzs00Tzzzw00Tzzzy00zzzzz1sTzzzzVw7zzzzkz3zzzzsTUzzzzwDsTVsS67w7kwD33z3sS7VVzUwD3kkzsS7VsQTwD3kwDzzzzzzy"
+        if (ok:=FindText(X, Y, 578, 624, 628, 658, 0, 0, Text)){
+            Sleep, 1000
+        }Else{
+            Break
+        }
+    }
+
+    Text:="|<>*71$43.zzzzzzzs0Dzzzzs00zzzzw00Dzzzy007zzzz3z3zzzzVzkzzzzkzsTzzzsTwDzzzwDy7zzzy7z3zzzz3zVzzzzVzUzzzzkTUzzzzs00Tzzzw00Tzzzy00zzzzz1sTzzzzVw7zzzzkz3zzzzsTUzzzzwDsTVsS67w7kwD33z3sS7VVzUwD3kkzsS7VsQTwD3kwDzzzzzzy"
+    if (ok:=FindText(X, Y, 578, 624, 628, 658, 0, 0, Text)){
+        Gosub, ScriptStart
+    }
+    ; connecting to the server mp end
+
 }

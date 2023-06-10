@@ -154,11 +154,18 @@ XboxAuthentication(){
     isAuthenticated := True
 
     Text:="|<>*128$260.zUTy7z3U01kzsT00DVzks00SDy03zw3z003ly7zXz01zs7zVzks00QDy7k03sTwC007Xy00Tz0Tk00wTUzszU0Dy0zsTwC0073zVw00y3z3U01szU03zk7w00D7sDyDk01z0Dy7z3zVzkzsT3zzUTkzsTyDkTkzs1zz3zly1zXwDsDk3zVzkzsTwDy7kzzs7wDy7zXwDwDy4TzkzwTUTsz3z3w8TsTwDy7z3zVwDzy0z3zVzsz3zVzV3zwDz7s3yDlzky67y7z3zVzkzsT3zzUDkzsTyDkzsTskzz3zly0zXwTwDVVzVzkzsTwDy7kzzs1wDy7zXwDy7wADzkzwTU7sz7z3sQTsTwDy7z3zVwDzy0T3zVzsz3zzz3VzwDz7sEyDlzzyD3y7z3zVzkzsT3zzV3kzsTyDkzzzksTz3zly4DXwTzz3kzVzkzsTwDw7kTzsEwDy7zXwDzzsS7zkzwTVVsz7zzkwDsTwDy7z001w01y673zVzsz3zzy7lzwDz7sMSDlw1wDVy7z3zVzk00T00TVkkzsTyDkzzzVwDz3zly73XwT0C7sTVzkzsTw007k07sQADy7zXwDzzsz3zkzwTVksz7k3Vy7sTwDy7z3zVwDzy7V3zVzsz3zzwDkzwDz7sS6Dlw0sTVy7z3zVzkzsT3zzVsEzsTyDkzzz3yDz3zly7lXwTwC00DVzkzsTwDy7kzzsT0Dy7zXwDyDk01zkzwTVw8z7z3003sTwDy7z3zVwDzy7k3zVzsz3zVs00TwDz7sTUDlzkk00y7z3zVzkzsT3zzVy0zsTyDkzsS007z3zly7s3wTwADw7VzkzsTwDy7kzzsTkDy7zXwDy7VzkzkzwTVz0z7z27zVsTsDy7z3zVwDzy7w3zVzsz3z3sTwDwDz7sTkDkzkVzsT1w7zVzkzsT3zzVzUzsTyDkDUwDz3z3zly7y3w7kMTy7k01zsTwDy7k03sTsDy7zXy00D3zszkzwTVzkzU067zky00zy7z3zVw00y7z3zVzszk07kzy7wDz7sTwDs033zwDs0zzVzkzsT00DVzkzsTyDy07wTzVz3zly7zXzU3s"
-    if (ok:=FindText(X:="wait", Y:=5, 188, 238, 466, 276, 0, 0, Text)){
+    if (ok:=FindText(X, Y, 188, 238, 466, 276, 0, 0, Text)){
         PressEscape(1)
         isAuthenticated := False
     }
 
+    Text:="|<>*146$198.Dz0s1kzz1zs70S03Xzy03U03s3zyTzVzwTzUs1kzz3zw70w03Xzy03U03s3zyTzVzyS3ks1kw03kS71s03U7U03U03w0D0S01kSw1ks1ks07UC71k03U7003U07Q070S01kDs1ks1ks070C73k03U7003U07Q070S01k7s1ks1ks070C77U03U7003U07Q070S01k7s1ks1ks070C77003U7003U0CC070S01k7s00s1ks07007C003U7003U0CC070S01k7s00s3kzw7007S003U7003U0CC070Ty1k7s00zzkzy7007S003U7003U0CD070Tz1kDs00zzkzy7007z003U7003U0Q7070Tz1zys00s3kw07007r003U7003U0Q7070S01zws00s1ks07007bU03U7003U0Q7070S01lss1ks1ks070C7Xk03U7003U0zzU70S01kss1ks1ks070C71k03U7003U0zzU70S01kws1ks1ks070C71s03U7003U0zzU70S01kQw1ks1ks07UC70s03U7003U0s3k70S01kSS7ks1kw03ky70Q03U7003U1k1k70S01kCTzUs1kzz3zw70S03U7003ztk1k70TzVkDDz0s1kzz1zs70C03U7003ztk1s70TzVk7U"
+
+    if (ok:=FindText(X, Y, 640-150000, 597-150000, 640+150000, 597+150000, 0, 0, Text)){
+        PressEscape(1)
+        isAuthenticated := False
+    }
+    Sleep, 1000
     Return isAuthenticated
 }
 

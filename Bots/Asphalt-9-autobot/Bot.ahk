@@ -170,7 +170,9 @@ HuntEnded:
 ; <========== Hunt Ended ==========>
 
 MP1Start:
-
+    If (!MainMenuLoadedCheck()) {
+        Goto, ScriptStart
+    }
     ; entering mp
     Loop, 2
     {
@@ -180,7 +182,7 @@ MP1Start:
 
     authIndex := 0
     If (!XboxAuthentication()){
-        If (authIndex == 5){
+        If (authIndex == 60){
             Goto, ScriptStart
         }Else{
             authIndex ++
@@ -227,20 +229,23 @@ OwnsThisCarLabel:
 
     Sleep, 2000
 
-    ; mp rewards skip
-    Text:="|<>*144$3.zz0zzzzzzzzU"
-    if (ok:=FindText(X, Y, 1184, 184, 1223, 222, 0, 0, Text))
-    {
-        Sleep, 250
-        Click, 1188, 649 Left, 1
-        Sleep, 250
-    }Else{
-        MpSkipCheck()
-        Sleep, 1000
-        If (watch_AD_if_1st_2nd_OR_3rd()){
-            If (!close_AD()){
-                Goto, ScriptStart
+    Loop, 120{
+        ; mp rewards skip
+        Text:="|<>*144$3.zz0zzzzzzzzU"
+        if (ok:=FindText(X, Y, 1184, 184, 1223, 222, 0, 0, Text))
+        {
+            Click, 1188, 649 Left, 1
+            Sleep, 1000
+            Break
+        }Else{
+            MpSkipCheck()
+            Sleep, 2000
+            If (watch_AD_if_1st_2nd_OR_3rd()){
+                If (!close_AD()){
+                    Goto, ScriptStart
+                }
             }
+            Click, 1188, 649 Left, 1
         }
     }
 
