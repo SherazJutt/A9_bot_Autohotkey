@@ -160,7 +160,6 @@ SelectCarToPlayHunt(){
 }
 
 HuntRewardsSkip(){
-    MsgBox, skip
     isSkipped := False
 
     Loop,30{

@@ -15,7 +15,7 @@ main_gui:
     Gui Add, Button, gscript_start x3 y3 w130 h60 , Play
     Gui Add, Button, gexitscript x134 y3 w70 h60, Exit
 
-    Gui Add, CheckBox, gToggleFeatures Checked x7 y70 w80 h25 , Play Hunt
+    Gui Add, CheckBox, gToggleFeatures %Hunt% x7 y70 w80 h25 , Play Hunt
     Gui Add, Button, gHunt_Cars_Label x90 y70 w75 h25 , Hunt Cars
     Gui Add, CheckBox, gToggleFeatures %MPads% x7 y100 w100 h25 , Play MP Ads
     Gui Add, CheckBox, gToggleFeatures %Mute_System% x7 y130 w150 h25, Mute System Volume

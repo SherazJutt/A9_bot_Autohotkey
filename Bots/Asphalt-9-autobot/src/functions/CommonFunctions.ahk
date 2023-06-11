@@ -89,14 +89,14 @@ Resume(){
         Send, {Escape}
     }
 }
+
 WhereToGetBpsScreen(){
     Text:="|<>*160$32.zzzzzyTzzyD3zzz3UTzzUy3zzkTkTzsDy3zw7zUTy3zw3z1zzkTUzzy3kTzzkMDzzy07zzzU3zzzw1zzzzUTzzzk3zzzs0Tzzw43zzy3UTzz1y3zzUzkTzkTy3zsDzkTw7zw3y3zzkT1zzy3UzzzkQTzzyDjzzzrzzzzzs"
     if (ok:=FindText(X, Y, 1142, 92, 1188, 136, 0, 0, Text))
     {
         Click, 1163, 116 Left, 1
-        Return True
+        Gosub, script_start
     }
-    Return False
 }
 
 LockedOrRefueling(){
@@ -110,6 +110,14 @@ LockedOrRefueling(){
     }
 
     Return isRefuelingOrLocked
+}
+
+TokensColorCheckToVerifyHomeScreen(){
+
+    Text:="|<>*72$29.zzrzzzy3zzzs3zzz01zzw01zzk00zy000zs0k0z03k0Q07k0E0Tk0E0nU1U37U3067070Tz0S1zy0w3zy1wA0S7sM0QDk000Tk001zU003z0007z000Ty000zw001y"
+    if (ok:=FindText(X, Y, 787, 42, 823, 80, 0, 0, Text)){
+        Return True
+    }
 }
 
 ; This shows sometimes After the MP race is completed
