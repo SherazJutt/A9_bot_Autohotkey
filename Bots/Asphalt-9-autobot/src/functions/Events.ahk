@@ -21,7 +21,7 @@ SeasonalEvents(){
                     Click, 349, 637 Left, 1
                     Sleep, 1500
                 }Else{
-                    Gosub, ScriptStart
+                    Gosub, script_start
                 }
             }
         }
@@ -43,7 +43,7 @@ EnterEventsTab(){
             Sleep, 1000
         }
     }Else{
-        Gosub, ScriptStart
+        Gosub, script_start
     }
 
     Sleep, 3000
@@ -66,7 +66,7 @@ EnterEventsTab(){
                 }
                 Goto, recheck
             }Else{
-                Gosub, ScriptStart
+                Gosub, script_start
             }
         }
     Return isEventsLoaded

@@ -12,26 +12,18 @@ CheckInternet(){
         Sleep, 1000
         Click, 693, 500 Left, 1
         Sleep, 2500
-        Return False
+        Gosub, script_start
     }
-    Return True
 }
 
 CheckGame(){
-
-    isRunning := True
-
-    IfWinExist, Asphalt 9: Legends
-    {
+    If WinExist("Asphalt 9: Legends"){
         WinActivate, Asphalt 9: Legends
         WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
         WinRestore, Asphalt 9: Legends
-    }else{
-        Gosub, ScriptStart
-        isRunning := False
+    } Else {
+        Gosub, script_start
     }
-
-    Return isRunning
 }
 
 FullScreenAD(){
@@ -120,16 +112,6 @@ LockedOrRefueling(){
     Return isRefuelingOrLocked
 }
 
-TokensColorCheckToVerifyHomeScreen(){
-
-    Text:="|<>*72$29.zzrzzzy3zzzs3zzz01zzw01zzk00zy000zs0k0z03k0Q07k0E0Tk0E0nU1U37U3067070Tz0S1zy0w3zy1wA0S7sM0QDk000Tk001zU003z0007z000Ty000zw001y"
-    if (ok:=FindText(X, Y, 787, 42, 823, 80, 0, 0, Text)){
-        Return True
-    }
-
-    Return False
-}
-
 ; This shows sometimes After the MP race is completed
 ConnectingToTheServer(){
     isError := True
@@ -146,7 +128,7 @@ ConnectingToTheServer(){
     }
 
     if(isError){
-        Gosub, ScriptStart
+        Gosub, script_start
     }
 }
 

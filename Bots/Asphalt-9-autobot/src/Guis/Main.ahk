@@ -12,7 +12,7 @@ main_gui:
 
     Gui -MinimizeBox -MaximizeBox -DPIScale ;-Caption
 
-    Gui Add, Button, gScriptStart x3 y3 w130 h60 , Play
+    Gui Add, Button, gscript_start x3 y3 w130 h60 , Play
     Gui Add, Button, gexitscript x134 y3 w70 h60, Exit
 
     Gui Add, CheckBox, gToggleFeatures Checked x7 y70 w80 h25 , Play Hunt

@@ -18,7 +18,7 @@ LeagueDetection(){
             }
         }
         If (!isMpScreen){
-            Gosub, ScriptStart
+            Gosub, script_start
         }
     }
 
@@ -192,7 +192,7 @@ SelectMPCarToPlay(){
                 Return True
             }
         }Else{
-            Gosub, ScriptStart
+            Gosub, script_start
         }
     }
 }
@@ -204,7 +204,7 @@ StartMPRace(){
     if (ok:=FindText(X:="wait", Y:=10, 1058, 624, 1146, 657, 0, 0, Text)){
         Click, 1183, 634 Left, 1
     }Else{
-        Gosub, ScriptStart
+        Gosub, script_start
     }
 }
 
@@ -251,7 +251,7 @@ MpSkipCheck(){
     Text:="|<>*53$36.zzzzzzy00001w00001k00001k00001U7zzzzUDzzzzUDzzzzUDzzzzU7zwvzk0000Dk00007s00003w00003zzzzk3zzzzw1zzzzw1zzzzw1zzzzs3U00003U00007U0000DU0001zzzzzzzU"
     if (ok:=FindText(X, Y, 745, 429, 795, 468, 0, 0, Text))
     {
-        Gosub, ScriptStart
+        Gosub, script_start
     }
 
 }
@@ -391,7 +391,7 @@ close_AD(){
             }
             Text:="|<>*127$33.zzzzzwwz7k7bXsw0QwD73XbVssyAw777lbUsszwwX77zbaMszwwl761bb8ssAww77lbbUsyAwy77lbbkswQwz7U3bbsy0zzzzzzU"
             if (ok:=FindText(X, Y, 1221, 604, 1261, 631, 0, 0, Text)){
-                Gosub, ScriptStart
+                Gosub, script_start
             }
             ; syncing to the server end
 
@@ -461,7 +461,7 @@ homeCheck(){
             ; in activity
             Text:="|<>*131$60.3zkT01zVzkVzky00TVzkVzUw00TVzkkzVwDsDVzkkz1wDwDVzkkT3sTwDVzksT3sTwDVzksC7sTwDVzkwC7sTwDVzkw4DsTwDVzky4DsTwDVzky0TsTwDVzkz0TsTwDVzkz0zsTwDVzkzUzsTwDVzkzVzsTwDVzkzVzsTwDVzkzVzsTwDVzkzVzsTwDVzkzVzsTwDVzkzVzwDwDVzUzVzw7kDkT1zVzw00Tk01zVzy00zs03zVzzU1zy0DU"
             if (ok:=FindText(X, Y, 189, 231, 271, 283, 0, 0, Text)){
-                Gosub, ScriptStart
+                Gosub, script_start
             }
         }
     }
