@@ -68,7 +68,6 @@ LeagueDetection(){
 }
 
 TiersCheck(){
-    isSkipped := False
     ; silver
     CoordMode, Pixel, Screen
     PixelSearch, FoundX, FoundY, 1024, 619, 1042, 635, 0x96B2D4, 0, Fast RGB
@@ -81,7 +80,7 @@ TiersCheck(){
         Sleep, 1000
         Click, 363, 323 Left, 1
         Sleep, 3000
-        isSkipped := True
+        Return
     }
     ; Gold
     CoordMode, Pixel, Screen
@@ -95,7 +94,7 @@ TiersCheck(){
         Sleep, 1000
         Click, 363, 323 Left, 1
         Sleep, 3000
-        isSkipped := True
+        Return
     }
     ; Platinum
     CoordMode, Pixel, Screen
@@ -109,7 +108,7 @@ TiersCheck(){
         Sleep, 1000
         Click, 363, 323 Left, 1
         Sleep, 3000
-        isSkipped := True
+        Return
     }
     ; Legend
     CoordMode, Pixel, Screen
@@ -117,16 +116,14 @@ TiersCheck(){
     If (ErrorLevel = 0)
     {
         Sleep, 350
-        Send, {Escape}-
+        Send, {Escape}
         Sleep, 2000
         Click, 1025, 144 Left, 1
         Sleep, 1000
         Click, 363, 323 Left, 1
         Sleep, 3000
-        isSkipped := True
+        Return
     }
-
-    Return isSkipped
 }
 
 isRefueling(){
@@ -160,7 +157,7 @@ SelectMPCarToPlay(){
 
     ; (i) icon to confirm mp screen
     Text:="|<>*144$3.zz0zzzzzzzzU"
-    if (ok:=FindText(X , Y, 1184, 184, 1223, 222, 0, 0, Text)){
+    if (ok:=FindText(X:="wait" , Y:=10, 1184, 184, 1223, 222, 0, 0, Text)){
         isMpCarToPlayScreen := False
 
         Loop, 30{
@@ -194,6 +191,8 @@ SelectMPCarToPlay(){
         }Else{
             Gosub, script_start
         }
+    }Else{
+        Gosub, script_start
     }
 }
 

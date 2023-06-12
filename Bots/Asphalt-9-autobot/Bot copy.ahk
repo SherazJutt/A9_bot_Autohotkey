@@ -152,9 +152,12 @@ OwnsThisCarLabel:
         }Else{
             MpSkipCheck()
             Sleep, 2000
-            If (watch_AD_if_1st_2nd_OR_3rd()){
-                If (!close_AD()){
-                    Goto, ScriptStart
+            if (PlayMPAds == "Checked"){
+                Goto, watch_AD_end
+                If (watch_AD_if_1st_2nd_OR_3rd()){
+                    If (!close_AD()){
+                        Goto, ScriptStart
+                    }
                 }
             }
             Click, 1188, 649 Left, 1

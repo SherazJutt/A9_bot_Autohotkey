@@ -1,8 +1,9 @@
 CarsSkip(){
-    ; <============ D ============>
     for index, car in carNames {
         IniRead, %car%_to, %SettingsIni%, CarsSkip, %car%_to
     }
+
+    ; <============ D ============>
 
     ; lancer
     if (Lancer !== 0){
