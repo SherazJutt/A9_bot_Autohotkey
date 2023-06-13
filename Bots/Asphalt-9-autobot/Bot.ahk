@@ -26,8 +26,6 @@ If !(A_IsAdmin || RegExMatch(CommandLine, " /restart(?!\S)")) {
 ; set tooltip coords screen base instead of focused window
 CoordMode, ToolTip, Screen
 
-t1:=A_TickCount, X:=Y:=""
-
 date_check:
 
     ; Create WinHttpRequest object
@@ -63,7 +61,7 @@ date_check:
 
     ; Year Month Day
     ExpirationDate := 2023 06 20
-    PurchaseDate := 2023 06 10
+    PurchaseDate := 2023 06 01
 
     if (CurrentDate >= ExpirationDate or !data)
     {
@@ -74,8 +72,10 @@ date_check:
         msgbox, Warning dont change the system date
         ExitApp
     }Else{
-        ToolTip, ExpirationDate : 01 June 2023 , 640, 0,
+        ToolTip, ExpirationDate : 20 June 2023 , 640, 0,
     }
+
+    t1:=A_TickCount, X:=Y:=""
 
     global SettingsIni := A_ScriptDir "\settings.ini"
 
@@ -154,9 +154,54 @@ HuntRaceScreen:
 
     Sleep, 2000
 
-    If (!TicketCheck()) {
-        Goto, hunt_ended
+    Click, 1162, 135 Left, 1
+
+    Text:="|<>*133$302.003zs007s007kTsDzzkzzzzs000w3zs03zkDz0T000Q000Tk07k00Dy001y001w7y3zzsDzzzy000D0zs00Dw1zk7k0070007s00Q001zU00TU00T1zUzzy3zzzzU003kDw001z0Ts3w001k001w003000Ts007s007kTsDzzUzzzzs000w3z000Dk7w0z000Q000S000kTs3y3zzy3zzw7y3zzsDzzzy000D0zU003w1z0Tk007000700047zUzUzzzUzzz1zUzzy3zzzzzU3zkDs0w0T0TUDw0zzzk1zk0k11zsDsDzzsDzzkTsDzzUzzzzzw1zw3y0zk7k7k7z0Tzzy1zw1zUETy3y3zzy3zzw7y3zzsDzzzzz0Tz0zUTw1w1s1zk7zzzUTz0zs07zUzUzzzUzzz1zUzzy3zzzzzk7zkDs7z0T0S0zw1zzzs7zkDy01zsDsDzzsDzzkTsDzzUzzzzzw1zw3y1zk7k70Tz0Tzzy1zw3zUETy3y3zzy3zzw7y3zzsDzzzzz0Tz0zUTw1w1k7zk7zzzUTz0zzw7zUzUzzzUzzz1zUzzy3zzzzzk7zkDs7zUz0M3zw1zzzs7zk7zz1zsDsDzzsDzzkTsDzzUzzzzzw1zw3y1zzzk41zz0Tzzy1zw0zzkTy3y3zzy3zzw7y3zzsDzzzzz0Tz0zUTzzw00zzk00TzUTz00Dw7zUzU01zUzzz1zUzzy3zzzzzk7zkDs7zzz00Dzw007zs7zk00T1zkDs00Ts00TkTsDzzUzzzzzw1zw3y1zzzk03zz001zy1zy001k007y007y007w7y3zzsDzzzzz0Tz0zUTzzw00Tzk00TzUTzk00A001zU01zU01z1zUzzy3zzzzzk7zkDs7zzz003zw007zs7zy001000zsDzzs00TkTsDzzUzzzzzw1zw3y1zzzk00zz001zy1zzw00E00zy3zzy3zzw7y3zzsDzzzzz0Tz0zUTzzw007zk7zzzUTzzw007sDzUzzzUzzz1zUzzy3zzzzzk7zkDs7zzz060zw1zzzs7zzzw01y3zsDzzsDzzkTsDzzUzzzzzw1zw3y1zk7k3UDz0Tzzy1zzzzU0TkTy3zzy3zzw7y3zzsDzzzzz0Tz0zUTw1w1w1zk7zzzUTz0zw07w3zUzzzUzzz1zUzzy3zzzzzk7zkDs7z0T0TUTw1zzzs7zkDz01z0zsDzzsDzzkTsDzzUzzzzzw1zw3y1zk7k7s3z0Tzzy1zw3zk0Ts7y3zzy3zzw7y3zzsDzzzzz0Tz0zUTw1w1z0Tk7zzzUTz0Ts07z1zUzzzUzzz1zUzzy3zzzzzk7zkDs3y0T0Tk7w1zzzs7zk7w01zkTsDzzsDzzkTsDzzUzzzzzw1zw3y000Dk7y0z000Ty1zw0000Tw3y001y3zzw7y001s007zzz0Tz0zk003w1zk7k007zUTzU0047zUzU00TUzzz1zU00S001zzzk7zkDw001z0Tw1w001zs7zs0011zs7s007sDzzkTs007U00Tzzw1zw3zU00zk7zUD000Ty1zz000kTz1y001y3zzw7y001s007zzz0Tz0zw00Tw1zw3k007zUTzw00yDzsTk00zlzzzXzk00z003zzzsDzsTzy1zzVzzky003zwDzzw3zU"
+
+    if (ok:=FindText(X:="wait", Y:=10, 430, 169, 755, 224, 0, 0, Text)) {
+        Sleep, 2000
+
+        ; 0
+        Text:="|<>*119$28.zzzzzz00TzU00Tw000zU001w0003k00060Ty0M3zw1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM3zw1U7zk70000Q0003s000Tk003zU00Tzk07zzzzzs"
+        if (ok:=FindText(X, Y, 625, 310, 676, 370, 0, 0, Text)){
+            if (AutoRefillTickets == "Checked"){
+                Text:="|<>*123$81.zy0zy7zlkQ0707zs7zkzyC3U0s0zzUzw7zVkQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707Uw7zUzwC3U0s0zzUzw7zVkQ0707zs700zwC3U0s0wS0s0701kQ0707Vk700s0C3U0s0wC0s0701kQ0707Us700s0C3U0s0w70s0701kQ0707Uw700s0C3k0w0w3Uzy701kTzbzzUS7zks0C3zwzzU"
+                if (ok:=FindText(X, Y, 470, 495, 576, 530, 0, 0, Text)){
+                    Sleep, 1000
+                    Click, 594, 497 Left, 1
+                    Sleep, 1000
+                    Goto, tickets_check_end_label
+                }
+            }
+        }
+
+        ; 1
+        Text:="|<>*113$17.zzzzkDy0Ds0T00s01U030060UA70MS0nw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs7zzy"
+        if (ok:=FindText(X, Y, 627, 308, 671, 369, 0, 0, Text)){
+            if (EventPassHolder == "Checked"){
+                PressEscape(1)
+                Goto, tickets_check_end_label
+            }Else{
+                if (AutoRefillTickets == "Checked"){
+                    Text:="|<>*123$81.zy0zy7zlkQ0707zs7zkzyC3U0s0zzUzw7zVkQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707Uw7zUzwC3U0s0zzUzw7zVkQ0707zs700zwC3U0s0wS0s0701kQ0707Vk700s0C3U0s0wC0s0701kQ0707Us700s0C3U0s0w70s0701kQ0707Uw700s0C3k0w0w3Uzy701kTzbzzUS7zks0C3zwzzU"
+                    if (ok:=FindText(X, Y, 470, 495, 576, 530, 0, 0, Text)){
+                        Sleep, 1000
+                        Click, 594, 497 Left, 1
+                        Sleep, 1000
+                        PressEscape(1)
+                        Goto, tickets_check_end_label
+                    }
+                }
+            }
+        }Else{
+            PressEscape(1)
+        }
+
+    }Else{
+        Gosub, script_start
     }
+
+tickets_check_end_label:
 
     Sleep, 1000
     SelectCarToPlayHunt()
@@ -189,13 +234,16 @@ MP1Start:
     If (!MainMenuLoadedCheck()) {
         Goto, script_start
     }
+    If (!SeasonalEvents()) {
+        Goto, script_start
+    }
+    Sleep, 3000
     ; entering mp
     Loop, 2
     {
         Click, 686, 644 Left, 1
-        Sleep, 1000
+        Sleep, 2000
     }
-
     authIndex := 0
     If (!XboxAuthentication()){
         If (authIndex == 60){
@@ -206,6 +254,7 @@ MP1Start:
         }
     }
 
+LeagueDetectionLabel:
     if (LeagueDetection == "Checked"){
         bronze = 0xD88560
         silver = 0x96B2D4

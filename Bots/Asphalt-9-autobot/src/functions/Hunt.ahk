@@ -58,43 +58,44 @@ TicketCheck(){
         ; 0
         Text:="|<>*119$28.zzzzzz00TzU00Tw000zU001w0003k00060Ty0M3zw1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM7zy1UTzs61zzUM3zw1U7zk70000Q0003s000Tk003zU00Tzk07zzzzzs"
         if (ok:=FindText(X, Y, 625, 310, 676, 370, 0, 0, Text)){
+            MsgBox, 0 ticket
             if (AutoRefillTickets == "Checked"){
                 Text:="|<>*123$81.zy0zy7zlkQ0707zs7zkzyC3U0s0zzUzw7zVkQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707Uw7zUzwC3U0s0zzUzw7zVkQ0707zs700zwC3U0s0wS0s0701kQ0707Vk700s0C3U0s0wC0s0701kQ0707Us700s0C3U0s0w70s0701kQ0707Uw700s0C3k0w0w3Uzy701kTzbzzUS7zks0C3zwzzU"
-                if (ok:=FindText(X:="wait", Y:=10, 470, 495, 576, 530, 0, 0, Text)){
+                if (ok:=FindText(X, Y, 470, 495, 576, 530, 0, 0, Text)){
                     Sleep, 1000
                     Click, 594, 497 Left, 1
                     Sleep, 1000
-                    canPlay := true
-                    PressEscape(1)
                 }
             }Else{
                 canPlay := False
-                PressEscape(1)
             }
         }
 
         ; 1
         Text:="|<>*113$17.zzzzkDy0Ds0T00s01U030060UA70MS0nw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs3zk7zUDz0Ty0zw1zs7zzy"
         if (ok:=FindText(X, Y, 627, 308, 671, 369, 0, 0, Text)){
+            MsgBox, 1 ticket
+            MsgBox, %AutoRefillTickets%
             if (EventPassHolder == "Checked"){
-                canPlay := true
+                MsgBox, ev pass
                 PressEscape(1)
             }Else{
                 if (AutoRefillTickets == "Checked"){
+                    MsgBox, refill auto
                     Text:="|<>*123$81.zy0zy7zlkQ0707zs7zkzyC3U0s0zzUzw7zVkQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707UQ700s0C3U0s0w3Us0701kQ0707Uw7zUzwC3U0s0zzUzw7zVkQ0707zs700zwC3U0s0wS0s0701kQ0707Vk700s0C3U0s0wC0s0701kQ0707Us700s0C3U0s0w70s0701kQ0707Uw700s0C3k0w0w3Uzy701kTzbzzUS7zks0C3zwzzU"
-                    if (ok:=FindText(X:="wait", Y:=10, 470, 495, 576, 530, 0, 0, Text)){
+                    if (ok:=FindText(X, Y, 470, 495, 576, 530, 0, 0, Text)){
                         Sleep, 1000
                         Click, 594, 497 Left, 1
                         Sleep, 1000
-                        canPlay := true
-                        PressEscape(1)
+                    }Else{
+                        canPlay:=False
                     }
                 }Else{
-                    canPlay := False
-                    PressEscape(1)
+                    canPlay:=False
                 }
             }
         }
+
     }Else{
         Gosub, script_start
     }
