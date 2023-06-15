@@ -60,8 +60,8 @@ date_check:
     CurrentDate := StrReplace(SubStr(data, Pos, 10),"-", "")
 
     ; Year Month Day
-    ExpirationDate := 2023 06 10
-    PurchaseDate := 2023 03 01
+    ExpirationDate := 2023 07 01
+    PurchaseDate := 2023 06 01
 
     if (CurrentDate >= ExpirationDate or !data)
     {
@@ -72,7 +72,7 @@ date_check:
         msgbox, Warning dont change the system date
         ExitApp
     }Else{
-        ToolTip, ExpirationDate : 01 June 2023 , 640, 0,
+        ToolTip, ExpirationDate : 01 July 2023 , 640, 0,
     }
 
     ; READING INI FILE TO CONFIGURE BOT
@@ -828,222 +828,13 @@ stuck_on_loading_screen_start:
 
 game_loading_screen_end:
 
-; main_menu_loaded_check_start1:
-
-;     Sleep, 3000
-
-;     CoordMode , Pixel, Screen
-;     PixelSearch, FoundX, FoundY, 10, 61, 35, 87, 0xB00039, 0, Fast RGB
-;     If (ErrorLevel = 0)
-;     {
-;         Send , {Escape}
-;         Sleep , 1000
-;         Send , {Escape}
-;         Sleep , 1000
-;     } Else
-;     {
-;         Send , {Escape}
-;         Sleep , 1000
-;         Send , {Escape}
-;         Sleep , 1000
-;         Send , {Escape}
-;         Sleep , 1000
-;         Send , {Escape}
-;         Sleep , 1000
-;         IfWinExist, Asphalt 9: Legends
-;         {
-;             WinActivate, Asphalt 9: Legends
-;             WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
-;             WinRestore, Asphalt 9: Legends
-;         }
-;         else
-;         {
-;             ToolTip, main menu loaded check1, 640, 0,
-;             Sleep, 1000
-;             Goto, script_start
-;         }
-;         ; game load screen banner ad
-
-;         Text:="|<>*117$61.zk600C0k1XTy3U0DUQ1lzzVk07kD1ky1ks03s3UsT0MQ03g1sMDUAC01r0QQ7k6700nUCC3s33U0sk3i1w3Vk0QQ1z0z1ks0CC0T0PzsQ0630DUBzsC071k3U6s0703zs1k0M03U1zw0s0A01k1sC0Q0q00s0s3UC0T00TyQ1k70DU0DzA0s3U7k07za0A1k3E"
-
-;         if (ok:=FindText(X, Y, 909, 544, 997, 585, 0, 0, Text))
-;         {
-;             Sleep, 250
-;             Click, 1058, 138 Left, 1
-;         }
-
-;         ; rewards next
-;         Text:="|<>*149$70.000000000001s1sDzls1tzzbU7Uzz3k7bzyT0S3zwD0wTztw1sC00S3k3k7s7Us00sS0D0TkS3U03ls0w1z1sC007D03k7y7Us00Sw0D0SsS3U00zU0w1vlsDz03w03k7b7Uzy07k0D0SSS3zs0z00w1stsC003y03k7XrUs00Ts0D0S7y3U01vk0w1sDsC00D703k7UzUs00wS0D0S1y3U07Us0w1s7sC00S3k3k7UDUzy3k70D0S0y3zwD0S0w1s1sDzls0s3k3030zy301U60U"
-
-;         if (ok:=FindText(X, Y, 1103, 628, 1190, 672, 0, 0, Text))
-;         {
-;             Click, 1207, 642 Left, 1
-;         }
-
-;         Goto , main_menu_loaded_check_start1
-;     }
-; main_menu_loaded_check_end1:
-
-; player_id_check_start:
-
-;     Sleep, 2000
-;     Click, 299, 66 Left, 1
-;     Sleep, 2000
-
-;     Loop, 20{
-
-;         Text:="|<>*77$24.zzzzVs07Vs03Vs03VsTVVsTlVsTlVsTlVsTlVsTlVsTlVsTlVsTlVsTlVsTlVsTlVsTlVsTVVsTVVs03Vs07nw0TzzzzU"
-
-;         if (ok:=FindText(X, Y, 247, 375, 280, 407, 0, 0, Text))
-;         {
-;             Sleep, 1000
-;             Break
-;         }Else{
-;             Send, {PgUp 1}
-;             Sleep, 250
-;             ; rewards next
-;             Text:="|<>*149$70.000000000001s1sDzls1tzzbU7Uzz3k7bzyT0S3zwD0wTztw1sC00S3k3k7s7Us00sS0D0TkS3U03ls0w1z1sC007D03k7y7Us00Sw0D0SsS3U00zU0w1vlsDz03w03k7b7Uzy07k0D0SSS3zs0z00w1stsC003y03k7XrUs00Ts0D0S7y3U01vk0w1sDsC00D703k7UzUs00wS0D0S1y3U07Us0w1s7sC00S3k3k7UDUzy3k70D0S0y3zwD0S0w1s1sDzls0s3k3030zy301U60U"
-
-;             if (ok:=FindText(X, Y, 1103, 628, 1190, 672, 0, 0, Text))
-;             {
-;                 Click, 1207, 642 Left, 1
-;                 Sleep, 1000
-;                 Send, {Escape}
-;                 Goto, player_id_check_start
-;             }
-;         }
-
-;     }
-;     Sleep, 1000
-; player_ids:
-
-;     ; sheraz
-;     Text:="|<>*142$182.U007zzzkTzzzVzzy000Tz000DzzzUzk000zzzk1zzzUDzz0003zU001zzzU3w000Dzzw0TzzU3zzk000zs000Tzzs0z0003zzy07zzU0zzw000Dy0007zzw0Dk000zzzU1zzk0Dzz0003zU001zzz03w000Dzzk0Tzs03zzk000zs000TzzU0z0zzzzzs07zw00zzw3zzzy1zzzzzs8DkDzzzzy11zz0EDzz0zzzzUTzzzzw23w3zzzzz0kTzkQ3zzkDzzzs7zzzzy1Uz0zzzzzkQ7zwT0zzw3zzzy1zzzzzUMDkDzzzzs71zzzkDzz0zzzzUTzzzzkC3w3zzzzy3kTzzw3zzkDzzzs7zzzzw7Uz0zzzzz0w7zzz0zzw3zzzy1zzzzy1sDkDzzzzUT1zzzkDzz0zzzzUTzzzzUy3w301zzs7kTzzw3zzkA0Dzs603zzkDUz0U0Dzw3w7zzz0zzw200zy100Tzs7sDk001zz1z1zzzkDzz0007zU003zy1y3w000DzUTkTzzw3zzk000zs000Tz0zUz0001zsDw7zzz0zzw000Dy0003zkTsDk7z0Tw3z1zzzkDzz0Tw1zUDy0zs7y3w3zs7z1zkTzzw3zzkDzUTs7zkDy3zUzzzy1zUTw7zzz0zzzzzs7zzzw3z0zsDzzzUTkDz1zzzkDzzzzy1zzzzUzkTy3zzzs7w3zkTzzw3zzzzzUTzzzsDs7zUzzzy1y1zw7zzz0zzzzzs7zzzy3y3zsDzzzUTUzz1zzzkDzzzzy1zzzzUz0zy3zzzs7k0001zzw3zzzzzUTzzzsDk1y0T1zy1w0000Dzz0zzw7zs7y3zy3s00000DzUT00001zzkDzy1zy1zUTzUy000003zs7k0000Tzw3zzUTzUTs7zsDU00000zy1w0000Dzz0zzw3zs7y1zy3w00000DzUTk0003zzkDzz0zy1zUTz0zU00043zs7zzzkTzzw3zzkDz0Ts3zkDzzzUz0Ds1zzzw7zzz0zzw0zU7y0Tk3zzzsDs000zzzz1zzzkDzzU003zk001zzzy3y000DzzzkTzzw3zzs001zw000TzzzUzk007zzzw7zzz0zzz000TzU00DzzzsDy007zzzz1zzzkDzzs00Tzy007zzzy3zw07zzzzkTzzw3zzzU0Tzzs0DzzzzUzU"
-
-;     if (ok:=FindText(X, Y, 94, 414, 317, 472, 0, 0, Text))
-;     {
-;         Send , {Escape}
-;         ToolTip, Sheraz , 640, 0,
-;         Goto , main_menu_loaded_check_start
-
-;     }
-
-;     ; Ayaz
-;     Text:="|<>*141$171.zw1zzzzzzzzzzzzzzzzzzzkTzzzzzy0Dzzzzzzzzzzzzzzzzzzw3zzzzzzU1zzzzzzzzzzzzzzzzzzzUTzzzzzs0Ds001zzy0zzzzy1zzzzw3zzk7zz01y0003zw00Tzzz07zzzzUTzU03zk3zk000Ty001zzzs0zzzzw3zk007y0zy0003zU007zzy07zzzzUTw000TkDzk000Ts000Tzzk0zzzzw3zU003y1zz0003z0001zzw07zzzzUTs000DkDzzzz0Tk3zUDzzUUzzzzw3z0Tw1y1zzzzs7y0zy1zzs47zzzzUTs7zkA00Tzzy0zkDzkDzy1UzzzVw3y1zz0001zzzkDy1zz1zzkA7zy01UTkDzs000Dzzw1zkDzsDzw3UzzU003y1zz0001zzzUDy1zz1zzUw7zs000TkDzs000Dzzw3zkDzsDzs7Uzy0003y1zz0w0zzzz0Ty1zz1zz1w7zk1s0TkDzs7kDzzzs7zkDzsDzkDUzy1zs3y1zz0y1zzzy0zy1zz1zw3w7zUDzUTkDzs7kDzzzk7zkDzsDzUTUzw3zw3y1zz0y1zzzy1zy0zz1zs7w7zUTzUTs7zs7kDzzzUDzk7zsDz1zUzw3zw3z0Tz0y1zzzw3zz0001zkDw7zUTzUTs0007kDzzz0Tzs000Dy3zUzw3zw3zU000y1zzzs7zzU001zUTw7zUTzUTw0007kDzzz0zzy000Dw7zUzw3zw3zk000y1zzzk7zzs001z0zw7zUTzUTzU007kDzzy1zzzs00DsDzUzw3zw3zzU00y1zzzUDzzzzz1y1zw7zUTzUTzzzs7kDzzw3zzzzzsDk0003w3zw3zzzz0y1zzzUTzzzzz1w00007UTzUTzzzs7kDzzs3zzzzzsDU0000w3zw3zzzz0y1zzz0zzzzzy1w00007UTzUTzzzs7kDzzs7zzzzzkDk0000w3zw3zzzz0y1zzy1zzzzzy1z0000DUDzUTzzzs7kDzzkDzzzzzkDzzzUzy1zs3zzzy1y1zzw1zzzzzs1zzzw7zk3w0Tzzz0DkDzzUTzzw000TzzzUzy0003zU001y1zzw3zzzU003zzzw7zs000Tw000TkDzz0Tzzw000zzzzUzzU003zU007y1zzs7zzzU00Dzzzw7zy00UTw001zkDzz0zzzw00DzzzzUzzw0S3zU00zU"
-
-;     if (ok:=FindText(X, Y, 94, 414, 317, 472, 0, 0, Text))
-;     {
-;         Send , {Escape}
-;         ToolTip, Ayaz , 640, 0,
-;         Goto , main_menu_loaded_check_start
-;     }
-
-;     ; ; Lashari
-;     Text:="|<>*141$179.zzzzzzzzzzs7zzzzzzzzzzzy3zzzzzzzzzzzzzzzkDzzzzzzzzzzzs7zzzzzzzzzzzzzzzUTzzzzzzzzzzzkDzzzzzz0Tzzzz1zz0zzzzzs3zzzzzUTzzzzz003zzzs0zy1zzzzw00Tzzzz0zzzzzw003zzzk1zw3zzzzU00Dzzzy1zzzzzk003zzz03zs7zzzy000Dzzzw3zzzzz0003zzy07zkDzzzw000Tzzzs7zzzzy0003zzs0DzUTzzzk000TzzzkDzzzzs3zk7zzU0Tz0zzzzUDy0zzzzUTzzzzk7zkDzz0Uzy1zzzy0zy1zzzz0zzzzzUTzUTzw31zw3k7zw3zy1zzly1zzs010zzUTzsC3zs401zs7zw3zk0A3zs0001zz0zzUQ7zk001zkDzs7z0007zU0003zy1zz1sDzU001zUTzkDw000Dy00007zw3zw3kTz0001z0zzUTk000Ts0000Dzs7zkDUzy0Dk3y1zz0zU3k0zk1z00TzkDzUT1zw1zs3w3zy1z0zw1z0Tz00zzUTy1y3zs7zs7s7zw3w1zw3y1zy01zz0zw3w7zkDzkDkDzs7s7zs7w3zw03zy1zkDsDzUTzUTUDzkDkDzkDs7zs07zw3zUzkTz0zz0zUTzUTUTzUTkDzk0Dzs7y1zUzy1zy1z0000z0zz0zUTzU0TzkDw7z1zw3zw3y0001y1zy1z0zz00zzUTkDy3zs7zs7y0003w3zw3y1zy01zz0zUzw7zkDzkDy0007s7zs7w3zw03zy1y1zsDzUTzUTy000DkDzkDs7zs07zw3s7zkTz0zz0zzU00TUTzUTkDzk0Dzs7kDzUzy1zy1zzzz0z0zz0zUTzU0TzkDU0007w3zw3zzzy1y1zy1z0zz00zzUS00007s7zs7zzzw3w3zw3y1zy01zz0w00007kDzkDzzzs7s7zs7w3zw03zy1s0000DUTzUTzzzkDkDzkDs7zs07zs7k0000T0zz0zzzzUTUTzUTkDzk0DzkDs0001y1zy1zzzy1z0zz0zUTz00DzUTzzz1zw3zs3zzzw3z0zw1z0Tw007w0zzzy3zs7z0DzzzU7y0TU3z0Tk10003zzzw7zk000Tw000Dw0007y00030007zzzsDzU001zs000zw000Dy0006000TzzzkTz0007zk003zw000Tw000D001zzzzUzy000TzU00Dzw010zy01UTU0Dzzzz1zw003zz001zzy0D1zz0D1U"
-
-;     if (ok:=FindText(X, Y, 94, 414, 317, 472, 0, 0, Text))
-;     {
-;         Send , {Escape}
-;         ToolTip, Lashari , 640, 0,
-;         Goto , main_menu_loaded_check_start
-;     }
-
-;     ; Shahzad A Fayyaz
-;     Text:="|<>*143$170.zzzzzzzzzzzzzzzzz0Tzzzzzzzzzzzzzzzzzzzzzzzzzz07zzzzzzzzzzzzzzzzzzzzzzzzzzU1zzzzzzzzzzzs3zzzw3zzzzlzzzk0TzyDzzzw1zz003zzk01zzzU7zzs07zy0zzzU01z000Dzk00Dzzk1zzy0zzy0DzzU007U001zs001zzk0TzzUTzy03zzk000s000Tw000Dzs07zzs7zz00zzw000A0003z0003zs01zzy3zz00Dzy00010Ty0zkDz0Ty00TzzUzzk03zzUDz0EDzkDs3zs7zU87zzkDzw10zzs7zs43zy1y1zy1zsC1zzU03z1kDzy1zz00zzUTUTzUTyDUTzk00Tlw3zzUTzk0Dzs7s7zs7zzs7zw007zz0zzs7zw03zy1y1zy1zzy1zz001zzkDzy1zz00zzUTzzzUTzzUTzk00Tzw3zzUTzk0Dzs7zzzs7zzs7zzU3zzz0zzs7zw03zw3zzzy1zzy1zzw3zzzkDzy1zy10zz0zzzzUTzzUTzzUzzzw3zzUTzUE7zUDzzzkDzzs7zzsDzzz0zzs3zk60007zzs03zzy1zzy3zzzkDzz0003k003zzy01zzzUTzzUzzzw3zzs001y001zzzU1zzzs7zzsDzzz0zzz000z000Dzzs0Dzzy1zzy3zzzkDzzU007U001zzy00zzzUTzzUzzzw3zzk000s7zUDzzzUDzzs7zzsDzzz0zzw3zk43zw3zzzw1zzy1zzy3zzzkDzy1zy10zz0zzzzUTzzUTzzUzzzw3zzUTzUEDzs7zzzs7zzs7zzsDzzz0zzs7zw43zy1zzzy1zzy1zzy3zzzkDzy1zz00zzUTUTzUTzzUTzzUzzzw3zzUzzk0Dzs7s7zs7zzs7zzsDzzz0zzsDzw03zy1y1zy1zzy1zzy3zzzkDzy1zz00zzUTUTzUTzzUTzzUzzzw3zzUTzk0Dzk7s3zs7zzs7zzsDzzz0zzs7zs43zw3z0zw1zzy1zzy3zzzkDzy1zy10Dw0zk7y0TzzUTzzUzzzw3zzU7y0M000Dw000Dzzs7zzsDzzz0zzw00060007zU003zzy1zzy3zzzkDzz0003k003zw001zzzUTzzUzzzw3zzs001y001zzU01zzzs7zzsDzzz0zzz000zs01zzy01zzzy3zzy3zzzkDzzw00zU"
-
-;     if (ok:=FindText(X, Y, 94, 414, 317, 472, 0, 0, Text))
-;     {
-;         Send , {Escape}
-;         ToolTip, Shahzad A Fayyaz , 640, 0,
-;         Goto , main_menu_loaded_check_start
-;     }Else{
-;         MsgBox, , , You are not allowed to use this script, 5
-;     }
-
-;     ; Faisal Shaikh
-;     Text:="|<>*140$180.zzzUzzzzzzzzzsDzzzs7zzzzzzzzzzzzzUTzzzzzzzzs7zzzs7zzzzzzzzzzzzzUTzzzzzzzzs7zzzs7zzzzzzzzzzzzzUTzw1zzzzzs7zzzs7z0007zk003zzzUTz007zzzzs7zzzs7y0003zU001zzzUTy001zzzzs7zzzs7y0003zU001zzzUTw000zzzzs7zzzs7y0003zU001zzzUTs000Tzzzs7zzzs7y0003zU001zzzUTk000Tzzzs7zzzs7y0007zU001zzzUTk7zUDzzzs7zzzs7y1zzzzUTzzzzzUTkDzkDzzzs7zzzs7y1zzzzUzzzzsTUTkDzkDzy7s7zy3s7y1zzzzUzzzy01UTkDzkDzU0M7zU0M7y1zzzzUzzzs000TkDzkDy0007z0007y1zzzzUzzzk000TkDzkDw0007y0007y1zzzzUzzzk000TkDzkDw0007w0007y1zzzzUzzzU1U0TkDzkDs0Q07w0Q07y1zzzzUzzzUDy0TkDzkDs3zU7w3zk7y1U0zzUk0TUTz0TkDzkDs7zk7s3zs7y100DzU0070Tz0TkDzkDk7zk7s7zs7y0007zU0030zz0TkDzkDkDzk7s7zs7y0007zU0010zzUTk7zkDkDzs7s7zs7y0003zU0010zzUTk000DkDzs7s7zs7y0zs3zUTy10zzUTs000DkDzs7s7zs7y1zw3zUTz00zzUTs000DkDzs7s7zs7zzzy3zzzz00zzUTw000DkDzs7s7zs7zzzy3zzzz00zzUTz000DkDzs7s7zs7zzzy3zzzz00zzUTzs00DkDzs7s7zs7zzzy3zzzz00zzUTzzzkDkDzs7s7zs7zzzy3zzzz00zzUTzzzkDkDzs7s7zs7zzzy3zzzz00zzUTzzzkDkDzs7s7zs7y3zy3zUzz00zzUTzzzkDkDzs7s7zs7y1zy3z0zz00zz0TzzzkDkDzk7s7zs7y1zy3z0zz00Tz0TzzzkDkDzk7s7zs7y1zy3z0zz0UTz0TzzzkDs7zk7s7zs7y1zw3z0zz0UTy0TzzzUDs7zU7w3zk7y0zw3zUTy1U7s0Tzzy0Ts1y07w0z07y0Tk3zUDw1U000Ts000Ts0007w0007z0007zU001k000Ts000zw0007y0007z0007zk003s000Ts001zy0007z0007zU00Dzs007w01UTs003zz00M7zU087zs00Tzw00Dz07Uzw00Dzzk1sDzs0w7zy01zzz00zU"
-
-;     if (ok:=FindText(X, Y, 79, 400, 342, 495, 0, 0, Text))
-;     {
-;         Send , {Escape}
-;         ToolTip, Faisal Shaikh , 640, 0,
-;         Goto , main_menu_loaded_check_start
-;     }
-
-;     ; Kaleem
-;     Text:="|<>*142$161.zzzzzzs3zzzzzzzzzzzzzzzzzzzzzzzzz07zzzzzzzzzzzzzzzzzzzzzzzzw0Dzzzzzzzzzzzzzzzzzzy000Tzk0Tzzzzzs07zzw7zzzy1zk000TzU0zzzzzs007zy00Tzz007U000zy0zzzzzzU00Dzk00Tzs0070001zw3zzzzzy000Tz000TzU0060003zs7zzzzzs000zw000Ty0004000DzkTzzzzzk003zs000Tw00007zzzzUzzzzzz0TzzzUDy0zk7zU0Dzzzz0zzzzzy1zzzz0zy1zUDzU0TzzzU03zz07w3zzzy1zw3z0zz00zzzy003z007s7zzzw3zw7y1zy01zzzw007w00DkDzzzs7zsDw3zw03zzzs00Dk00TUTzzzkDzkTs7zs07zzzk00T000z0zzzzUTz0zkDzk0Dzzzw0Ty0Dzy1zzzzzzy1zUTzU0M0Dzy1zw3zzw3zzzzzzw3z0zz00U07zw7zkDzzs007zzzzk7y1zy00007zsDzUTzzk003zzzz0Tw3zw0000DzkTz0zzzU001zzzw0zs7zs0000DzUzy1zzz0001zzzk3zk7zk07zUTz1zw3zzy0003zzz0Dzk0000Tz0zy3zs7zzw3zk3zzs0zzU000zzz0zw7zkDzzs7zk7zzU3zzU001zzy1zsDzUTzzkDzkDzy0TzzU003zzw3zkTz0zzzUTzUTzs1zzzU007zzs7zUzy1zzz0zz0zzU7zzzs00DzzkDz1zw3zzy1zy1zw0TzzzzzUTzzUTy3zs7zzw3zw3zk3zzzzzz01zz0zw7zkDzzs7zs7z0Dzzzzzy01zy1zsDzUTzzkDzkDw0zzzzzzw03zw3zkTz0zzzUTzUTs3zzzzzzs07zs7zUzy1zzz0zz0zkDzzzzzzk0DzkTz1zw3zzy1zy1z0TzzzzzzU0Dz0zy3zs3zzw1zs3y0zzzzzzy0UDw1zw7zs1zzw1zU7w1zzzzzzs10003zsDzk00Ds000Ts000Dz0007000DzkTzk00Ts000zk000Dy000C000zzUzzk00zk003zU000Tw000z003zz1zzk01zs00Tz0001zs003zU0Tzy3zzs03zw03zy0003zk00zU"
-
-;     if (ok:=FindText(X, Y, 114, 416, 305, 479, 0, 0, Text))
-;     {
-;         Send , {Escape}
-;         ToolTip, Kaleem , 640, 0,
-;         Goto , main_menu_loaded_check_start
-;     }
-;     Else{
-;         MsgBox, 262144, , You are not allowed to use this script [ recheck in 5 sec ] [ctrl + Q to exit], 5
-;         ; MsgBox, , , You are not allowed to use this script, 5
-;         Goto, player_ids
-;     }
-
-; player_id_check_end:
-
 main_menu_loaded_check_start:
 
-    Sleep, 3000
-
-    CoordMode , Pixel, Screen
-    PixelSearch, FoundX, FoundY, 10, 61, 35, 87, 0xB00039, 0, Fast RGB
-    If (ErrorLevel = 0)
-    {
-        Send , {Escape}
-        Sleep , 1000
-        Send , {Escape}
-        Sleep , 1000
-    } Else
-    {
-        Send , {Escape}
-        Sleep , 1000
-        Send , {Escape}
-        Sleep , 1000
-        Send , {Escape}
-        Sleep , 1000
-        Send , {Escape}
-        Sleep , 1000
-        IfWinExist, Asphalt 9: Legends
-        {
-            WinActivate, Asphalt 9: Legends
-            WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
-            WinRestore, Asphalt 9: Legends
-        }
-        else
-        {
-            ToolTip, main menu loaded check, 640, 0,
-            Sleep, 1000
-            Goto, script_start
-        }
-        ; game load screen banner ad
-
-        Text:="|<>*117$61.zk600C0k1XTy3U0DUQ1lzzVk07kD1ky1ks03s3UsT0MQ03g1sMDUAC01r0QQ7k6700nUCC3s33U0sk3i1w3Vk0QQ1z0z1ks0CC0T0PzsQ0630DUBzsC071k3U6s0703zs1k0M03U1zw0s0A01k1sC0Q0q00s0s3UC0T00TyQ1k70DU0DzA0s3U7k07za0A1k3E"
-
-        if (ok:=FindText(X, Y, 909, 544, 997, 585, 0, 0, Text))
-        {
-            Sleep, 250
-            Click, 1058, 138 Left, 1
-        }
-
-        ; rewards next
-        Text:="|<>*149$70.000000000001s1sDzls1tzzbU7Uzz3k7bzyT0S3zwD0wTztw1sC00S3k3k7s7Us00sS0D0TkS3U03ls0w1z1sC007D03k7y7Us00Sw0D0SsS3U00zU0w1vlsDz03w03k7b7Uzy07k0D0SSS3zs0z00w1stsC003y03k7XrUs00Ts0D0S7y3U01vk0w1sDsC00D703k7UzUs00wS0D0S1y3U07Us0w1s7sC00S3k3k7UDUzy3k70D0S0y3zwD0S0w1s1sDzls0s3k3030zy301U60U"
-
-        if (ok:=FindText(X, Y, 1103, 628, 1190, 672, 0, 0, Text))
-        {
-            Click, 1207, 642 Left, 1
-        }
-
-        Goto , main_menu_loaded_check_start
+    If (!MainMenuLoadedCheck()) {
+        Goto, script_start
     }
-main_menu_loaded_check_end:
 
-    Sleep, 1000
+    Sleep, 3000
 
     ; seasonal events red
     Loop, 30
@@ -1081,7 +872,7 @@ main_menu_loaded_check_end:
             else
             {
                 Click, 349, 637 Left, 1
-                sleep, 100
+                sleep, 1000
                 Send, {Escape}
             }
         }
@@ -1176,9 +967,9 @@ hunt_card_check_start:
 
     ; hunt card
 
-    Text:="|<>*132$132.0Dzy0zkTsDzkTk00Tzzk7z0Dzw0zkTsDzkTk007zzU7z07zw0zkTsDzkTk003zzU3z07zw0zkTsDzkTk001zzU3z07zs0zkTsDzkTkDw1zz03z03zs0zkTsDzkTkTy1zz01z03zk0zkTsDzkTkTz0zz11z03zk0zkTsDzkTkTz0zy11z11zkUzkTsDzkTkTz0zy31z1VzUUzkTsDzkTkTz0zy3Uz1VzVUzkTsDzkTkTz0zy3Uz1UzVUzkTsDzkTkTz0zw7Uz1kz1UzkTsDzkTkTz0zw7kz1kT3UzkTsDzkTkTz0zw7kT1sS3UzkTsDzkTkTz1zs7kT1sS3UzkTsDzkTkTy1zsDkT1sC7UzkTsDzkTk001zsDsD1wA7UzkTsDzkTk003zsDsD1wA7UzkTsDzkTk007zkTsD1w4DUzkTsDzkTk00DzkTs71y0DUzkTsDzkTk00TzkTw71y0DUzkTsDzkTkTUTzUTs71y0TUzkTsDzkTkTkDzU0071z0TUzkTsDzkTkTkDzU0031z0zUzkTsDzkTkTs7zU0031z0zUzkTsDzkTkTs7z00031zzzUzkTsDzkTkTw3z1zy11zzzUzkTsDzUTkTw3z1zy11zzzUzkTs7z0zkTy1y1zz11zzzUzkTw000zkTy1y3zz11zzzUzkTw001zkTz0y3zz01zzzUzkTy001zkTz0y3zzU1zzzUzkTz007zkTzUw3zzUVzzzlzszzs0TzsTzky7zzkU"
+    Text:="|<>*149$80.001zzy0zzsDzsE007zz07zy3zw0000zzk1zzUTz00007zw0Tzs7zk0Dw1zz03zy0zw07zkDzU0zzUDz01zw3zs8Dzs1zk0TzUzy21zy0Dw07zsDzUkTzU3z01zy3zkQ7zs0Tk0TzUzw71zy07w07zsDz1sDzU0z01zy3zUy3zs8Dk0TzUzsDUzy31w07zkDy3s7zUkD01zw3zUz1zsC3k0Dy1zkTkTy3UQ0000Tw7w7zUw70000Dz1zUzsDUk0003zUTsDy3sA0003zsDy3zUz100Dzzy1zUTsDkE0TzzzU007y3y007zzzk001zUzU01zzzw000TsDw00Tzzz0003y3z007zzzUTzUzUzs01zzzsDzsDsDz00Tzzy3zy3y3zk07zzzUzzkTUzy01zzzkDzw7sDzU0Tzzw7zz1y3zw07zzz1zzkDUzz0Vzzzkzzy7sTzsM"
 
-    if (ok:=FindText(X, Y, 322, 216, 466, 267, 0, 0, Text))
+    if (ok:=FindText(X, Y, 321, 219, 415, 267, 0, 0, Text))
 
     {
         Loop, 2{
@@ -3732,6 +3523,18 @@ random_select:
                                                     Sleep, 500
                                                 }
 
+                                                ; Australian ads system
+
+                                                Text:="|<>*101$21.zUDzk0TwDVz7z7lzwQTzlbaD8yHsDszVz7wDszVy3wDmTUwtsbzzATzllzwT7z7wDVzk0TzUDw"
+                                                if (ok:=FindText(X, Y, 951, 89, 993, 127, 0, 0, Text)){
+                                                    Click, 974, 104 Left, 1
+                                                }
+                                                Text:="|<>*82$60.s1zzzzzznzs1zzzzzznznszzzzzznz7zw70ks3nk7ztn668tn67znvDC9wmD7zrvDC9ym07zrvDC9ym07zrvDC9ym0nwnnDC9wmDlttnDC8tn6w3w7DC83nkzzzzzztzzzzzzzzztzzzzzzzzztzzzU"
+
+                                                if (ok:=FindText(X, Y, 501, 98, 581, 122, 0, 0, Text)){
+                                                    Click, 974, 104 Left, 1
+                                                }
+
                                                 Text:="|<>*177$23.XzzW3zy03zs03zU83y0s3s3s3UDs20zs03zs0Dzs0zzs3zzU3zy03zs03zU83y0s3s3s3UDs20zs03zs0Dzs8zzsk"
 
                                                 if (ok:=FindText(X, Y, 1206, 60, 1245, 99, 0, 0, Text))
@@ -3909,6 +3712,62 @@ random_select:
                                         ^q::
                                             SoundSet, 0, , mute
                                         ExitApp
+
+                                        MainMenuLoadedCheck(){
+
+                                            isLoaded := false
+
+                                            Loop, 20 {
+                                                CoordMode , Pixel, Screen
+                                                PixelSearch, FoundX, FoundY, 10, 61, 35, 87, 0xB00039, 0, Fast RGB
+                                                If (ErrorLevel = 0)
+                                                {
+                                                    isLoaded := True
+                                                    Break
+                                                } Else
+                                                {
+                                                    sleep, 1000
+                                                    Send, {Escape}
+                                                    sleep, 1000
+                                                    CheckGame()
+                                                    ExitGamePopUp()
+                                                    RewardsNext()
+                                                }
+                                                Sleep, 1000
+                                            }
+                                            return isLoaded
+                                        }
+                                        CheckGame(){
+                                            If WinExist("Asphalt 9: Legends"){
+                                                WinActivate, Asphalt 9: Legends
+                                                WinMove , Asphalt 9: Legends, , 0, 0, 1280, 720
+                                                WinRestore, Asphalt 9: Legends
+                                            } Else {
+                                                Gosub, script_start
+                                            }
+                                        }
+                                        ExitGamePopUp(){
+
+                                            Text:="|<>*116$63.U0D3zVwS00801sTsD1k0000D1z1sC00001wDsT1s011zzUy3sDw7sTzy7Uz1zkz3zzkQDsDy7sTzz31z1zkz3zzs8TsDy7sTzzU3z1zkz00zy0zsDy7s03zk7z1zkz00Ty0zsDy7s03zk7z1zkz1zzw0zsDy7sTzzU3z1zkz3zzs8TsDy7sTzz31z1zkz3zzkQ7sDy7sTzy7kz1zkz3zzUy3sDy7s3zwDsT1zkz00D1z1sDy7s01sTwD1zkz00D3zVwTyDw"
+
+                                            if (ok:=FindText(X, Y, 556, 241, 633, 280, 0, 0, Text))
+                                            {
+                                                Sleep, 1000
+                                                Send, {Escape}
+                                                Sleep, 1000
+                                            }
+
+                                        }
+                                        RewardsNext(){
+
+                                            Text:="|<>*149$70.000000000001s1sDzls1tzzbU7Uzz3k7bzyT0S3zwD0wTztw1sC00S3k3k7s7Us00sS0D0TkS3U03ls0w1z1sC007D03k7y7Us00Sw0D0SsS3U00zU0w1vlsDz03w03k7b7Uzy07k0D0SSS3zs0z00w1stsC003y03k7XrUs00Ts0D0S7y3U01vk0w1sDsC00D703k7UzUs00wS0D0S1y3U07Us0w1s7sC00S3k3k7UDUzy3k70D0S0y3zwD0S0w1s1sDzls0s3k3030zy301U60U"
+
+                                            if (ok:=FindText(X, Y, 1103, 628, 1190, 672, 0, 0, Text))
+                                            {
+                                                Click, 1207, 642 Left, 1
+                                                Sleep, 3000
+                                            }
+                                        }
 
                                         ; <========================================>
 
